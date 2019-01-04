@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 332px 100%;
+
+  &__left-side{
+    height: 100vh;
+    background: url("img/left-side-bg.png") no-repeat center center / cover;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  &__article {
+    height: 100vh;
+  }
+}
+
+.ls {
+  &__inner-wrapper {
+    width: 222px;
+    height: 100vh;
+    background: green;
+  }
+
+  &__title {
+    color: #ffffff;
+    font-family: "Roboto - Black";
+    font-size: 32px;
+    margin-bottom: 65px;
+  }
+
+  &__log-reg-form {
+    height: 100px;
+  }
+}

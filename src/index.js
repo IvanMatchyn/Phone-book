@@ -1,3 +1,4 @@
-var newText = document.querySelector('.title');
-
-newText.innerText = 'Hello World';
+import './index.scss'
+import './normalize.css'
+import './fonts/fonts.css'
+import './regForm/login.js'
