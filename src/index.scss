@@ -2,11 +2,21 @@
   box-sizing: border-box;
 }
 
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  text-align: center;
+}
+
 .main {
   display: grid;
-  grid-template-columns: 332px 100%;
+  grid-template-columns: 332px 1fr;
 
-  &__left-side{
+  &__left-side {
     height: 100vh;
     background: url("img/left-side-bg.png") no-repeat center center / cover;
     display: flex;
@@ -23,8 +33,7 @@
 .ls {
   &__inner-wrapper {
     width: 222px;
-    height: 100vh;
-    ;
+    height: 100vh;;
   }
 
   &__title {
@@ -38,3 +47,181 @@
     height: 100px;
   }
 }
+
+.login {
+  &-nav-menu {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 222px;
+  }
+
+  &-form-styles {
+    width: 222px;
+    padding-top: 1px;
+    margin-bottom: 9px;
+    font-family: 'Roboto';
+    font-size: 16px;
+
+    &::placeholder {
+      font-size: 13px;
+    }
+  }
+
+  &-links {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  &-forgot-pass {
+    font-family: 'Roboto';
+    font-size: 14px;
+    text-decoration: none;
+
+    &:visited {
+      color: white;
+    }
+
+    &:hover {
+      color: #4267b2;
+    }
+  }
+
+  &-registration {
+    margin-bottom: 5px;
+    text-decoration: none;
+    font-family: 'Roboto';
+    font-size: 14px;
+
+    &:visited {
+      color: white;
+    }
+
+    &:hover {
+      color: #4267b2;
+    }
+  }
+
+  &-button {
+    background-color: #4267b2;
+    white-space: nowrap;
+    padding: 7px 10px;
+    font-family: 'Roboto';
+    color: white;
+    font-size: 13px;
+
+    &:active {
+      transform: translateY(1px);
+      filter: saturate(150%);
+    }
+
+    &:hover {
+      color: #4267b2;
+      border-color: currentColor;
+      background-color: white;
+    }
+  }
+}
+
+.reg-form-submit:focus,
+.reg-form-submit:active {
+  outline: none;
+}
+
+.registration {
+  &-header {
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 75px;
+    box-shadow: 0 0 10px rgba(48, 54, 80, 0.2);
+    background-color: #ffffff;
+
+    &-text {
+      margin-left: 290px;
+      color: #10b1df;
+      font-family: "Roboto - Black";
+      font-size: 24px;
+      font-weight: 900;
+    }
+  }
+
+  &-main {
+    margin-top: 29px;
+    margin-left: 290px;
+  }
+
+  &-email {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-items: flex-start;
+    align-items: flex-start;
+  }
+
+  &-text {
+    width: 371px;
+    height: 32px;
+    box-shadow: inset 0 0 10px #e5e5e5;
+    border: 1px solid #999999;
+    background-color: #ffffff;
+    padding: 3px;
+  }
+
+  &-fullName {
+    width: 371px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+
+  &-name-field {
+    width: 176px;
+    height: 32px;
+    box-shadow: inset 0 0 10px #e5e5e5;
+    border: 1px solid #999999;
+    background-color: #ffffff;
+    padding: 3px;
+  }
+
+}
+
+.text-tooltip {
+  margin: 10px 0 8px 0;
+  color: #c8c8c8;
+  font-family: 'Roboto';
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
