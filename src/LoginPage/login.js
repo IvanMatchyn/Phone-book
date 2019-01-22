@@ -1,25 +1,32 @@
 import Registration from "../Registration/Registration.js";
+import * as constants from '../constants.js'
+import LSideInnerBlock from "../LSideBlock/LSideBlock.js"
 
 export default class LoginPage {
-    constructor(){
-
+    constructor() {
     }
 
-    onload(){
+    onload() {
+        const loginClass = new LoginPage();
         const registrationForm = new Registration;
 
         fetch('./LoginPage/login.html')
             .then(function (response) {
                 return response.text().then(function (text) {
-                    MAIN_LSIDE_BLOCK.innerHTML = text;
+                    constants.MAIN_LSIDE_BLOCK.innerHTML = text;
                 })
             })
-            .then(registrationForm.onload)
-            .then(registrationForm.registrateNewUser)
-            .then(this.enterIntoSystem);
+            .then(function () {
+                registrationForm.onload();
+            })
+            .then(function () {
+                loginClass.enterIntoSystem();
+            })
+
     }
 
-    enterIntoSystem(){
+    enterIntoSystem() {
+        const lsInner = new LSideInnerBlock();
         const login = document.querySelector('#login');
         const logPassword = document.querySelector('#log-password');
         const enterButton = document.querySelector('.reg-form-submit');
@@ -35,28 +42,14 @@ export default class LoginPage {
             fetch('http://phonebook.hillel.it/api/users/login', {
                 method: 'POST',
                 body: userInfoObjJSON,
+                credentials: "include",
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
 
                 .then(response => {
-                    const leftSideBlock = document.querySelector('.ls__content-wrapper');
-
-
-                    fetch('./LSideBlock/LSideBlock.html')
-                        .then(function (response) {
-                            return response.text().then(function (text) {
-                                leftSideBlock.innerHTML = text;
-                                contactBook.clearMainBlock();
-                            })
-                        })
-
-                        .then(() => {
-                            contactBook.clearMainBlock();
-                            this.logOutFromSystem();
-                            this.addNewContact();
-                        })
+                    lsInner.onload();
                 })
 
                 .catch(err => {
