@@ -10,11 +10,20 @@ export default class ContactMenu {
     showMenu() {
         const dotButton = document.querySelector('.all-contacts__items-options');
         const menu = document.querySelector('.all-contacts__items-options__menu');
+        const hiddenMenu = document.querySelector('.all-contacts__items-options__menu-addToGroup');
+        const main = document.querySelector('.main');
 
-        dotButton.addEventListener('click', () => {
+        dotButton.addEventListener('click', (ev) => {
             menu.classList.add('show');
-        })
+            ev.stopPropagation();
+        });
 
+        main.addEventListener('click', (ev)=>{
+            menu.classList.remove('show');
+            menu.classList.add('hidden');
+            hiddenMenu.classList.remove('show');
+            hiddenMenu.classList.add('hidden');
+        });
     }
 
     editMenu(){
@@ -44,9 +53,9 @@ export default class ContactMenu {
         const addToGroup = document.querySelector('#addToGroup');
         const hiddenMenu = document.querySelector('.all-contacts__items-options__menu-addToGroup');
 
-        addToGroup.addEventListener('click', function () {
+        addToGroup.addEventListener('click', function (e) {
+            e.stopPropagation();
             hiddenMenu.classList.add('show')
         });
-
     }
 }

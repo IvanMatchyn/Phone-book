@@ -1,6 +1,7 @@
 import Registration from "../Registration/Registration.js";
 import * as constants from '../constants.js'
 import LSideInnerBlock from "../LSideBlock/LSideBlock.js"
+import ContactsBook from '../Module.js'
 
 export default class LoginPage {
     constructor() {
@@ -30,10 +31,12 @@ export default class LoginPage {
         const login = document.querySelector('#login');
         const logPassword = document.querySelector('#log-password');
         const enterButton = document.querySelector('.reg-form-submit');
+        const book = new ContactsBook();
 
         let userInfoObj = {};
 
         enterButton.addEventListener('click', () => {
+            book.clearMainBlock();
             userInfoObj.email = login.value;
             userInfoObj.password = logPassword.value;
 

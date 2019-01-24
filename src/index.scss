@@ -37,6 +37,34 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+::-webkit-scrollbar-button {
+  width:5px;
+  height:0px
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2c3149
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background-color: #9699a5;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background-color:#9699a5;
+}
+
+::-webkit-resizer{
+  width:4px;
+  height:0px
+}
+
+::-webkit-scrollbar{
+  width: 4px;
+}
+
 .main {
   max-height: 861px;
   height: 100%;
@@ -45,7 +73,7 @@ input::-webkit-inner-spin-button {
 
   &__left-side {
     position: relative;
-    height: 100vh;
+    height: 100%;
     background: url("img/left-side-bg.png") no-repeat center center / cover;
   }
 
@@ -196,7 +224,17 @@ input::-webkit-inner-spin-button {
     &__categories {
       cursor: pointer;
       margin-top: 32px;
+
+      &__wrapper {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 200px;
+        height: 100%;
+
+      }
+
       &__header {
+        z-index: 0;
         margin: 0 55px 17px 55px;
         color: #8992ca;
         font-family: 'Roboto';
@@ -204,13 +242,13 @@ input::-webkit-inner-spin-button {
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 1.4px;
-
       }
 
       &__contacts {
         position: relative;
 
         &-wrapper {
+          z-index: 0;
           position: relative;
         }
 
@@ -228,7 +266,9 @@ input::-webkit-inner-spin-button {
           font-weight: 400;
           line-height: 48px;
         }
+
         &__option {
+          outline: none;
           position: absolute;
           right: 61px;
           top: 12px;
@@ -1173,11 +1213,54 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.drop {
+  &-down{
+    z-index: 1;
+    position: absolute;
+    right: 5px;
+    top: 12px;
+    width: 75px;
+    box-shadow: 0 0 10px rgba(48, 54, 80, 0.2);
+    border-radius: 5px;
+    background-color: #2c314a;
+    cursor: pointer;
+
+    &__items {
+      text-align: center;
+      padding: 0 8px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      font-family: 'Roboto';
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 26px;
+      border-radius: 5px;
+
+
+      &-p {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+      }
+    }
+  }
+}
+
 .wrong-info {
   border-color: red;
   &::placeholder {
     color: red;
   }
+}
+
+.wrong-text {
+  color: red;
+  font-family: 'Roboto';
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .hidden {

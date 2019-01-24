@@ -43,10 +43,7 @@ export default class NewContact {
         let dataArray = [nameVal, surNameVal, descVal, phoneVal, emailVal, birthdayVal, infoVal];
         let newContact = {};
 
-
-
-
-        saveButton.addEventListener('click', function () {
+        saveButton.addEventListener('click', function save() {
             dataArray.forEach(elem =>{
                 elem.classList.remove('wrong-info');
 
@@ -56,27 +53,35 @@ export default class NewContact {
                     newContact.position = descVal.value;
                     newContact.email = ["" + emailVal.value];
                     newContact.phone = [{
-                        // _id: undefined,
                         category: "mobile",
                         value: phoneVal.value
                     }];
                     newContact.bornDate = "" + birthdayVal.value;
-                    // newContact.category = undefined;
-                    // newContact.information = infoVal.value;
-                    // newContact.image = undefined;
-                    newContact.addedAt = "";
-                    // newContact.addedBy = undefined;
-
+                    newContact.information = infoVal.value;
 
                 } else {
                     elem.classList.add('wrong-info');
                 }
-
-
-
             });
-        })
 
+            let JSONcontact = JSON.stringify(newContact);
+
+            fetch('http://phonebook.hillel.it/api/phonebook',{
+                method: 'POST',
+                body: JSONcontact,
+                credentials: "include",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response=>{
+                    console.log(response)
+                    console.log(response.text())
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+        })
     }
 
     cancelSavingInfo() {
