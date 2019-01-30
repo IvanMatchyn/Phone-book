@@ -3,3 +3,4 @@ src/*.log
 .idea
 webpack.config.js
 src/fonts
+dist

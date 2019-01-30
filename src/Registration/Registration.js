@@ -1,21 +1,29 @@
+import * as constants from '../constants.js'
+
 export default class Registration {
     constructor() {
 
     }
 
     onload() {
+        const regClass = this;
         const regLink = document.querySelector('.login-registration');
 
         regLink.addEventListener('click', function (e) {
             e.preventDefault();
 
             fetch('./Registration/RegistrationForm.html')
-                .then(function (response) {
-                    return response.text().then(function (text) {
-                        MAIN_RSIDE_BLOCK.innerHTML = text;
-                    })
+                .then(response => {
+                    return response.text()
+
                 })
-        })
+
+                .then(text => {
+                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                    regClass.registrateNewUser();
+                })
+        });
+        console.log(document.documentElement.clientWidth)
     }
 
     registrateNewUser() {
@@ -27,11 +35,12 @@ export default class Registration {
         let infoUserObject = {};
 
         confirmRegistration.addEventListener('click', obj => {
+            console.log('hi')
             let allDone = true;
             let infoArray = [userEmail, userPassword, userFirstName, userSecondName];
             let infoArrayTextField = [userFirstName, userSecondName];
 
-            if (!RAGEXP_EMAIL.test(userEmail.value)) {
+            if (!constants.RAGEXP_EMAIL.test(userEmail.value)) {
                 userEmail.classList.add('wrong-info');
                 userEmail.setAttribute('placeholder', 'Incorrect');
                 allDone = false;
@@ -40,7 +49,7 @@ export default class Registration {
                 userEmail.removeAttribute('placeholder', 'Incorrect');
             }
 
-            if (!RAGEXP_PASS.test(userPassword.value)) {
+            if (!constants.RAGEXP_PASS.test(userPassword.value)) {
                 userPassword.classList.add('wrong-info');
                 userPassword.setAttribute('placeholder', 'Incorrect');
                 allDone = false;
@@ -50,7 +59,7 @@ export default class Registration {
             }
 
             infoArrayTextField.forEach(elem => {
-                if (!RAGEXP_TEXT.test(elem.value)) {
+                if (!constants.RAGEXP_TEXT.test(elem.value)) {
                     elem.classList.add('wrong-info');
                     elem.setAttribute('placeholder', 'Incorrect');
                     allDone = false;
@@ -101,5 +110,42 @@ export default class Registration {
                     console.log(err);
                 })
         })
+    }
+
+    regLinkMobile() {
+        const mainLeft = document.querySelector('.main__left-side');
+        const regLink = document.querySelector('.login-registration');
+
+        if (document.documentElement.clientWidth <= 720) {
+            regLink.addEventListener('click', link => {
+                mainLeft.classList.add('hidden');
+                constants.MAIN_RSIDE_BLOCK.style.display = 'block';
+
+                fetch('./Registration/RegistrationForm.html')
+                    .then(response => {
+                        return response.text()
+                    })
+
+                    .then(text => {
+                        constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                        this.registrateNewUser();
+
+                        let closeButton = document.createElement('button');
+                        closeButton.classList.add('registration-close-button');
+
+                        let header = document.querySelector('.main__block-header');
+                        header.appendChild(closeButton);
+
+                        let leftBlock = document.querySelector('.main__left-side');
+
+                        closeButton.addEventListener('click', button => {
+                            constants.MAIN_RSIDE_BLOCK.style.display = 'none';
+                            leftBlock.classList.remove('hidden');
+                        });
+                    });
+            });
+        } else {
+            this.onload();
+        }
     }
 }
