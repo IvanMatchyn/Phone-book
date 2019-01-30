@@ -12,18 +12,17 @@ export default class NewContact {
 
         addButton.addEventListener('click', () => {
             book.clearMainBlock();
-            fetch('./addContact/addContact.html')
+            fetch('./AddContact/AddContact.html')
                 .then(response => {
                     return response.text().then(function (text) {
                         constants.MAIN_RSIDE_BLOCK.innerHTML = text;
                     })
                 })
                 .then(function () {
+                    book.mobileOpen();
                     addContactFunc.saveContact();
                     addContactFunc.cancelSavingInfo();
                 })
-
-
         })
     }
 
@@ -44,52 +43,63 @@ export default class NewContact {
         let newContact = {};
 
         saveButton.addEventListener('click', function save() {
-            dataArray.forEach(elem =>{
+            dataArray.forEach(elem => {
                 elem.classList.remove('wrong-info');
 
-                if(elem.value.length != 0){
+                if (elem.value.length != 0) {
                     newContact.name = nameVal.value;
                     newContact.surname = surNameVal.value;
                     newContact.position = descVal.value;
-                    newContact.email = ["" + emailVal.value];
+                    newContact.email = [`${emailVal.value}`];
                     newContact.phone = [{
                         category: "mobile",
                         value: phoneVal.value
                     }];
-                    newContact.bornDate = "" + birthdayVal.value;
-                    newContact.information = infoVal.value;
+                    newContact.bornDate = `${birthdayVal.value}`;
+                    newContact.information = `${infoVal.value}`;
+
 
                 } else {
                     elem.classList.add('wrong-info');
                 }
+
+
             });
 
             let JSONcontact = JSON.stringify(newContact);
+            console.log(JSONcontact.length);
 
-            fetch('http://phonebook.hillel.it/api/phonebook',{
-                method: 'POST',
-                body: JSONcontact,
-                credentials: "include",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response=>{
-                    console.log(response)
-                    console.log(response.text())
+            if (JSONcontact.length != 0) {
+                fetch('http://phonebook.hillel.it/api/phonebook', {
+                    method: 'POST',
+                    body: JSONcontact,
+                    credentials: "include",
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 })
-                .catch(err=>{
-                    console.log(err);
-                })
+                    .then(response => {
+                        console.log(response)
+                        console.log(response.text())
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
         })
     }
 
     cancelSavingInfo() {
         const cancelButton = document.querySelector('.add-contact__buttons__cancel');
         const book = new ContactsBook();
+        let mainLeftBlock = document.querySelector('.main__left-side');
 
         cancelButton.addEventListener('click', () => {
             book.clearMainBlock();
+            if (document.documentElement.clientWidth <= 720) {
+                mainLeftBlock.style.display = 'block';
+            }
         });
     }
 }

@@ -1,12 +1,14 @@
 import * as constants from "../constants";
 import LSideInnerBlock from "../LSideBlock/LSideBlock.js"
+import ContactsBook from "../Module.js"
 
-export default class GroupMenu {
+export default class CategoryMenu {
     constructor() {
     }
 
     onload() {
-        fetch('../AllContacts/createGroup.html')
+        let book = new ContactsBook();
+        fetch('../Categories/createCategory.html')
             .then(response => {
                 return response.text()
             })
@@ -14,6 +16,7 @@ export default class GroupMenu {
                 constants.MAIN_RSIDE_BLOCK.innerHTML = html;
             })
             .then(() => {
+                book.mobileOpen();
                 this.create();
             })
     }
@@ -21,7 +24,7 @@ export default class GroupMenu {
     delete(parentElem) {
         let parentID = parentElem.parentElement.getAttribute('data-id');
 
-        fetch(`http://phonebook.hillel.it/api/categories/${parentID}`, {
+        fetch(`http://phonebook.hillel.it/api/phonebook/${parentID}`, {
             method: 'DELETE',
             credentials: "include",
             headers: {
@@ -38,6 +41,7 @@ export default class GroupMenu {
         const createGroupValue = document.querySelector('.create-group__value');
         const createPar = document.querySelector('.create-group');
         const leftBlockOnload = new LSideInnerBlock;
+
 
         let newGroup = {};
 
@@ -75,5 +79,34 @@ export default class GroupMenu {
         createButton2.addEventListener('click', () => {
             this.onload();
         })
+    }
+
+    categoryDropDownMenu() {
+        let dropDownMenu = document.createElement('div');
+        let dropDownMenuItem = document.createElement('div');
+        let dropDownMenuItemText = document.createElement('p');
+
+
+        dropDownMenu.classList.add('show');
+
+        dropDownMenu.classList.add('drop-down');
+        dropDownMenuItem.classList.add('drop-down__items');
+        dropDownMenuItemText.classList.add('drop-down__items-p');
+
+        dropDownMenuItemText.innerText = 'Delete';
+
+        dropDownMenuItem.appendChild(dropDownMenuItemText);
+        dropDownMenu.appendChild(dropDownMenuItem);
+
+        dropDownMenu.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        dropDownMenuItem.addEventListener('click', event => {
+            this.delete(dropDownMenu);
+            event.stopPropagation();
+        });
+
+        return dropDownMenu;
     }
 }

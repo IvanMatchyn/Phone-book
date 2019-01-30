@@ -6,7 +6,7 @@ export default class EditContact {
     }
 
     onload(){
-        fetch('../editContact/editContact.html')
+        fetch('../EditContact/EditContact.html')
             .then(response => {
                 return response.text()
             })

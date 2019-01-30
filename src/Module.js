@@ -20,4 +20,31 @@ export default class ContactsBook {
             mainBlock.removeChild(elem);
         })
     }
+
+    mobileOpen() {
+        if (document.documentElement.clientWidth <= 720) {
+            let mainLeftBlock = document.querySelector('.main__left-side');
+            let mainRightBlock = document.querySelector('.main__article');
+
+            mainLeftBlock.style.display = 'none';
+            mainRightBlock.style.display = 'block';
+
+            let closeButton = document.createElement('button');
+            let header = document.querySelector('.main__block-header');
+
+            closeButton.classList.add('create-group__close-button')
+
+            header.appendChild(closeButton);
+
+            closeButton.addEventListener('click', button => {
+                mainLeftBlock.style.display = 'block';
+                this.clearMainBlock();
+            })
+        }
+    }
+
+    location(){
+        let location = new Location();
+        console.log(location);
+    }
 }

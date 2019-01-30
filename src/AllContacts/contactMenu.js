@@ -1,6 +1,6 @@
 import * as constants from "../constants";
-import EditContact from '../editContact/editContact.js'
-import GroupMenu from './groupsMenu.js'
+import EditContact from '../EditContact/editContact.js'
+import CategoryMenu from '../Categories/categoryMenu.js'
 
 export default class ContactMenu {
     constructor() {
@@ -37,7 +37,7 @@ export default class ContactMenu {
     }
 
     createGroup(){
-        const groupMenu = new GroupMenu();
+        const groupMenu = new CategoryMenu();
         const createGroupLink = document.querySelector('#create-group');
 
         createGroupLink.addEventListener('click', elem => {

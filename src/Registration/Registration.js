@@ -8,10 +8,10 @@ export default class Registration {
     onload() {
         const regClass = this;
         const regLink = document.querySelector('.login-registration');
-        //
+
         regLink.addEventListener('click', function (e) {
             e.preventDefault();
-        //
+
             fetch('./Registration/RegistrationForm.html')
                 .then(response => {
                     return response.text()
@@ -23,6 +23,7 @@ export default class Registration {
                     regClass.registrateNewUser();
                 })
         });
+        console.log(document.documentElement.clientWidth)
     }
 
     registrateNewUser() {
@@ -109,5 +110,42 @@ export default class Registration {
                     console.log(err);
                 })
         })
+    }
+
+    regLinkMobile() {
+        const mainLeft = document.querySelector('.main__left-side');
+        const regLink = document.querySelector('.login-registration');
+
+        if (document.documentElement.clientWidth <= 720) {
+            regLink.addEventListener('click', link => {
+                mainLeft.classList.add('hidden');
+                constants.MAIN_RSIDE_BLOCK.style.display = 'block';
+
+                fetch('./Registration/RegistrationForm.html')
+                    .then(response => {
+                        return response.text()
+                    })
+
+                    .then(text => {
+                        constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                        this.registrateNewUser();
+
+                        let closeButton = document.createElement('button');
+                        closeButton.classList.add('registration-close-button');
+
+                        let header = document.querySelector('.main__block-header');
+                        header.appendChild(closeButton);
+
+                        let leftBlock = document.querySelector('.main__left-side');
+
+                        closeButton.addEventListener('click', button => {
+                            constants.MAIN_RSIDE_BLOCK.style.display = 'none';
+                            leftBlock.classList.remove('hidden');
+                        });
+                    });
+            });
+        } else {
+            this.onload();
+        }
     }
 }

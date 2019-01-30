@@ -18,7 +18,7 @@ export default class LoginPage {
                 })
             })
             .then(function () {
-                registrationForm.onload();
+                registrationForm.regLinkMobile();
             })
             .then(function () {
                 loginClass.enterIntoSystem();
@@ -37,6 +37,7 @@ export default class LoginPage {
 
         enterButton.addEventListener('click', () => {
             book.clearMainBlock();
+
             userInfoObj.email = login.value;
             userInfoObj.password = logPassword.value;
 
@@ -53,13 +54,20 @@ export default class LoginPage {
 
                 .then(response => {
                     lsInner.onload();
+                    this.mobileLogin();
                 })
 
                 .catch(err => {
                     console.log(err);
                 })
-
         });
+    }
+
+    mobileLogin(){
+        if(document.documentElement.clientWidth <= 414){
+            let title = document.querySelector('.ls__title');
+            title.style.display = 'none';
+        }
     }
 }
 
