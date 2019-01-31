@@ -36,15 +36,10 @@ export default class ContactsBook {
 
             header.appendChild(closeButton);
 
-            closeButton.addEventListener('click', button => {
+            closeButton.addEventListener('click', () => {
                 mainLeftBlock.style.display = 'block';
                 this.clearMainBlock();
             })
         }
-    }
-
-    location(){
-        let location = new Location();
-        console.log(location);
     }
 }
