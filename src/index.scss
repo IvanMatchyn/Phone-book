@@ -39,7 +39,7 @@ input::-webkit-inner-spin-button {
 
 ::-webkit-scrollbar-button {
   width: 5px;
-  height: 0px
+  height: 0;
 }
 
 ::-webkit-scrollbar-track {
@@ -47,8 +47,8 @@ input::-webkit-inner-spin-button {
 }
 
 ::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 0px;
-  border-radius: 0px;
+  -webkit-border-radius: 0;
+  border-radius: 0;
   background-color: #9699a5;
 }
 
@@ -58,7 +58,7 @@ input::-webkit-inner-spin-button {
 
 ::-webkit-resizer {
   width: 4px;
-  height: 0px
+  height: 0;
 }
 
 ::-webkit-scrollbar {
@@ -212,7 +212,7 @@ input::-webkit-inner-spin-button {
         font-size: 14px;
         font-weight: 400;
 
-        &::-webkit-search-cancel-button
+        &::-webkit-search-cancel-button,
         &::placeholder {
           padding-left: 35px;
           color: #9699a5;
@@ -1321,9 +1321,6 @@ input::-webkit-inner-spin-button {
     &__buttons {
       margin-right: 24px;
       margin-left: 24px;
-      &__line {
-        width: 520px;
-      }
     }
   }
 }
@@ -1333,12 +1330,6 @@ input::-webkit-inner-spin-button {
     &__block {
       &__header {
         margin-right: 30px;
-      }
-    }
-
-    &__buttons {
-      &__line {
-        width: 472px;
       }
     }
   }
@@ -1363,7 +1354,7 @@ input::-webkit-inner-spin-button {
     padding: 64px 24px 0 24px;
 
     &__initials__photo {
-      margin-right: 16px;
+      margin-right: 35px;
       min-width: 106px;
 
       &__fake {
@@ -1463,6 +1454,7 @@ input::-webkit-inner-spin-button {
 
     &__initials__photo {
       margin-top: 16px;
+      margin-right: 15px;
     }
 
     &__initials__desc__textarea__wrapper {
@@ -1715,7 +1707,7 @@ input::-webkit-inner-spin-button {
     grid-row-gap: 16px;
 
     &__header {
-      margin-bottom: 0px;
+      margin-bottom: 0;
       display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: 150px 105px;

@@ -14,6 +14,5 @@ import ContactsBook from "./Module.js";
 (function () {
     let book = new ContactsBook();
     book.onload();
-    book.location();
 })();
 

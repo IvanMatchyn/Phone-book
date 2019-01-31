@@ -12,21 +12,29 @@ export default class Registration {
         regLink.addEventListener('click', function (e) {
             e.preventDefault();
 
-            fetch('./Registration/RegistrationForm.html')
+             fetch('./Registration/RegistrationForm.html',{
+                 headers: {
+                     'Content-Type': 'text/html'
+                 }
+             })
                 .then(response => {
+                    let url = new URL('../Registration', 'http://localhost:3000');
+                    console.log(url.hostname);
+                    console.log(url.pathname);
+                    url.pathname = 'registration.html';
                     return response.text()
-
                 })
 
                 .then(text => {
                     constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-                    regClass.registrateNewUser();
+                    regClass.registrationNewUser();
+
                 })
         });
         console.log(document.documentElement.clientWidth)
     }
 
-    registrateNewUser() {
+    registrationNewUser() {
         const confirmRegistration = document.querySelector('.registration-confirm-button');
         const userEmail = document.querySelector('#registration-email');
         const userPassword = document.querySelector('#registration-password');
@@ -34,8 +42,7 @@ export default class Registration {
         const userSecondName = document.querySelector('#registration-surrname');
         let infoUserObject = {};
 
-        confirmRegistration.addEventListener('click', obj => {
-            console.log('hi')
+        confirmRegistration.addEventListener('click', () => {
             let allDone = true;
             let infoArray = [userEmail, userPassword, userFirstName, userSecondName];
             let infoArrayTextField = [userFirstName, userSecondName];
@@ -117,7 +124,7 @@ export default class Registration {
         const regLink = document.querySelector('.login-registration');
 
         if (document.documentElement.clientWidth <= 720) {
-            regLink.addEventListener('click', link => {
+            regLink.addEventListener('click', () => {
                 mainLeft.classList.add('hidden');
                 constants.MAIN_RSIDE_BLOCK.style.display = 'block';
 
@@ -128,7 +135,7 @@ export default class Registration {
 
                     .then(text => {
                         constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-                        this.registrateNewUser();
+                        this.registrationNewUser();
 
                         let closeButton = document.createElement('button');
                         closeButton.classList.add('registration-close-button');
@@ -138,7 +145,7 @@ export default class Registration {
 
                         let leftBlock = document.querySelector('.main__left-side');
 
-                        closeButton.addEventListener('click', button => {
+                        closeButton.addEventListener('click', () => {
                             constants.MAIN_RSIDE_BLOCK.style.display = 'none';
                             leftBlock.classList.remove('hidden');
                         });
