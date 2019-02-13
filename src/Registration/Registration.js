@@ -12,26 +12,29 @@ export default class Registration {
         regLink.addEventListener('click', function (e) {
             e.preventDefault();
 
-             fetch('./Registration/RegistrationForm.html',{
-                 headers: {
-                     'Content-Type': 'text/html'
-                 }
-             })
+            // window.history.pushState(
+            //     {},
+            //     'registration',
+            //     window.location.origin + '/registration');
+
+            fetch('./Registration/RegistrationForm.html', {
+                headers: {
+                    'Content-Type': 'text/html'
+                }
+            })
                 .then(response => {
-                    let url = new URL('../Registration', 'http://localhost:3000');
-                    console.log(url.hostname);
-                    console.log(url.pathname);
-                    url.pathname = 'registration.html';
                     return response.text()
+
                 })
 
                 .then(text => {
                     constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-                    regClass.registrationNewUser();
+                })
 
+                .then(() => {
+                    regClass.registrationNewUser();
                 })
         });
-        console.log(document.documentElement.clientWidth)
     }
 
     registrationNewUser() {
@@ -40,6 +43,7 @@ export default class Registration {
         const userPassword = document.querySelector('#registration-password');
         const userFirstName = document.querySelector('#registration-name');
         const userSecondName = document.querySelector('#registration-surrname');
+        let mode = constants.myStorage.getItem('mode');
         let infoUserObject = {};
 
         confirmRegistration.addEventListener('click', () => {
@@ -76,7 +80,6 @@ export default class Registration {
                 }
             });
 
-
             infoArray.forEach(elem => {
                 if (elem.value.length === 0) {
                     elem.classList.add('wrong-info');
@@ -85,37 +88,85 @@ export default class Registration {
                 }
             });
 
-            console.log(allDone);
+            if (mode === 'online') {
+                if (allDone) {
+                    infoUserObject.email = userEmail.value;
+                    infoUserObject.password = userPassword.value;
+                    infoUserObject.name = userFirstName.value;
+                    infoUserObject.surname = userSecondName.value;
 
-            if (allDone) {
-                infoUserObject.email = userEmail.value;
-                infoUserObject.password = userPassword.value;
-                infoUserObject.name = userFirstName.value;
-                infoUserObject.surname = userSecondName.value;
+                    infoArray.forEach(elem => {
+                        elem.classList.remove('wrong-info');
+                        elem.removeAttribute('placeholder', 'Incorrect');
 
-                infoArray.forEach(elem => {
-                    elem.classList.remove('wrong-info');
-                    elem.removeAttribute('placeholder', 'Incorrect');
+                    })
+                }
 
+                let infoToJSON = JSON.stringify(infoUserObject);
+
+                fetch('http://phonebook.hillel.it/api/users/register', {
+                    method: 'POST',
+                    body: infoToJSON,
+                    headers: {'Content-Type': 'application/json'}
                 })
+
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            } else if (mode === 'offline') {
+                function createUser() {
+                    let usersArray = JSON.parse(localStorage.getItem('Users'));
+                    let userID = Number(localStorage.getItem('maxUserID')) + 1;
+
+                    infoUserObject.ID = userID;
+                    localStorage.setItem('maxUserID', `${userID}`);
+
+                    infoUserObject.email = userEmail.value;
+                    infoUserObject.password = userPassword.value;
+                    infoUserObject.name = userFirstName.value;
+                    infoUserObject.surname = userSecondName.value;
+                    infoUserObject.categories = [];
+                    infoUserObject.contacts = [];
+                    infoUserObject.userInfo = [];
+
+                    usersArray.push(infoUserObject);
+
+                    let usersArrayToJSON = JSON.stringify(usersArray);
+
+                    localStorage.setItem('Users', usersArrayToJSON);
+                }
+
+                if (allDone) {
+                    let usersArray = JSON.parse(localStorage.getItem('Users'));
+
+                    if (usersArray.length === 0) {
+                        createUser()
+
+                    } else {
+                        usersArray.forEach(elem => {
+                            if (elem.email !== userEmail.value) {
+                                createUser();
+                                let errorMSG = document.querySelector('#wrong-email');
+                                errorMSG.style.display = 'none';
+
+                            } else {
+                                let emailBlock = document.querySelector('#email-check')
+                                let errorMSG = document.querySelector('#wrong-email');
+                                errorMSG.style.display = 'block';
+                                emailBlock.appendChild(errorMSG);
+                            }
+                        });
+                    }
+
+                    infoArray.forEach(elem => {
+                        elem.classList.remove('wrong-info');
+                        elem.removeAttribute('placeholder', 'Incorrect');
+                    })
+                }
             }
-
-            let infoToJSON = JSON.stringify(infoUserObject);
-
-            console.log(infoToJSON);
-
-            fetch('http://phonebook.hillel.it/api/users/register', {
-                method: 'POST',
-                body: infoToJSON,
-                headers: {'Content-Type': 'application/json'}
-            })
-
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
         })
     }
 
