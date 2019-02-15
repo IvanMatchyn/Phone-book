@@ -1,10 +1,9 @@
 import ContactsBook from "../Module.js"
 import * as constants from "../constants";
-import NewContact from "../AddContact/addContact.js"
-import AllContact from "../AllContacts/AllContacts.js"
 import Categories from '../Categories/categories.js'
-import ContactInformation from '../ContactInfo/contactInfo.js'
-import CategoryMenu from "../Categories/categoryMenu";
+import Session from "../Offline/Session";
+import LoadPage from "../LoadPage/LoadPage";
+
 
 export default class LSideInnerBlock {
     constructor() {
@@ -12,11 +11,6 @@ export default class LSideInnerBlock {
 
     onload() {
         const categories = new Categories();
-        const allContacts = new AllContact();
-        const inner = new LSideInnerBlock();
-        const newContact = new NewContact();
-        const contactInfo = new ContactInformation();
-        const groupMenu = new CategoryMenu();
 
         fetch('./LSideBlock/LSideBlock.html')
             .then(function (response) {
@@ -26,31 +20,57 @@ export default class LSideInnerBlock {
             })
 
             .then(() => {
-                let button = document.querySelector('.ls-inner__account__option');
-                newContact.onload();
-                inner.logOut();
-                contactInfo.showContactIinfo(button);
-                allContacts.showContactsMenu();
-                categories.loadCategories();
-                groupMenu.createLink2();
+                showAllContact();
+                addContactLink();
+                createCategory();
+                categories.addCategories();
+                addName();
+                logOut();
+            });
+
+        function createCategory() {
+            const createButton2 = document.querySelector('.ls-inner__add-group__wrapper');
+
+            createButton2.addEventListener('click', () => {
+                LoadPage.load("createCategory");
             })
-    }
+        }
 
-    logOut(){
-        const book = new ContactsBook();
-        const logOutButton = document.querySelector('.ls-inner__account__name-logOut-button');
+        function showAllContact() {
+            const allContactsButton = document.querySelector('#all-contacts-button');
 
-        logOutButton.addEventListener('click', () => {
-            book.clearMainBlock();
-            book.onload();
-            this.logOutMobile();
-        })
-    }
+            allContactsButton.addEventListener('click', () => {
+                LoadPage.load("allContacts");
+            })
+        }
 
-    logOutMobile(){
-        if(document.documentElement.clientWidth <= 720){
-            let title = document.querySelector('.ls__title');
-            title.style.display = 'block'
+        function addContactLink() {
+            const addButton = document.querySelector('.ls-inner__add-contact__wrapper');
+
+            addButton.addEventListener('click', () => {
+                LoadPage.load("addContact");
+            })
+        }
+
+        function addName() {
+            let userFullName = document.querySelector('.ls-inner__account__name-text');
+            let activeUser = Session.getInstance().getActiveUser();
+            userFullName.innerText = activeUser.name + ' ' + activeUser.surname
+        }
+
+        function logOut() {
+            const book = new ContactsBook();
+            const logOutButton = document.querySelector('.ls-inner__account__name-logOut-button');
+
+            logOutButton.addEventListener('click', () => {
+                book.clearMainBlock();
+                LoadPage.load("login");
+
+                if (document.documentElement.clientWidth <= 720) {
+                    let title = document.querySelector('.ls__title');
+                    title.style.display = 'block';
+                }
+            })
         }
     }
 }

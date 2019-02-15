@@ -1,15 +1,30 @@
-import LoginPage from "./LoginPage/login.js";
-import * as constants from './constants.js'
+import Session from "./Offline/Session";
+import LoadPage from "./LoadPage/LoadPage";
 
 export default class ContactsBook {
     constructor() {
     }
 
     onload() {
-        if (constants.ONLOAD_PAGE === 'login') {
-            let login = new LoginPage;
-            login.onload();
+        let maxUserID = localStorage.getItem('maxUserID');
+
+        if (maxUserID == null) {
+            localStorage.setItem('maxUserID', '0');
         }
+
+        if (localStorage.getItem('Users') == null) {
+            let newUsers = [];
+            let newUsersToJSON = JSON.stringify(newUsers);
+            localStorage.setItem('Users', newUsersToJSON);
+        }
+
+        let url = new URLSearchParams(window.location.search.substring(1));
+        let page = url.get("page");
+
+        if (page === null) {
+            page = "login";
+        }
+        LoadPage.load(page);
     }
 
     clearMainBlock() {
@@ -32,7 +47,7 @@ export default class ContactsBook {
             let closeButton = document.createElement('button');
             let header = document.querySelector('.main__block-header');
 
-            closeButton.classList.add('create-group__close-button')
+            closeButton.classList.add('create-group__close-button');
 
             header.appendChild(closeButton);
 
@@ -41,5 +56,18 @@ export default class ContactsBook {
                 this.clearMainBlock();
             })
         }
+    }
+
+    offlineSynchronization() {
+        let activeUser = Session.getInstance().getActiveUser();
+        let usersArray = JSON.parse(localStorage.getItem('Users'));
+
+        usersArray.forEach((elem, i) => {
+            if (activeUser.ID = elem.ID) {
+                usersArray[i] = activeUser;
+            }
+        });
+
+        localStorage.setItem('Users', JSON.stringify(usersArray))
     }
 }

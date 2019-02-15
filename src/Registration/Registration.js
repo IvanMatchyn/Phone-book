@@ -7,31 +7,52 @@ export default class Registration {
 
     onload() {
         const regClass = this;
-        const regLink = document.querySelector('.login-registration');
 
-        regLink.addEventListener('click', function (e) {
-            e.preventDefault();
-
-             fetch('./Registration/RegistrationForm.html',{
-                 headers: {
-                     'Content-Type': 'text/html'
-                 }
-             })
-                .then(response => {
-                    let url = new URL('../Registration', 'http://localhost:3000');
-                    console.log(url.hostname);
-                    console.log(url.pathname);
-                    url.pathname = 'registration.html';
-                    return response.text()
+        fetch('./Registration/RegistrationForm.html', {
+            headers: {
+                'Content-Type': 'text/html'
+            }
+        })
+            .then(response => {
+                return response.text().then(text => {
+                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
                 })
+            })
 
-                .then(text => {
+            .then(() => {
+                mobileCheck();
+            });
+
+
+        function mobileCheck() {
+            const mainLeft = document.querySelector('.main__left-side');
+            const regLink = document.querySelector('.login-registration');
+
+            if (document.documentElement.clientWidth <= 720) {
+                regLink.addEventListener('click', () => {
+                    mainLeft.classList.add('hidden');
+                    constants.MAIN_RSIDE_BLOCK.style.display = 'block';
                     constants.MAIN_RSIDE_BLOCK.innerHTML = text;
                     regClass.registrationNewUser();
 
-                })
-        });
-        console.log(document.documentElement.clientWidth)
+                    let closeButton = document.createElement('button');
+                    closeButton.classList.add('registration-close-button');
+
+                    let header = document.querySelector('.main__block-header');
+                    header.appendChild(closeButton);
+
+                    let leftBlock = document.querySelector('.main__left-side');
+
+                    closeButton.addEventListener('click', () => {
+                        constants.MAIN_RSIDE_BLOCK.style.display = 'none';
+                        leftBlock.classList.remove('hidden');
+                    });
+
+                });
+            } else {
+                regClass.registrationNewUser();
+            }
+        }
     }
 
     registrationNewUser() {
@@ -52,6 +73,7 @@ export default class Registration {
                 userEmail.setAttribute('placeholder', 'Incorrect');
                 allDone = false;
             } else {
+                allDone = true;
                 userEmail.classList.remove('wrong-info');
                 userEmail.removeAttribute('placeholder', 'Incorrect');
             }
@@ -61,6 +83,7 @@ export default class Registration {
                 userPassword.setAttribute('placeholder', 'Incorrect');
                 allDone = false;
             } else {
+                allDone = true;
                 userPassword.classList.remove('wrong-info');
                 userPassword.removeAttribute('placeholder', 'Incorrect');
             }
@@ -71,11 +94,11 @@ export default class Registration {
                     elem.setAttribute('placeholder', 'Incorrect');
                     allDone = false;
                 } else {
+                    allDone = true;
                     elem.classList.remove('wrong-info');
                     elem.removeAttribute('placeholder', 'Incorrect');
                 }
             });
-
 
             infoArray.forEach(elem => {
                 if (elem.value.length === 0) {
@@ -85,74 +108,56 @@ export default class Registration {
                 }
             });
 
-            console.log(allDone);
+            function createUser() {
+                let usersArray = JSON.parse(localStorage.getItem('Users'));
+                let userID = Number(localStorage.getItem('maxUserID')) + 1;
 
-            if (allDone) {
+                infoUserObject.ID = userID;
+                localStorage.setItem('maxUserID', `${userID}`);
+
                 infoUserObject.email = userEmail.value;
                 infoUserObject.password = userPassword.value;
                 infoUserObject.name = userFirstName.value;
                 infoUserObject.surname = userSecondName.value;
+                infoUserObject.categories = [];
+                infoUserObject.contacts = [];
+                infoUserObject.userInfo = [];
+
+                usersArray.push(infoUserObject);
+
+                let usersArrayToJSON = JSON.stringify(usersArray);
+
+                localStorage.setItem('Users', usersArrayToJSON);
+            }
+
+            if (allDone) {
+                let usersArray = JSON.parse(localStorage.getItem('Users'));
+
+                if (usersArray.length === 0) {
+                    createUser()
+
+                } else {
+                    usersArray.forEach(elem => {
+                        if (elem.email !== userEmail.value) {
+                            createUser();
+                            let errorMSG = document.querySelector('#wrong-email');
+                            errorMSG.style.display = 'none';
+
+                        } else {
+                            let emailBlock = document.querySelector('#email-check')
+                            let errorMSG = document.querySelector('#wrong-email');
+                            errorMSG.style.display = 'block';
+                            emailBlock.appendChild(errorMSG);
+                        }
+                    });
+                }
 
                 infoArray.forEach(elem => {
                     elem.classList.remove('wrong-info');
                     elem.removeAttribute('placeholder', 'Incorrect');
-
                 })
             }
 
-            let infoToJSON = JSON.stringify(infoUserObject);
-
-            console.log(infoToJSON);
-
-            fetch('http://phonebook.hillel.it/api/users/register', {
-                method: 'POST',
-                body: infoToJSON,
-                headers: {'Content-Type': 'application/json'}
-            })
-
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
         })
-    }
-
-    regLinkMobile() {
-        const mainLeft = document.querySelector('.main__left-side');
-        const regLink = document.querySelector('.login-registration');
-
-        if (document.documentElement.clientWidth <= 720) {
-            regLink.addEventListener('click', () => {
-                mainLeft.classList.add('hidden');
-                constants.MAIN_RSIDE_BLOCK.style.display = 'block';
-
-                fetch('./Registration/RegistrationForm.html')
-                    .then(response => {
-                        return response.text()
-                    })
-
-                    .then(text => {
-                        constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-                        this.registrationNewUser();
-
-                        let closeButton = document.createElement('button');
-                        closeButton.classList.add('registration-close-button');
-
-                        let header = document.querySelector('.main__block-header');
-                        header.appendChild(closeButton);
-
-                        let leftBlock = document.querySelector('.main__left-side');
-
-                        closeButton.addEventListener('click', () => {
-                            constants.MAIN_RSIDE_BLOCK.style.display = 'none';
-                            leftBlock.classList.remove('hidden');
-                        });
-                    });
-            });
-        } else {
-            this.onload();
-        }
     }
 }

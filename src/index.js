@@ -6,7 +6,6 @@ import  './Module.js'
 import './constants.js'
 import './LoginPage/login.js'
 import './AddContact/addContact.js'
-import './EditContact/editContact.js'
 import  './LSideBlock/LSideBlock.js'
 
 import ContactsBook from "./Module.js";

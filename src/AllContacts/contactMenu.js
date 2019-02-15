@@ -1,24 +1,22 @@
-import * as constants from "../constants";
-import EditContact from '../EditContact/editContact.js'
 import CategoryMenu from '../Categories/categoryMenu.js'
+import ContactBook from "../Module.js"
+import Session from "../Offline/Session";
 
 export default class ContactMenu {
     constructor() {
 
     }
 
-    showMenu() {
-        const dotButton = document.querySelector('.all-contacts__items-options');
-        const menu = document.querySelector('.all-contacts__items-options__menu');
-        const hiddenMenu = document.querySelector('.all-contacts__items-options__menu-addToGroup');
+    showMenu(button, menu, hiddenMenu) {
         const main = document.querySelector('.main');
 
-        dotButton.addEventListener('click', (ev) => {
+        button.addEventListener('click', (ev) => {
+            menu.classList.remove('hidden');
             menu.classList.add('show');
             ev.stopPropagation();
         });
 
-        main.addEventListener('click', (ev)=>{
+        main.addEventListener('click', (ev) => {
             menu.classList.remove('show');
             menu.classList.add('hidden');
             hiddenMenu.classList.remove('show');
@@ -26,36 +24,66 @@ export default class ContactMenu {
         });
     }
 
-    editMenu(){
-        const editContact = new EditContact();
-        const editButton = document.querySelector('#edit-contact');
-
-
-        editButton.addEventListener('click', elem =>{
-            editContact.onload();
-        });
-    }
-
-    createGroup(){
+    createGroup(button) {
         const groupMenu = new CategoryMenu();
-        const createGroupLink = document.querySelector('#create-group');
 
-        createGroupLink.addEventListener('click', elem => {
+        button.addEventListener('click', () => {
             groupMenu.onload();
         })
     }
 
-    deleteContact(){
+    deleteContact(button, parentBlock) {
+        let book = new ContactBook();
+        let activeUser = Session.getInstance().getActiveUser();
+        let usersArray = activeUser.contacts;
 
+        button.addEventListener('click', function deleteContact() {
+            let id = Number(parentBlock.getAttribute('data-id'));
+
+            usersArray.forEach((elem, i) => {
+                if (elem.id === id) {
+                    usersArray.splice(i, 1);
+                }
+            });
+
+            localStorage.setItem('Active User', JSON.stringify(activeUser));
+            book.offlineSynchronization();
+            parentBlock.remove();
+        })
     }
 
-    addContactToGroup(){
-        const addToGroup = document.querySelector('#addToGroup');
-        const hiddenMenu = document.querySelector('.all-contacts__items-options__menu-addToGroup');
+    addContactToGroup(link, menu, groupLinks, contact) {
+        let book = new ContactBook();
+        let contactID = Number(contact.getAttribute('data-id'));
 
-        addToGroup.addEventListener('click', function (e) {
+        link.addEventListener('click', function (e) {
             e.stopPropagation();
-            hiddenMenu.classList.add('show')
+            menu.classList.add('show')
         });
+
+        groupLinks.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            let id = Number(groupLinks.getAttribute('data-id'));
+
+            let category = Session.getInstance().getActiveUser().categories.find(function (elem) {
+                return id === elem.id;
+            });
+
+            if (category !== undefined) {
+                let contact = category.contacts.find(function (number) {
+                    return number === contactID
+                });
+
+                if (contact === undefined) {
+                    category.contacts.push(contactID);
+                }
+            }
+
+            localStorage.setItem('Active User', JSON.stringify(Session.getInstance().getActiveUser()));
+            book.offlineSynchronization();
+            menu.classList.remove('show');
+            menu.classList.add('hidden');
+        });
+
     }
 }
