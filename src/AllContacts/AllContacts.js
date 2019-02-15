@@ -144,8 +144,13 @@ export default class AllContacts {
             remove.classList.add('all-contacts__items-options__menu-items');
             remove.classList.add('remove-contact-func');
             remove.innerText = 'Remove from Category';
-            contactOptionMenu.insertBefore(remove, addToGroup)
+            contactOptionMenu.insertBefore(remove, addToGroup);
             addToGroupMenu.style.top = '178px';
+
+            remove.addEventListener('click', ev => {
+                ev.stopPropagation();
+                console.log(id)
+            })
         }
 
         link.appendChild(contactItem);
