@@ -8,30 +8,24 @@ export default class NewContact {
 
     onload() {
         const book = new ContactsBook();
-        const addContactFunc = this;
-        const addButton = document.querySelector('.ls-inner__add-contact__wrapper');
 
-        addButton.addEventListener('click', () => {
-            book.clearMainBlock();
-            fetch('./AddContact/AddContact.html')
-                .then(response => {
-                    return response.text().then(function (text) {
-                        constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-                    })
+        book.clearMainBlock();
+        fetch('./AddContact/AddContact.html')
+            .then(response => {
+                return response.text().then(function (text) {
+                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
                 })
-                .then(function () {
-                    book.mobileOpen();
-                    addContactFunc.saveContact();
-                    addContactFunc.cancelSavingInfo();
-                })
-        })
+            })
+            .then(() => {
+                book.mobileOpen();
+                this.saveContact();
+                this.cancelSavingInfo();
+            })
     }
 
     saveContact() {
-        const addContacts = new NewContact();
         const book = new ContactsBook();
         const saveButton = document.querySelector('.add-contact__buttons__save');
-        let mode = constants.myStorage.getItem('mode');
         let activeUser = Session.getInstance().getActiveUser();
 
         let nameVal = document.querySelector('#addContact-name');
@@ -46,82 +40,117 @@ export default class NewContact {
 
         let dataArray = [nameVal, surNameVal, descVal, phoneVal, emailVal, birthdayVal, infoVal];
 
-        let emptyCheck = true;
+        let allDone = true;
 
         saveButton.addEventListener('click', function save() {
             let newContact = {};
-            dataArray.forEach(elem => {
-                elem.classList.remove('wrong-info');
-                if (elem.value.length === 0) {
-                    emptyCheck = false;
-                    elem.classList.add('wrong-info');
-                }
-            });
+
+            if(!constants.RAGEXP_TEXT.test(nameVal.value)){
+                nameVal.classList.add('wrong-info');
+                nameVal.setAttribute('placeholder', 'Incorrect');
+                allDone = false;
+            } else {
+                allDone = true;
+                nameVal.classList.remove('wrong-info');
+                nameVal.removeAttribute('placeholder', 'Incorrect');
+            }
+
+            if(!constants.RAGEXP_TEXT.test(surNameVal.value)){
+                surNameVal.classList.add('wrong-info');
+                surNameVal.setAttribute('placeholder', 'Incorrect');
+                allDone = false;
+            } else {
+                allDone = true;
+                surNameVal.classList.remove('wrong-info');
+                surNameVal.removeAttribute('placeholder', 'Incorrect');
+            }
+
+            if(!constants.RAGEXP_TEXT.test(descVal.value)){
+                descVal.classList.add('wrong-info');
+                descVal.setAttribute('placeholder', 'Incorrect');
+                allDone = false;
+            } else {
+                allDone = true;
+                descVal.classList.remove('wrong-info');
+                descVal.removeAttribute('placeholder', 'Incorrect');
+            }
+
+            if(!constants.RAGEXP_TEXT.test(infoVal.value)){
+                infoVal.classList.add('wrong-info');
+                infoVal.setAttribute('placeholder', 'Incorrect');
+                allDone = false;
+            } else {
+                allDone = true;
+                infoVal.classList.remove('wrong-info');
+                infoVal.removeAttribute('placeholder', 'Incorrect');
+            }
+
+            if (!constants.RAGEXP_EMAIL.test(emailVal.value)) {
+                emailVal.classList.add('wrong-info');
+                emailVal.setAttribute('placeholder', 'Incorrect');
+                allDone = false;
+            } else {
+                allDone = true;
+                emailVal.classList.remove('wrong-info');
+                emailVal.removeAttribute('placeholder', 'Incorrect');
+            }
+
+            if (!constants.RAGEXP_BIRTHDAY.test(birthdayVal.value)) {
+                birthdayVal.classList.add('wrong-info');
+                birthdayVal.setAttribute('placeholder', 'Incorrect');
+                allDone = false;
+            } else {
+                allDone = true;
+                birthdayVal.classList.remove('wrong-info');
+                birthdayVal.removeAttribute('placeholder', 'Incorrect');
+            }
+
+            if (!constants.RAGEXP_PHONE.test(phoneVal.value)) {
+                phoneVal.classList.add('wrong-info');
+                phoneVal.setAttribute('placeholder', 'Incorrect');
+                allDone = false;
+            } else {
+                allDone = true;
+                phoneVal.classList.remove('wrong-info');
+                phoneVal.removeAttribute('placeholder', 'Incorrect');
+            }
+
+            if (allDone) {
+                let mainBlock = document.querySelector('.add-contact');
+                let maxContactID = Number(localStorage.getItem('maxContactID'));
+                newContact.id = maxContactID + 1;
+
+                newContact.name = nameVal.value;
+                newContact.surname = surNameVal.value;
+                newContact.position = descVal.value;
+                newContact.email = emailVal.value;
+                newContact.phone = phoneVal.value;
+                newContact.bornDate = birthdayVal.value;
+                newContact.information = infoVal.value;
+                newContact.facebook = facebookVal.value;
+                newContact.instagramm = instagrammVal.value;
 
 
-            if (emptyCheck) {
-                if (mode === 'online') {
-                    newContact.name = nameVal.value;
-                    newContact.surname = surNameVal.value;
-                    newContact.position = descVal.value;
-                    newContact.email = [`${emailVal.value}`];
-                    newContact.phone = [{
-                        category: "mobile",
-                        value: phoneVal.value
-                    }];
-                    newContact.bornDate = `${birthdayVal.value}`;
-                    newContact.information = `${infoVal.value}`;
+                let updatedMaxContactID = newContact.id;
+                localStorage.setItem('maxContactID', `${updatedMaxContactID}`);
 
-                    let JSONcontact = JSON.stringify(newContact);
+                let activeUserContacts = activeUser.contacts;
+                activeUserContacts.push(newContact);
+                localStorage.setItem('Active User', JSON.stringify(activeUser));
+                book.offlineSynchronization();
 
-                    if (JSONcontact.length != 0) {
-                        fetch('http://phonebook.hillel.it/api/phonebook', {
-                            method: 'POST',
-                            body: JSONcontact,
-                            credentials: "include",
-                            mode: 'no-cors',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                            .then(response => {
-                                console.log(response)
-                                console.log(response.text())
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-                    }
-                    addContacts.onload();
+                dataArray.forEach(elem => {
+                    elem.value = '';
+                });
 
-                } else if (mode === 'offline') {
-                    let maxContactID = Number(localStorage.getItem('maxContactID'));
-                    newContact.id = maxContactID + 1;
+                let goodText = document.createElement('div')
+                goodText.innerText = 'Contact was created';
+                goodText.classList.add('good-text');
+                goodText.style.fontSize = '18px';
+                goodText.style.marginLeft = '20px';
+                goodText.style.marginTop = '50px';
 
-                    newContact.name = nameVal.value;
-                    newContact.surname = surNameVal.value;
-                    newContact.position = descVal.value;
-                    newContact.email = emailVal.value;
-                    newContact.phone = phoneVal.value;
-                    newContact.bornDate = birthdayVal.value;
-                    newContact.information = infoVal.value;
-                    newContact.facebook = facebookVal.value;
-                    newContact.instagramm = instagrammVal.value;
-
-
-
-                    let updatedMaxContactID = newContact.id;
-                    localStorage.setItem('maxContactID', `${updatedMaxContactID}`);
-
-                    let activeUserContacts = activeUser.contacts;
-                    activeUserContacts.push(newContact);
-                    localStorage.setItem('Active User', JSON.stringify(activeUser));
-                    book.offlineSynchronization();
-
-                    dataArray.forEach(elem => {
-                        elem.value = '';
-                    });
-                }
+                mainBlock.appendChild(goodText)
             }
         })
     }

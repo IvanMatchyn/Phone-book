@@ -10,52 +10,33 @@ export default class AllContacts {
     }
 
     loadAllContacts() {
-        let mode = constants.myStorage.getItem('mode');
-
-        if (mode === 'online') {
-            fetch('http://phonebook.hillel.it/api/phonebook?', {
-                method: 'GET',
-                credentials: 'include',
-            })
-                .then(response => {
-                    return response.text();
-                })
-                .then(array => {
-                    let contactArray = JSON.parse(array);
-                    this.showAllContacts(contactArray);
-                })
-
-        } else if (mode === 'offline') {
-            let contactsArray = Session.getInstance().getActiveUser().contacts;
-            this.showAllContacts(contactsArray);
-        }
-
+        Session.getInstance().loadActiveUser();
+        let contactsArray = Session.getInstance().getActiveUser().contacts;
+        this.showAllContacts(contactsArray);
     }
 
     showAllContacts(array) {
         let book = new ContactBook();
-        const allContactsButton = document.querySelector('#all-contacts-button');
 
-        allContactsButton.addEventListener('click', () => {
-            fetch('./AllContacts/AllContacts.html')
-                .then(response => {
-                    return response.text().then(function (text) {
-                        constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-                    })
+        fetch('./AllContacts/AllContacts.html')
+            .then(response => {
+                return response.text().then(function (text) {
+                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
                 })
-                .then(() => {
-                    const allContactBLock = document.querySelector('.all-contacts');
-                    book.mobileOpen();
-                    array.forEach(elem => {
-                        this.createElements(allContactBLock, elem.name, elem.surname, elem.position, elem.id);
-                    })
-                });
-        });
+            })
+            .then(() => {
+                const allContactBLock = document.querySelector('.all-contacts');
+                book.mobileOpen();
+                array.forEach(elem => {
+                    this.createElements(allContactBLock, elem.name, elem.surname, elem.position, elem.id);
+                })
+            });
+
     }
 
     createElements(link, name, surname, description, id, forCategories) {
         const contactMenu = new ContactMenu();
-        const editMenu = new EditContact()
+        const editMenu = new EditContact();
 
         let activeUser = Session.getInstance().getActiveUser();
         let categoryArray = activeUser.categories;
@@ -158,7 +139,7 @@ export default class AllContacts {
         contactItem.appendChild(contactOptionMenu);
         contactItem.appendChild(addToGroupMenu);
 
-        if(forCategories === true){
+        if (forCategories === true) {
             let remove = document.createElement('div');
             remove.classList.add('all-contacts__items-options__menu-items');
             remove.classList.add('remove-contact-func');

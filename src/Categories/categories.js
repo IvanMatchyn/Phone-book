@@ -9,48 +9,14 @@ export default class Categories {
 
     }
 
-    loadCategories() {
-        let mode = constants.myStorage.getItem('mode');
-
-        if (mode === 'online') {
-            fetch('http://phonebook.hillel.it/api/categories?', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    return response.text();
-                })
-
-                .then(array => {
-                    this.addCategories(array)
-                })
-
-                .catch(err => {
-                    console.log(err);
-                })
-        } else if (mode === 'offline') {
-            this.addCategories()
-        }
-
-    }
-
-    addCategories(servAnswer) {
+    addCategories() {
+        Session.getInstance().loadActiveUser();
         const categoriesBlock = document.querySelector('.ls-inner__categories__wrapper');
         let allCCategories = new CategoryMenu();
-        let answer = '';
         let dropMenu = allCCategories.categoryDropDownMenu();
-        let mode = constants.myStorage.getItem('mode');
         let activeUser = Session.getInstance().getActiveUser();
 
-        if (mode === 'online') {
-            answer = JSON.parse(servAnswer);
-        } else if (mode === 'offline') {
-            answer = activeUser.categories;
-        }
-
-        answer.forEach(obj => {
+        activeUser.categories.forEach(obj => {
             let categoryName = document.createElement('p');
             categoryName.classList.add('ls-inner__categories__contacts__header');
             categoryName.innerText = obj.name;
@@ -61,11 +27,7 @@ export default class Categories {
             let categoryWrapper = document.createElement('div');
             categoryWrapper.classList.add('ls-inner__categories__contacts-wrapper');
 
-            if (mode === 'online') {
-                categoryWrapper.dataset.id = obj._id;
-            } else if (mode === 'offline') {
-                categoryWrapper.dataset.id = obj.id
-            }
+            categoryWrapper.dataset.id = obj.id;
 
 
             categoryWrapper.appendChild(categoryName);
@@ -109,7 +71,6 @@ export default class Categories {
                 .then(response => {
                     return response.text().then(function (text) {
                         constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-
                     })
                 })
                 .then(() => {
@@ -124,15 +85,10 @@ export default class Categories {
                             if (contactInfo.id === number) {
                                 const allContactsBlock = document.querySelector('.all-contacts');
                                 allContactHTML.createElements(allContactsBlock, contactInfo.name, contactInfo.surname, contactInfo.position, contactInfo.id, true)
-                                // this.removeFromCategory();
                             }
                         })
                     })
                 })
         });
     }
-
-    // removeFromCategory(){
-    //     let removeButton = document.querySelector();
-    // }
 }

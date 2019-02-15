@@ -1,13 +1,30 @@
-import Mode from './Mode/Mode.js'
 import Session from "./Offline/Session";
+import LoadPage from "./LoadPage/LoadPage";
 
 export default class ContactsBook {
     constructor() {
     }
 
     onload() {
-        let mode = new Mode();
-        mode.onload();
+        let maxUserID = localStorage.getItem('maxUserID');
+
+        if (maxUserID == null) {
+            localStorage.setItem('maxUserID', '0');
+        }
+
+        if (localStorage.getItem('Users') == null) {
+            let newUsers = [];
+            let newUsersToJSON = JSON.stringify(newUsers);
+            localStorage.setItem('Users', newUsersToJSON);
+        }
+
+        let url = new URLSearchParams(window.location.search.substring(1));
+        let page = url.get("page");
+
+        if (page === null) {
+            page = "login";
+        }
+        LoadPage.load(page);
     }
 
     clearMainBlock() {
@@ -46,19 +63,11 @@ export default class ContactsBook {
         let usersArray = JSON.parse(localStorage.getItem('Users'));
 
         usersArray.forEach((elem, i) => {
-            if(activeUser.ID = elem.ID){
-              usersArray[i] = activeUser;
+            if (activeUser.ID = elem.ID) {
+                usersArray[i] = activeUser;
             }
         });
 
         localStorage.setItem('Users', JSON.stringify(usersArray))
-    }
-
-    historyLoad(){
-        let mode = new Mode();
-        let routes = {
-            '/': mode.onload()
-            '/?page=login': login
-        }
     }
 }
