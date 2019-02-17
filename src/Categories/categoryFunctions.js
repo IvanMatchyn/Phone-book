@@ -96,33 +96,4 @@ export default class CategoryFunctions {
             }
         })
     }
-
-    categoryDropDownMenu() {
-        let dropDownMenu = document.createElement('div');
-        let dropDownMenuItem = document.createElement('div');
-        let dropDownMenuItemText = document.createElement('p');
-
-
-        dropDownMenu.classList.add('show');
-
-        dropDownMenu.classList.add('drop-down');
-        dropDownMenuItem.classList.add('drop-down__items');
-        dropDownMenuItemText.classList.add('drop-down__items-p');
-
-        dropDownMenuItemText.innerText = 'Delete';
-
-        dropDownMenuItem.appendChild(dropDownMenuItemText);
-        dropDownMenu.appendChild(dropDownMenuItem);
-
-        dropDownMenu.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-
-        dropDownMenuItem.addEventListener('click', event => {
-            this.delete(dropDownMenu);
-            event.stopPropagation();
-        });
-
-        return dropDownMenu;
-    }
 }

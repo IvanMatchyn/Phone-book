@@ -4,13 +4,12 @@ import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
 import EditContact from '../EditContact/editContact.js'
 
-
+//rename to ContactHtmlBuilder
 export default class AllContacts {
     constructor() {
     }
 
     loadAllContacts() {
-        Session.getInstance().loadActiveUser();
         let contactsArray = Session.getInstance().getActiveUser().contacts;
         this.showAllContacts(contactsArray);
     }
@@ -26,6 +25,7 @@ export default class AllContacts {
             })
             .then(() => {
                 const allContactBLock = document.querySelector('.all-contacts');
+                //Create units class like validate class (use static function or singleton )
                 book.mobileOpen();
                 array.forEach(elem => {
                     this.createContactElements(allContactBLock, elem.name, elem.surname, elem.position, elem.id);
@@ -34,85 +34,50 @@ export default class AllContacts {
 
     }
 
-    createElements(link, name, surname, description, id, forCategories) {
+    createContactElements(link, name, surname, description, id, forCategories) {
         const contactMenu = new ContactMenu();
         const editMenu = new EditContact();
 
-        let activeUser = Session.getInstance().getActiveUser();
-        let categoryArray = activeUser.categories;
+        let categoryArray = Session.getInstance().getActiveUser().categories;
 
-        let contactItem = document.createElement('div');
-        let contactPhoto = document.createElement('div');
-        let contactDescWrapper = document.createElement('div');
-        let contactName = document.createElement('div');
-        let contactDesc = document.createElement('div');
-        let contactOptionsWrapper = document.createElement('div');
-        let contactOptionButton = document.createElement('button');
-        let contactOptionMenu = document.createElement('div');
-        let editContactLink = document.createElement('div');
-        let deleteContactLink = document.createElement('div');
-        let createGroupLink = document.createElement('div');
-        let addToGroup = document.createElement('div');
-        let addToGroupName = document.createElement('p');
-        let addToGroupArrow = document.createElement('img');
-        let addToGroupMenu = document.createElement('div');
+        let contactItemElem = this.createElementWithClass('div', null, 'all-contacts__items');
+        let contactPhotoElem = this.createElementWithClass('div', null, 'all-contacts__items-photo');
+        let contactDescWrapperElem = this.createElementWithClass('div', null, 'all-contacts__items-desc');
+        let contactNameElem = this.createElementWithClass('div', name + ' ' + surname, 'all-contacts__items-desc__name');
+        let contactDescriptionElem = this.createElementWithClass('div', description, 'all-contacts__items-desc__text');
+        let contactOptionsWrapperElem = this.createElementWithClass('div', null, 'all-contacts__items-options__wrapper');
+        let contactOptionButtonElem = this.createElementWithClass('button', null, 'all-contacts__items-options');
+        let contactOptionMenuElem = this.createElementWithClass('div', null, 'all-contacts__items-options__menu');
+        let editContactLinkElem = this.createElementWithClass('div', 'Edit Contact', 'all-contacts__items-options__menu-items', 'edit-contact-func');
+        let deleteContactLinkElem = this.createElementWithClass('div', 'Delete', 'all-contacts__items-options__menu-items', 'delete-contact-func');
+        let createGroupLinkElementElem = this.createElementWithClass('div', 'Create Group', 'all-contacts__items-options__menu-items', 'create-group-func');
+        let addToGroupElem = this.createElementWithClass('div', 'all-contacts__items-options__menu-items', 'addToGroup-func');
+        let addToGroupNameElem = this.createElementWithClass('p', 'Add To Group', 'all-contacts__items-options__menu-items-p');
+        let addToGroupArrowElem = this.createElementWithClass('img', 'all-contacts__items-options__menu-items-img');
+        let addToGroupMenuElem = this.createElementWithClass('div', 'all-contacts__items-options__menu-addToGroup');
 
-
-        contactItem.classList.add('all-contacts__items');
-        contactItem.dataset.id = id;
+        contactItemElem.dataset.id = id;
 
         contactItemElem.addEventListener('click', (e) => {
             e.stopPropagation();
             this.showSingleContactInfo(contactItemElem, id);
         });
 
-        contactMenu.showMenu(contactOptionButton, contactOptionMenu, addToGroupMenu);
-        contactMenu.createGroup(createGroupLink);
-        contactMenu.deleteContact(deleteContactLink, contactItem);
-
-        contactPhoto.classList.add('all-contacts__items-photo');
-
-        contactDescWrapper.classList.add('all-contacts__items-desc');
-        contactName.classList.add('all-contacts__items-desc__name');
-        contactDesc.classList.add('all-contacts__items-desc__text');
-
-        contactName.innerText = name + ' ' + surname;
-        contactDesc.innerText = description;
+        contactMenu.showMenu(contactOptionButtonElem, contactOptionMenuElem, addToGroupMenuElem);
+        contactMenu.addCreateGroupEvent(createGroupLinkElementElem);
+        contactMenu.deleteContact(deleteContactLinkElem, contactItemElem);
 
         contactDescWrapperElem.appendChild(contactNameElem);
         contactDescWrapperElem.appendChild(contactDescriptionElem);
 
-        contactOptionsWrapper.classList.add('all-contacts__items-options__wrapper');
-        contactOptionButton.classList.add('all-contacts__items-options');
-
-        contactOptionsWrapper.appendChild(contactOptionButton);
-
-        contactOptionMenu.classList.add('all-contacts__items-options__menu');
-
-        editContactLink.classList.add('all-contacts__items-options__menu-items');
-        editContactLink.classList.add('edit-contact-func');
-        editContactLink.innerText = 'Edit Contact';
+        contactOptionsWrapperElem.appendChild(contactOptionButtonElem);
 
         editContactLinkElem.addEventListener('click', (e) => {
             e.stopPropagation();
             editMenu.onload(editContactLinkElem, id);
         });
 
-        deleteContactLink.classList.add('all-contacts__items-options__menu-items');
-        deleteContactLink.classList.add('delete-contact-func');
-        deleteContactLink.innerText = 'Delete';
-
-        createGroupLink.classList.add('all-contacts__items-options__menu-items');
-        createGroupLink.classList.add('create-group-func');
-        createGroupLink.innerText = 'Create Group';
-
-        addToGroup.classList.add('all-contacts__items-options__menu-items');
-        addToGroup.classList.add('addToGroup-func');
-
-        addToGroupName.classList.add('all-contacts__items-options__menu-items-p');
-        addToGroupName.innerText = 'Add To Group';
-        addToGroupArrow.classList.add('all-contacts__items-options__menu-items-img');
-        addToGroupArrow.setAttribute('src', '../img/addToGroup.png');
+        addToGroupArrowElem.setAttribute('src', '../img/addToGroup.png');
 
         addToGroupElem.appendChild(addToGroupNameElem);
         addToGroupElem.appendChild(addToGroupArrowElem);
@@ -122,12 +87,8 @@ export default class AllContacts {
         contactOptionMenuElem.appendChild(createGroupLinkElementElem);
         contactOptionMenuElem.appendChild(addToGroupElem);
 
-        addToGroupMenu.classList.add('all-contacts__items-options__menu-addToGroup');
-
         categoryArray.forEach(category => {
-            let addToGroupMenuItems = document.createElement('div');
-            addToGroupMenuItems.classList.add('all-contacts__items-options__menu-items');
-            addToGroupMenuItems.innerText = category.name;
+            let addToGroupMenuItems = this.createElementWithClass('div', category.name, 'all-contacts__items-options__menu-items');
             addToGroupMenuItems.dataset.id = category.id;
             addToGroupMenuElem.appendChild(addToGroupMenuItems);
             contactMenu.addContactToGroup(addToGroupElem, addToGroupMenuElem, addToGroupMenuItems, contactItemElem);
@@ -139,13 +100,11 @@ export default class AllContacts {
         contactItemElem.appendChild(contactOptionMenuElem);
         contactItemElem.appendChild(addToGroupMenuElem);
 
-        if (forCategories === true) {
-            let remove = document.createElement('div');
-            remove.classList.add('all-contacts__items-options__menu-items');
-            remove.classList.add('remove-contact-func');
-            remove.innerText = 'Remove from Category';
-            contactOptionMenu.insertBefore(remove, addToGroup);
-            addToGroupMenu.style.top = '178px';
+        if (forCategories) {
+            //move to method createRemoveButton ....
+            let remove = this.createElementWithClass('div', 'Remove from Category', 'all-contacts__items-options__menu-items', 'remove-contact-func');
+            contactOptionMenuElem.insertBefore(remove, addToGroupElem);
+            addToGroupMenuElem.style.top = '178px';
 
             remove.addEventListener('click', ev => {
                 ev.stopPropagation();
@@ -154,6 +113,20 @@ export default class AllContacts {
         }
 
         link.appendChild(contactItemElem);
+    }
+
+    createElementWithClass(elementType, innerText, ...classNameList) {
+        let element = document.createElement(elementType);
+
+        if (innerText !== null) {
+            element.innerText = innerText;
+        }
+
+        classNameList.forEach(className => {
+            element.classList.add(className)
+        });
+
+        return element;
     }
 
     showSingleContactInfo(contact, id) {

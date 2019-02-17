@@ -35,8 +35,7 @@ export default class LoadPage {
         );
 
         switch (page) {
-            case "login" :
-
+            case PageType.LOGIN_PAGE :
                 loginPage.onload();
                 break;
             case PageType.REGISTRATION_PAGE :

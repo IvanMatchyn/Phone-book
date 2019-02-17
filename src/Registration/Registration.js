@@ -27,7 +27,7 @@ export default class Registration {
             const mainLeft = document.querySelector('.main__left-side');
             const regLink = document.querySelector('.login-registration');
 
-            if (document.documentElement.clientWidth <= 720) {
+            if (Registration.isMobileDevice()) {
                 regLink.addEventListener('click', () => {
                     mainLeft.classList.add('hidden');
                     constants.MAIN_RSIDE_BLOCK.style.display = 'block';
@@ -52,7 +52,11 @@ export default class Registration {
         }
     }
 
-    registrationNewUser() {
+    static isMobileDevice() {
+        return document.documentElement.clientWidth <= 720;
+    }
+
+    addEventRegistrationNewUser() {
         const confirmRegistration = document.querySelector('.registration-confirm-button');
         const userEmail = document.querySelector('#registration-email');
         const userPassword = document.querySelector('#registration-password');
