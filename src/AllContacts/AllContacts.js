@@ -1,4 +1,4 @@
-import * as constants from "../constants";
+import * as constants from "../Constants";
 import ContactMenu from "./contactMenu.js";
 import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
@@ -28,7 +28,7 @@ export default class AllContacts {
                 const allContactBLock = document.querySelector('.all-contacts');
                 book.mobileOpen();
                 array.forEach(elem => {
-                    this.createElements(allContactBLock, elem.name, elem.surname, elem.position, elem.id);
+                    this.createContactElements(allContactBLock, elem.name, elem.surname, elem.position, elem.id);
                 })
             });
 
@@ -61,9 +61,9 @@ export default class AllContacts {
         contactItem.classList.add('all-contacts__items');
         contactItem.dataset.id = id;
 
-        contactItem.addEventListener('click', (e) => {
+        contactItemElem.addEventListener('click', (e) => {
             e.stopPropagation();
-            this.showSingleContactInfo(contactItem, id);
+            this.showSingleContactInfo(contactItemElem, id);
         });
 
         contactMenu.showMenu(contactOptionButton, contactOptionMenu, addToGroupMenu);
@@ -79,8 +79,8 @@ export default class AllContacts {
         contactName.innerText = name + ' ' + surname;
         contactDesc.innerText = description;
 
-        contactDescWrapper.appendChild(contactName);
-        contactDescWrapper.appendChild(contactDesc);
+        contactDescWrapperElem.appendChild(contactNameElem);
+        contactDescWrapperElem.appendChild(contactDescriptionElem);
 
         contactOptionsWrapper.classList.add('all-contacts__items-options__wrapper');
         contactOptionButton.classList.add('all-contacts__items-options');
@@ -93,9 +93,9 @@ export default class AllContacts {
         editContactLink.classList.add('edit-contact-func');
         editContactLink.innerText = 'Edit Contact';
 
-        editContactLink.addEventListener('click', (e) => {
+        editContactLinkElem.addEventListener('click', (e) => {
             e.stopPropagation();
-            editMenu.onload(editContactLink, id);
+            editMenu.onload(editContactLinkElem, id);
         });
 
         deleteContactLink.classList.add('all-contacts__items-options__menu-items');
@@ -114,13 +114,13 @@ export default class AllContacts {
         addToGroupArrow.classList.add('all-contacts__items-options__menu-items-img');
         addToGroupArrow.setAttribute('src', '../img/addToGroup.png');
 
-        addToGroup.appendChild(addToGroupName);
-        addToGroup.appendChild(addToGroupArrow);
+        addToGroupElem.appendChild(addToGroupNameElem);
+        addToGroupElem.appendChild(addToGroupArrowElem);
 
-        contactOptionMenu.appendChild(editContactLink);
-        contactOptionMenu.appendChild(deleteContactLink);
-        contactOptionMenu.appendChild(createGroupLink);
-        contactOptionMenu.appendChild(addToGroup);
+        contactOptionMenuElem.appendChild(editContactLinkElem);
+        contactOptionMenuElem.appendChild(deleteContactLinkElem);
+        contactOptionMenuElem.appendChild(createGroupLinkElementElem);
+        contactOptionMenuElem.appendChild(addToGroupElem);
 
         addToGroupMenu.classList.add('all-contacts__items-options__menu-addToGroup');
 
@@ -129,15 +129,15 @@ export default class AllContacts {
             addToGroupMenuItems.classList.add('all-contacts__items-options__menu-items');
             addToGroupMenuItems.innerText = category.name;
             addToGroupMenuItems.dataset.id = category.id;
-            addToGroupMenu.appendChild(addToGroupMenuItems);
-            contactMenu.addContactToGroup(addToGroup, addToGroupMenu, addToGroupMenuItems, contactItem);
+            addToGroupMenuElem.appendChild(addToGroupMenuItems);
+            contactMenu.addContactToGroup(addToGroupElem, addToGroupMenuElem, addToGroupMenuItems, contactItemElem);
         });
 
-        contactItem.appendChild(contactPhoto);
-        contactItem.appendChild(contactDescWrapper);
-        contactItem.appendChild(contactOptionsWrapper);
-        contactItem.appendChild(contactOptionMenu);
-        contactItem.appendChild(addToGroupMenu);
+        contactItemElem.appendChild(contactPhotoElem);
+        contactItemElem.appendChild(contactDescWrapperElem);
+        contactItemElem.appendChild(contactOptionsWrapperElem);
+        contactItemElem.appendChild(contactOptionMenuElem);
+        contactItemElem.appendChild(addToGroupMenuElem);
 
         if (forCategories === true) {
             let remove = document.createElement('div');
@@ -153,7 +153,7 @@ export default class AllContacts {
             })
         }
 
-        link.appendChild(contactItem);
+        link.appendChild(contactItemElem);
     }
 
     showSingleContactInfo(contact, id) {

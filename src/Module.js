@@ -1,5 +1,5 @@
 import Session from "./Offline/Session";
-import LoadPage from "./LoadPage/LoadPage";
+import LoadPage, {PageType} from "./LoadPage/LoadPage";
 
 export default class ContactsBook {
     constructor() {
@@ -24,7 +24,7 @@ export default class ContactsBook {
         if (page === null) {
             page = "login";
         }
-        LoadPage.load(page);
+        LoadPage.load(PageType.LOGIN_PAGE);
     }
 
     clearMainBlock() {
@@ -69,5 +69,28 @@ export default class ContactsBook {
         });
 
         localStorage.setItem('Users', JSON.stringify(usersArray))
+    }
+
+    rageXPCheck(rageXP, element, allFieldsArray) {
+        if (!rageXP.test(element.value)) {
+            element.classList.add('wrong-info');
+            element.setAttribute('placeholder', 'Incorrect');
+            return false;
+        } else {
+            element.classList.remove('wrong-info');
+            element.removeAttribute('placeholder', 'Incorrect');
+        }
+
+        let emptyField = allFieldsArray.find(emptyElement => {
+            if (emptyElement.value.length === 0) {
+                emptyElement.classList.add('wrong-info');
+                emptyElement.setAttribute('placeholder', 'Incorrect');
+                return false;
+
+            }
+        });
+
+        return !emptyField;
+
     }
 }

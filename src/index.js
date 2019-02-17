@@ -1,12 +1,12 @@
 import './index.scss'
 import './normalize.css'
 import './fonts/fonts.css'
-import './constants.js'
+import './Constants.js'
 import  './Module.js'
-import './constants.js'
-import './LoginPage/login.js'
+import './Constants.js'
+import './LoginPage/LoginPage.js'
 import './AddContact/addContact.js'
-import  './LSideBlock/LSideBlock.js'
+import './HomePage/HomePage.js'
 
 import ContactsBook from "./Module.js";
 

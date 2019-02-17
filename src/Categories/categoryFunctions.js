@@ -1,9 +1,9 @@
-import * as constants from "../constants";
-import LSideInnerBlock from "../LSideBlock/LSideBlock.js"
+import * as constants from "../Constants";
+import HomePage from "../HomePage/HomePage.js"
 import ContactsBook from "../Module.js"
 import Session from "../Offline/Session";
 
-export default class CategoryMenu {
+export default class CategoryFunctions {
     constructor() {
     }
 
@@ -23,7 +23,7 @@ export default class CategoryMenu {
     delete(parentElem) {
         let parentID = parentElem.parentElement.getAttribute('data-id');
         const book = new ContactsBook;
-        const leftBlock = new LSideInnerBlock;
+        const leftBlock = new HomePage;
 
         let activeUser = Session.getInstance().getActiveUser();
         let categoriesArray = activeUser.categories;
@@ -42,7 +42,7 @@ export default class CategoryMenu {
     create() {
         const createButton = document.querySelector('.create-group__confirm');
         const createGroupValue = document.querySelector('.create-group__value');
-        const leftBlock = new LSideInnerBlock;
+        const leftBlock = new HomePage;
         const book = new ContactsBook;
         let result = document.querySelector('.create-group__result');
         let createInput = document.querySelector('.create-group__value');

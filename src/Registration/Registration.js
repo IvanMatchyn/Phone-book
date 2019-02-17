@@ -1,4 +1,5 @@
-import * as constants from '../constants.js'
+import * as constants from '../Constants.js'
+import ContactsBook from "../Module";
 
 export default class Registration {
     constructor() {
@@ -18,11 +19,9 @@ export default class Registration {
                     constants.MAIN_RSIDE_BLOCK.innerHTML = text;
                 })
             })
-
             .then(() => {
                 mobileCheck();
             });
-
 
         function mobileCheck() {
             const mainLeft = document.querySelector('.main__left-side');
@@ -32,8 +31,7 @@ export default class Registration {
                 regLink.addEventListener('click', () => {
                     mainLeft.classList.add('hidden');
                     constants.MAIN_RSIDE_BLOCK.style.display = 'block';
-                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
-                    regClass.registrationNewUser();
+                    regClass.addEventRegistrationNewUser();
 
                     let closeButton = document.createElement('button');
                     closeButton.classList.add('registration-close-button');
@@ -47,10 +45,9 @@ export default class Registration {
                         constants.MAIN_RSIDE_BLOCK.style.display = 'none';
                         leftBlock.classList.remove('hidden');
                     });
-
                 });
             } else {
-                regClass.registrationNewUser();
+                regClass.addEventRegistrationNewUser();
             }
         }
     }
@@ -61,103 +58,98 @@ export default class Registration {
         const userPassword = document.querySelector('#registration-password');
         const userFirstName = document.querySelector('#registration-name');
         const userSecondName = document.querySelector('#registration-surrname');
-        let infoUserObject = {};
 
         confirmRegistration.addEventListener('click', () => {
-            let allDone = true;
             let infoArray = [userEmail, userPassword, userFirstName, userSecondName];
-            let infoArrayTextField = [userFirstName, userSecondName];
 
-            if (!constants.RAGEXP_EMAIL.test(userEmail.value)) {
-                userEmail.classList.add('wrong-info');
-                userEmail.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                userEmail.classList.remove('wrong-info');
-                userEmail.removeAttribute('placeholder', 'Incorrect');
-            }
+            try {
+                if(Registration.validateUser(userEmail, userPassword, userFirstName, userSecondName)){
+                    if (!this.checkIsUserAlreadyExist(userEmail)) {
+                        Registration.createNewUser(userEmail, userPassword, userFirstName, userSecondName);
 
-            if (!constants.RAGEXP_PASS.test(userPassword.value)) {
-                userPassword.classList.add('wrong-info');
-                userPassword.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                userPassword.classList.remove('wrong-info');
-                userPassword.removeAttribute('placeholder', 'Incorrect');
-            }
+                        infoArray.forEach(elem => {
+                            elem.classList.remove('wrong-info');
+                            elem.removeAttribute('placeholder', 'Incorrect');
+                        });
 
-            infoArrayTextField.forEach(elem => {
-                if (!constants.RAGEXP_TEXT.test(elem.value)) {
-                    elem.classList.add('wrong-info');
-                    elem.setAttribute('placeholder', 'Incorrect');
-                    allDone = false;
-                } else {
-                    allDone = true;
-                    elem.classList.remove('wrong-info');
-                    elem.removeAttribute('placeholder', 'Incorrect');
-                }
-            });
-
-            infoArray.forEach(elem => {
-                if (elem.value.length === 0) {
-                    elem.classList.add('wrong-info');
-                    elem.setAttribute('placeholder', 'Incorrect');
-                    allDone = false;
-                }
-            });
-
-            function createUser() {
-                let usersArray = JSON.parse(localStorage.getItem('Users'));
-                let userID = Number(localStorage.getItem('maxUserID')) + 1;
-
-                infoUserObject.ID = userID;
-                localStorage.setItem('maxUserID', `${userID}`);
-
-                infoUserObject.email = userEmail.value;
-                infoUserObject.password = userPassword.value;
-                infoUserObject.name = userFirstName.value;
-                infoUserObject.surname = userSecondName.value;
-                infoUserObject.categories = [];
-                infoUserObject.contacts = [];
-                infoUserObject.userInfo = [];
-
-                usersArray.push(infoUserObject);
-
-                let usersArrayToJSON = JSON.stringify(usersArray);
-
-                localStorage.setItem('Users', usersArrayToJSON);
-            }
-
-            if (allDone) {
-                let usersArray = JSON.parse(localStorage.getItem('Users'));
-
-                if (usersArray.length === 0) {
-                    createUser()
-
-                } else {
-                    usersArray.forEach(elem => {
-                        if (elem.email !== userEmail.value) {
-                            createUser();
-                            let errorMSG = document.querySelector('#wrong-email');
-                            errorMSG.style.display = 'none';
-
-                        } else {
-                            let emailBlock = document.querySelector('#email-check')
-                            let errorMSG = document.querySelector('#wrong-email');
-                            errorMSG.style.display = 'block';
-                            emailBlock.appendChild(errorMSG);
-                        }
-                    });
+                        Registration.successfulMessage();
+                    }
                 }
 
-                infoArray.forEach(elem => {
-                    elem.classList.remove('wrong-info');
-                    elem.removeAttribute('placeholder', 'Incorrect');
-                })
+            } catch (e) {
+                console.log(e);
             }
-
         })
+    }
+
+    static validateUser(email, pass, firstName, secondName) {
+        const book = new ContactsBook();
+
+        let infoArray = [email, pass, firstName, secondName];
+
+        let emailCheck = book.rageXPCheck(constants.RAGEXP_EMAIL, email, infoArray);
+        let passCheck = book.rageXPCheck(constants.RAGEXP_PASS, pass, infoArray);
+        let nameCheck = book.rageXPCheck(constants.RAGEXP_TEXT, firstName, infoArray);
+        let surnameCheck = book.rageXPCheck(constants.RAGEXP_TEXT, secondName, infoArray);
+
+        return emailCheck && passCheck && nameCheck && surnameCheck
+    }
+
+    checkIsUserAlreadyExist(email) {
+        let usersArray = JSON.parse(localStorage.getItem('Users'));
+
+
+        if (usersArray.length === 0) {
+            return false;
+        } else {
+            let findUser = usersArray.find(element => {
+                return element.email === email.value
+            });
+
+            if (findUser) {
+                let emailBlock = document.querySelector('#email-check')
+                let errorMSG = document.querySelector('#wrong-email');
+                errorMSG.style.display = 'block';
+                emailBlock.appendChild(errorMSG);
+                return true;
+            } else {
+                let errorMSG = document.querySelector('#wrong-email');
+                errorMSG.style.display = 'none';
+                return false;
+            }
+        }
+    }
+
+    static createNewUser(email, pass, firstName, secondName) {
+        let infoUserObject = {};
+
+        let usersArray = JSON.parse(localStorage.getItem('Users'));
+        let userID = Number(localStorage.getItem('maxUserID')) + 1;
+
+        infoUserObject.ID = userID;
+        localStorage.setItem('maxUserID', `${userID}`);
+
+        infoUserObject.email = email.value;
+        infoUserObject.password = pass.value;
+        infoUserObject.name = firstName.value;
+        infoUserObject.surname = secondName.value;
+        infoUserObject.categories = [];
+        infoUserObject.contacts = [];
+        infoUserObject.userInfo = [];
+
+        usersArray.push(infoUserObject);
+
+        let usersArrayToJSON = JSON.stringify(usersArray);
+        localStorage.setItem('Users', usersArrayToJSON);
+    }
+
+    static successfulMessage() {
+        const confirmRegistration = document.querySelector('.registration-confirm-button');
+        const regForm = document.querySelector('.registration-main');
+        console.log(regForm)
+        let message = document.createElement('div');
+        message.classList.add('good-text');
+        message.innerText = 'User was created successfully';
+        regForm.insertBefore(message, confirmRegistration);
     }
 }

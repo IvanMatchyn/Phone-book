@@ -1,4 +1,4 @@
-import CategoryMenu from '../Categories/categoryMenu.js'
+import CategoryFunctions from '../Categories/categoryFunctions.js'
 import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
 
@@ -17,6 +17,7 @@ export default class ContactMenu {
         });
 
         main.addEventListener('click', (ev) => {
+            ev.stopPropagation();
             menu.classList.remove('show');
             menu.classList.add('hidden');
             hiddenMenu.classList.remove('show');
@@ -24,10 +25,11 @@ export default class ContactMenu {
         });
     }
 
-    createGroup(button) {
-        const groupMenu = new CategoryMenu();
+    addCreateGroupEvent(button) {
+        const groupMenu = new CategoryFunctions();
 
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
             groupMenu.onload();
         })
     }
@@ -37,7 +39,8 @@ export default class ContactMenu {
         let activeUser = Session.getInstance().getActiveUser();
         let usersArray = activeUser.contacts;
 
-        button.addEventListener('click', function deleteContact() {
+        button.addEventListener('click', function (ev) {
+            ev.stopPropagation();
             let id = Number(parentBlock.getAttribute('data-id'));
 
             usersArray.forEach((elem, i) => {
@@ -81,9 +84,13 @@ export default class ContactMenu {
 
             localStorage.setItem('Active User', JSON.stringify(Session.getInstance().getActiveUser()));
             book.offlineSynchronization();
+
+            let mainManu = menu.previousSibling;
             menu.classList.remove('show');
             menu.classList.add('hidden');
-        });
+            mainManu.classList.remove('show');
+            mainManu.classList.add('hidden');
 
+        });
     }
 }

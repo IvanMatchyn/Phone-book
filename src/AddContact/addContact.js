@@ -1,5 +1,5 @@
 import ContactsBook from "../Module.js"
-import * as constants from "../constants";
+import * as constants from "../Constants";
 import Session from "../Offline/Session";
 
 export default class NewContact {
