@@ -63,7 +63,7 @@ export default class CategoriesLoad {
                     let headerText = document.querySelector('.main__block-header__text__add-contact');
                     headerText.innerText = header;
 
-                    book.mobileOpen();
+                    ContactBook.mobileOpen();
                     contacts.forEach(elem => {
                         let contactInfo = elem;
 
@@ -71,7 +71,7 @@ export default class CategoriesLoad {
                             return contactInfo.id === element
                         });
 
-                        if(currentContact){
+                        if (currentContact) {
                             const allContactsBlock = document.querySelector('.all-contacts');
                             allContactHTML.createContactElements(allContactsBlock, contactInfo.name, contactInfo.surname, contactInfo.position, contactInfo.id, true)
                         }

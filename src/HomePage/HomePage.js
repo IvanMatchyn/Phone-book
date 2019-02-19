@@ -21,7 +21,7 @@ export default class HomePage {
                 addEventShowAllContactsPage();
                 addEventCreateContactPage();
                 addEventCreateCategoryPage();
-                categories.addCategories();
+                CategoriesLoad.addCategories();
                 addUserNameToHomePage();
                 addEventLogOutButton();
                 addSearchEvent();
@@ -62,13 +62,9 @@ export default class HomePage {
             const logOutButton = document.querySelector('.ls-inner__account__name-logOut-button');
 
             logOutButton.addEventListener('click', () => {
-                book.clearMainBlock();
+                ContactsBook.clearMainBlock();
                 LoadPage.load(PageType.LOGIN_PAGE);
-
-                if (document.documentElement.clientWidth <= 720) {
-                    let title = document.querySelector('.ls__title');
-                    title.style.display = 'block';
-                }
+                ContactsBook.isMobileDevice();
             })
         }
 

@@ -35,25 +35,24 @@ export default class EditContact {
         let editContactInstagram = document.querySelector('#addContact-instagramm');
         let editContactFacebook = document.querySelector('#addContact-facebook');
 
-        this.loadOldInfo(editContactName, editContactSurName, editContactDescription, editContactPhone, editContactEmail, editContactBirthDate, editContactInfo, editContactInstagramm, editContactFacebook);
+        this.loadOldInfo(id ,editContactName, editContactSurName, editContactDescription, editContactPhone, editContactEmail,
+            editContactBirthDate, editContactInfo, editContactInstagram, editContactFacebook);
 
         saveButton.addEventListener('click', () => {
-            try {
-                EditContact.validateFields(editContactName, editContactSurName, editContactDescription, editContactPhone, editContactEmail, editContactBirthDate, editContactInfo, editContactInstagramm, editContactFacebook);
-                EditContact.addUIvalueToObj(id, editContactName, editContactSurName, editContactDescription, editContactPhone, editContactEmail, editContactBirthDate, editContactInfo, editContactInstagramm, editContactFacebook);
-            } catch (e) {
-                console.log(e);
-            }
+            EditContact.validateFields(editContactName, editContactSurName, editContactDescription, editContactPhone,
+                editContactEmail, editContactBirthDate, editContactInfo, editContactInstagram, editContactFacebook);
+
+            EditContact.addUIValueToObj(id, editContactName, editContactSurName, editContactDescription, editContactPhone,
+                editContactEmail, editContactBirthDate, editContactInfo, editContactInstagram, editContactFacebook);
+
         });
     }
 
-    loadOldInfo(name, surname, description, phone, email, bornDate, information, instagramm, facebook) {
+    loadOldInfo(id ,name, surname, description, phone, email, bornDate, information, instagram, facebook) {
         let usersArray = Session.getInstance().getActiveUser().contacts;
 
         let currentElem = usersArray.find(elem => {
-            if (elem.id === id) {
-                return elem;
-            }
+            return elem.id === id
         });
 
         if (currentElem) {
@@ -82,15 +81,12 @@ export default class EditContact {
         return checkName && checkSurname && checkDesc && checkInfo && checkEmail && checkBornDate && checkPhone
     }
 
-    static addUIvalueToObj(id, name, surname, description, phone, email, borndate, information, instagramm, facebook) {
-        let book = new ContactBook();
+    static addUIValueToObj(id, name, surname, description, phone, email, bornDate, information, instagramm, facebook) {
         let mainBlock = document.querySelector('.add-contact');
-        let usersArray = Session.getInstance().getActiveUser().contacts;
+        let contactArray = Session.getInstance().getActiveUser().contacts;
 
-        let currentContact = usersArray.find(elem => {
-            if (elem.id === id){
-                return elem;
-            }
+        let currentContact = contactArray.find(elem => {
+            return elem.id === id
         });
 
         if(currentContact){
@@ -114,7 +110,7 @@ export default class EditContact {
             successfullyEdit.style.fontSize = '18px';
             mainBlock.appendChild(successfullyEdit);
             Session.getInstance().saveToStorage();
-            book.offlineSynchronization();
+            ContactBook.offlineSynchronization();
         }
     }
 }

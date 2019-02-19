@@ -3,27 +3,9 @@ import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
 import ContactsBook from "../Module";
 
-export default class ContactMenu {
+export default class ContactFunctions {
     constructor() {
 
-    }
-
-    showMenu(button, menu, hiddenMenu) {
-        const main = document.querySelector('.main');
-
-        button.addEventListener('click', (ev) => {
-            menu.classList.remove('hidden');
-            menu.classList.add('show');
-            ev.stopPropagation();
-        });
-
-        main.addEventListener('click', (ev) => {
-            ev.stopPropagation();
-            menu.classList.remove('show');
-            menu.classList.add('hidden');
-            hiddenMenu.classList.remove('show');
-            hiddenMenu.classList.add('hidden');
-        });
     }
 
     addCreateGroupEvent(button) {
@@ -35,10 +17,9 @@ export default class ContactMenu {
         })
     }
 
-    deleteContact(button, parentBlock) {
-        let book = new ContactBook();
+    addEventDeleteContact(button, id) {
         let activeUser = Session.getInstance().getActiveUser();
-        let usersArray = activeUser.contacts;
+        let contactArray = activeUser.contacts;
 
         button.addEventListener('click', function (ev) {
             ev.stopPropagation();
