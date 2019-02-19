@@ -108,7 +108,7 @@ export default class EditContact {
         }
 
         function succesfulEdition() {
-            let successfullyEdit = document.createElement('div')
+            let successfullyEdit = document.createElement('div');
             successfullyEdit.innerText = 'Contact was updated';
             successfullyEdit.classList.add('good-text');
             successfullyEdit.style.fontSize = '18px';

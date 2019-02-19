@@ -87,7 +87,7 @@ export default class CategoriesLoad {
     }
 
     static categoryDropDownMenu() {
-        let categoryFunctions = new CategoryFunctions()
+        let categoryFunctions = new CategoryFunctions();
         let dropDownMenu = document.createElement('div');
         let dropDownMenuItem = document.createElement('div');
         let dropDownMenuItemText = document.createElement('p');

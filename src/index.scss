@@ -110,7 +110,7 @@ input::-webkit-inner-spin-button {
 
       &__add-contact {
         color: #10b1df;
-        font-family: 'Roboto';
+        font-family: 'Roboto', serif;
         font-size: 24px;
         font-weight: 900;
         margin-left: 48px;
@@ -128,7 +128,7 @@ input::-webkit-inner-spin-button {
   &__title {
     padding: 17px 50px 65px 50px;
     color: #ffffff;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-weight: 900;
     font-size: 32px;
     margin: 0;
@@ -156,7 +156,7 @@ input::-webkit-inner-spin-button {
         &-text {
           margin: 0;
           color: #ffffff;
-          font-family: 'Roboto';
+          font-family: 'Roboto', serif;
           font-size: 16px;
           font-weight: 400;
         }
@@ -164,7 +164,7 @@ input::-webkit-inner-spin-button {
         &-logOut-button {
           margin-top: 5px;
           color: #8992ca;
-          font-family: 'Roboto';
+          font-family: 'Roboto', serif;
           font-size: 12px;
           font-weight: 400;
         }
@@ -206,7 +206,7 @@ input::-webkit-inner-spin-button {
         border: none;
         -webkit-appearance: none;
         background-color: #2e334c00;
-        font-family: Roboto;
+        font-family: Roboto, serif;
         font-size: 14px;
         font-weight: 400;
 
@@ -214,7 +214,7 @@ input::-webkit-inner-spin-button {
         &::placeholder {
           padding-left: 35px;
           color: #9699a5;
-          font-family: Roboto;
+          font-family: Roboto, serif;
           font-size: 14px;
           font-weight: 400;
         }
@@ -236,7 +236,7 @@ input::-webkit-inner-spin-button {
       &__header {
         margin: 0 55px 17px 55px;
         color: #8992ca;
-        font-family: 'Roboto';
+        font-family: 'Roboto', serif;
         font-size: 12px;
         font-weight: 500;
         text-transform: uppercase;
@@ -260,7 +260,7 @@ input::-webkit-inner-spin-button {
           margin: 0;
           padding: 0 55px;
           color: #ffffff;
-          font-family: 'Roboto';
+          font-family: 'Roboto', serif;
           font-size: 15px;
           font-weight: 400;
           line-height: 48px;
@@ -294,7 +294,7 @@ input::-webkit-inner-spin-button {
 
         &__name {
           color: #ffffff;
-          font-family: Roboto;
+          font-family: Roboto, serif;
           font-size: 16px;
           font-weight: 400;
           line-height: 24px;
@@ -309,7 +309,7 @@ input::-webkit-inner-spin-button {
 
         &__date {
           color: #ffffff;
-          font-family: Roboto;
+          font-family: Roboto, serif;
           font-size: 10px;
           font-weight: 400;
           line-height: 24px;
@@ -335,7 +335,7 @@ input::-webkit-inner-spin-button {
       &__text {
         margin: 0;
         color: #ffffff;
-        font-family: 'Roboto';
+        font-family: 'Roboto', serif;
         font-size: 15px;
         font-weight: 400;
         line-height: 32px;
@@ -385,7 +385,7 @@ input::-webkit-inner-spin-button {
       &__text {
         margin: 0;
         color: #ffffff;
-        font-family: 'Roboto';
+        font-family: 'Roboto', serif;
         font-size: 15px;
         font-weight: 400;
         line-height: 32px;
@@ -447,7 +447,7 @@ input::-webkit-inner-spin-button {
     width: 222px;
     padding-top: 1px;
     margin-bottom: 9px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 13px;
 
     &::placeholder {
@@ -465,7 +465,7 @@ input::-webkit-inner-spin-button {
   }
 
   &-forgot-pass {
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 14px;
     text-decoration: none;
     color: white;
@@ -482,7 +482,7 @@ input::-webkit-inner-spin-button {
   &-registration {
     margin-bottom: 5px;
     text-decoration: none;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 14px;
     color: white;
 
@@ -499,7 +499,7 @@ input::-webkit-inner-spin-button {
     background-color: #4267b2;
     white-space: nowrap;
     padding: 7px 10px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     color: white;
     font-size: 13px;
 
@@ -566,7 +566,7 @@ input::-webkit-inner-spin-button {
     border-radius: 56px;
     background-color: #10b1df;
     color: white;
-    font-family: "Roboto - Black";
+    font-family: "Roboto - Black", serif;
     font-size: 18px;
     font-weight: 900;
 
@@ -606,7 +606,7 @@ input::-webkit-inner-spin-button {
 .text-tooltip {
   margin: 10px 0 8px 0;
   color: #c8c8c8;
-  font-family: 'Roboto';
+  font-family: 'Roboto', serif;
   font-size: 12px;
   font-weight: 400;
 }
@@ -652,7 +652,7 @@ input::-webkit-inner-spin-button {
     padding-top: 40px;
     text-align: right;
     color: #22282d;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 18px;
     font-weight: 700;
   }
@@ -660,7 +660,7 @@ input::-webkit-inner-spin-button {
   &__tooltip {
     margin: 16px 0 7px 0;
     color: #c8c8c8;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 12px;
     font-weight: 400;
   }
@@ -698,7 +698,7 @@ input::-webkit-inner-spin-button {
       border: 1px solid #999999;
       background-color: #ffffff;
       color: #22282d;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 16px;
       font-weight: 400;
       padding-left: 10px;
@@ -722,7 +722,7 @@ input::-webkit-inner-spin-button {
   &__incorrect {
     padding-top: 47px;
     color: #d0021b;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 12px;
     font-weight: 400;
   }
@@ -747,7 +747,7 @@ input::-webkit-inner-spin-button {
       border-radius: 56px;
       background-color: #10b1df;
       color: #ffffff;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 15px;
       font-weight: 400;
       line-height: 32px;
@@ -764,7 +764,7 @@ input::-webkit-inner-spin-button {
       border-radius: 56px;
       border: 2px solid #00b3e4;
       color: #10b1df;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 15px;
       font-weight: 400;
       line-height: 32px;
@@ -929,7 +929,7 @@ input::-webkit-inner-spin-button {
       text-transform: capitalize;
       margin: 0;
       color: #000000;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 16px;
       font-weight: 700;
     }
@@ -958,7 +958,7 @@ input::-webkit-inner-spin-button {
       border-radius: 56px;
       background-color: #10b1df;
       color: #ffffff;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 15px;
       font-weight: 400;
       line-height: 32px;
@@ -972,7 +972,7 @@ input::-webkit-inner-spin-button {
       border-radius: 56px;
       border: 2px solid #00b3e4;
       color: #10b1df;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 15px;
       font-weight: 400;
       line-height: 32px;
@@ -1020,14 +1020,14 @@ input::-webkit-inner-spin-button {
       &__name {
         margin-bottom: 3px;
         color: #000000;
-        font-family: 'Roboto';
+        font-family: 'Roboto', serif;
         font-size: 16px;
         font-weight: 400;
       }
 
       &__text {
         color: #9b9b9b;
-        font-family: 'Roboto';
+        font-family: 'Roboto', serif;
         font-size: 12px;
         font-weight: 400;
       }
@@ -1072,7 +1072,7 @@ input::-webkit-inner-spin-button {
           justify-content: space-between;
           align-items: center;
           color: #ffffff;
-          font-family: 'Roboto';
+          font-family: 'Roboto', serif;
           font-size: 14px;
           font-weight: 400;
           line-height: 26px;
@@ -1125,7 +1125,7 @@ input::-webkit-inner-spin-button {
       &__initials {
         &-h1 {
           color: #000000;
-          font-family: 'Roboto';
+          font-family: 'Roboto', serif;
           font-size: 24px;
           font-weight: 900;
         }
@@ -1135,7 +1135,7 @@ input::-webkit-inner-spin-button {
         &-text {
           color: #1f2226;
           margin: 4px 0;
-          font-family: 'Roboto';
+          font-family: 'Roboto', serif;
           font-size: 14px;
           font-weight: 400;
           line-height: 18px;
@@ -1152,7 +1152,7 @@ input::-webkit-inner-spin-button {
     &-header {
       margin-right: 20px;
       color: #22282d;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 18px;
       font-weight: 700;
       min-width: 150px;
@@ -1160,7 +1160,7 @@ input::-webkit-inner-spin-button {
       &-h2 {
         margin: 0;
         text-align: right;
-        font-family: 'Roboto';
+        font-family: 'Roboto', serif;
         font-size: 18px;
         font-weight: 700;
       }
@@ -1168,7 +1168,7 @@ input::-webkit-inner-spin-button {
 
     &-value {
       color: #22282d;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 16px;
       font-weight: 400;
       line-height: 24px;
@@ -1189,7 +1189,7 @@ input::-webkit-inner-spin-button {
 
       &__h3 {
         color: #3bb9e3;
-        font-family: 'Helvetica Neue';
+        font-family: 'Helvetica Neue', serif;
         font-size: 14px;
         font-weight: 500;
         letter-spacing: -0.1px;
@@ -1240,7 +1240,7 @@ input::-webkit-inner-spin-button {
 
   &__header {
     &-h1 {
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 18px;
       font-weight: 700;
     }
@@ -1266,7 +1266,7 @@ input::-webkit-inner-spin-button {
     border-radius: 56px;
     background-color: #10b1df;
     color: #ffffff;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 15px;
     font-weight: 400;
     line-height: 32px;
@@ -1298,7 +1298,7 @@ input::-webkit-inner-spin-button {
       justify-content: space-between;
       align-items: center;
       color: #ffffff;
-      font-family: 'Roboto';
+      font-family: 'Roboto', serif;
       font-size: 14px;
       font-weight: 400;
       line-height: 26px;
@@ -1319,14 +1319,14 @@ input::-webkit-inner-spin-button {
   flex-flow: column nowrap;
   margin-left: 50px;
   color: #ffffff;
-  font-family: 'Roboto';
+  font-family: 'Roboto', serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 18px;
 
   &-header {
     color: #ffffff;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 18px;
@@ -1345,7 +1345,7 @@ input::-webkit-inner-spin-button {
     background-color: #ffffff;
     white-space: nowrap;
     padding: 7px 10px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     color: #4267b2;
     font-size: 13px;
 
@@ -1369,16 +1369,17 @@ input::-webkit-inner-spin-button {
   }
 }
 
+
 .wrong-text {
   color: red;
-  font-family: 'Roboto';
+  font-family: 'Roboto', serif;
   font-size: 12px;
   font-weight: 900;
 }
 
 .good-text {
   color: green;
-  font-family: 'Roboto';
+  font-family: 'Roboto', serif;
   font-size: 12px;
   font-weight: 900;
 }

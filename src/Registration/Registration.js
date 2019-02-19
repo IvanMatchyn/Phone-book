@@ -23,41 +23,6 @@ export default class Registration {
                 ContactsBook.mobileOpen();
                 regClass.addEventRegistrationNewUser();
             });
-
-        function mobileCheck() {
-            const mainLeft = document.querySelector('.main__left-side');
-            const regLink = document.querySelector('.login-registration');
-
-            if (Registration.isMobileDevice()) {
-                regLink.addEventListener('click', () => {
-                    mainLeft.classList.add('hidden');
-                    constants.MAIN_RSIDE_BLOCK.style.display = 'block';
-                    regClass.addEventRegistrationNewUser();
-                    createCloseButtonIfMobile();
-                });
-            } else {
-                regClass.addEventRegistrationNewUser();
-            }
-
-            function createCloseButtonIfMobile(){
-                let closeButton = document.createElement('button');
-                closeButton.classList.add('registration-close-button');
-
-                let header = document.querySelector('.main__block-header');
-                header.appendChild(closeButton);
-
-                let leftBlock = document.querySelector('.main__left-side');
-
-                closeButton.addEventListener('click', () => {
-                    constants.MAIN_RSIDE_BLOCK.style.display = 'none';
-                    leftBlock.classList.remove('hidden');
-                });
-            }
-        }
-    }
-
-    static isMobileDevice() {
-        return document.documentElement.clientWidth <= 720;
     }
 
     addEventRegistrationNewUser() {

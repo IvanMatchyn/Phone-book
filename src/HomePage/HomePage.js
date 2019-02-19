@@ -10,8 +10,6 @@ export default class HomePage {
     }
 
     onload() {
-        const categories = new CategoriesLoad();
-
         fetch('./HomePage/HomePage.html')
             .then(function (response) {
                 return response.text().then(function (text) {
@@ -126,7 +124,6 @@ export default class HomePage {
 
                 bornInfo.appendChild(name);
                 bornInfo.appendChild(dateBlock)
-
             });
         }
     }
