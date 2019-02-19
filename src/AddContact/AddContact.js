@@ -1,5 +1,5 @@
 import ContactsBook from "../Module.js"
-import * as constants from "../constants";
+import * as constants from "../Constants";
 import Session from "../Offline/Session";
 
 export default class NewContact {
@@ -7,7 +7,6 @@ export default class NewContact {
     }
 
     onload() {
-        const book = new ContactsBook();
 
         book.clearMainBlock();
         fetch('./AddContact/AddContact.html')
@@ -39,8 +38,6 @@ export default class NewContact {
         let instagrammVal = document.querySelector('#addContact-instagramm');
 
         let dataArray = [nameVal, surNameVal, descVal, phoneVal, emailVal, birthdayVal, infoVal];
-
-        let allDone = true;
 
         saveButton.addEventListener('click', function save() {
             let newContact = {};
@@ -115,7 +112,8 @@ export default class NewContact {
                 phoneVal.removeAttribute('placeholder', 'Incorrect');
             }
 
-            if (allDone) {
+            if (nameCheck && surnameCheck && descriptionCheck && infoCheck && emailCheck && bornDateCheck
+                && phoneCheck) {
                 let mainBlock = document.querySelector('.add-contact');
                 let maxContactID = Number(localStorage.getItem('maxContactID'));
                 newContact.id = maxContactID + 1;
@@ -128,7 +126,7 @@ export default class NewContact {
                 newContact.bornDate = birthdayVal.value;
                 newContact.information = infoVal.value;
                 newContact.facebook = facebookVal.value;
-                newContact.instagramm = instagrammVal.value;
+                newContact.instagramm = instagramVal.value;
 
 
                 let updatedMaxContactID = newContact.id;
@@ -157,9 +155,6 @@ export default class NewContact {
 
     cancelSavingInfo() {
         const cancelButton = document.querySelector('.add-contact__buttons__cancel');
-        const book = new ContactsBook();
-        let mainLeftBlock = document.querySelector('.main__left-side');
-
         cancelButton.addEventListener('click', () => {
             book.clearMainBlock();
             if (document.documentElement.clientWidth <= 720) {

@@ -1,9 +1,9 @@
-import * as constants from "../constants";
-import LSideInnerBlock from "../LSideBlock/LSideBlock.js"
+import * as constants from "../Constants";
+import HomePage from "../HomePage/HomePage.js"
 import ContactsBook from "../Module.js"
 import Session from "../Offline/Session";
 
-export default class CategoryMenu {
+export default class CategoryFunctions {
     constructor() {
     }
 
@@ -16,14 +16,14 @@ export default class CategoryMenu {
                 constants.MAIN_RSIDE_BLOCK.innerHTML = html;
             })
             .then(() => {
+                ContactsBook.mobileOpen();
                 this.create();
             })
     }
 
     delete(parentElem) {
-        let parentID = parentElem.parentElement.getAttribute('data-id');
-        const book = new ContactsBook;
-        const leftBlock = new LSideInnerBlock;
+        const parentID = parentElem.parentElement.getAttribute('data-id');
+        const leftBlock = new HomePage;
 
         let activeUser = Session.getInstance().getActiveUser();
         let categoriesArray = activeUser.categories;
@@ -34,19 +34,18 @@ export default class CategoryMenu {
             }
         });
 
-        localStorage.setItem('Active User', JSON.stringify(activeUser));
-        book.offlineSynchronization();
+        Session.getInstance().saveToStorage();
+        ContactsBook.offlineSynchronization();
         leftBlock.onload();
     }
 
     create() {
         const createButton = document.querySelector('.create-group__confirm');
         const createGroupValue = document.querySelector('.create-group__value');
-        const leftBlock = new LSideInnerBlock;
-        const book = new ContactsBook;
-        let result = document.querySelector('.create-group__result');
-        let createInput = document.querySelector('.create-group__value');
-        let activeUser = Session.getInstance().getActiveUser();
+        const leftBlock = new HomePage;
+        const result = document.querySelector('.create-group__result');
+        const createInput = document.querySelector('.create-group__value');
+        const activeUser = Session.getInstance().getActiveUser();
 
         createButton.addEventListener('click', () => {
             let maxCategoryID = localStorage.getItem('maxCategoryID');
@@ -72,57 +71,33 @@ export default class CategoryMenu {
                 result.classList.remove('good-text');
                 result.style.display = 'block';
             } else {
-                successfulCreation();
+                let maxCategoryID = localStorage.getItem('maxCategoryID');
+
+                let newCategory = {
+                    id: Number(maxCategoryID) + 1,
+                    name: createGroupValue.value,
+                    contacts: []
+                };
+                successfulCreation(newCategory);
             }
 
-
-            function successfulCreation() {
-                result.innerText = 'Category "' + newCategory.name + '" was created';
+            function successfulCreation(category) {
+                result.innerText = 'Category "' + category.name + '" was created';
                 result.classList.remove('wrong-text');
                 result.classList.add('good-text');
                 createInput.classList.remove('wrong-info');
                 result.style.display = 'block';
 
-                let updatedMaxCategoryID = newCategory.id;
-                localStorage.setItem('maxCategoryID', `${updatedMaxCategoryID}`);
+                let updatedMaxCategoryID = category.id;
 
-                activeUser.categories.push(newCategory);
+                localStorage.setItem('maxCategoryID', `${updatedMaxCategoryID}`);
+                activeUser.categories.push(category);
                 Session.getInstance().saveToStorage();
                 book.offlineSynchronization();
 
                 createGroupValue.value = '';
-
                 leftBlock.onload();
             }
         })
-    }
-
-    categoryDropDownMenu() {
-        let dropDownMenu = document.createElement('div');
-        let dropDownMenuItem = document.createElement('div');
-        let dropDownMenuItemText = document.createElement('p');
-
-
-        dropDownMenu.classList.add('show');
-
-        dropDownMenu.classList.add('drop-down');
-        dropDownMenuItem.classList.add('drop-down__items');
-        dropDownMenuItemText.classList.add('drop-down__items-p');
-
-        dropDownMenuItemText.innerText = 'Delete';
-
-        dropDownMenuItem.appendChild(dropDownMenuItemText);
-        dropDownMenu.appendChild(dropDownMenuItem);
-
-        dropDownMenu.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-
-        dropDownMenuItem.addEventListener('click', event => {
-            this.delete(dropDownMenu);
-            event.stopPropagation();
-        });
-
-        return dropDownMenu;
     }
 }

@@ -1,5 +1,5 @@
 import Session from "./Offline/Session";
-import LoadPage from "./LoadPage/LoadPage";
+import LoadPage, {PageType} from "./LoadPage/LoadPage";
 
 export default class ContactsBook {
     constructor() {
@@ -19,15 +19,16 @@ export default class ContactsBook {
         }
 
         let url = new URLSearchParams(window.location.search.substring(1));
+
         let page = url.get("page");
 
         if (page === null) {
             page = "login";
         }
-        LoadPage.load(page);
+        LoadPage.load(PageType.LOGIN_PAGE);
     }
 
-    clearMainBlock() {
+    static clearMainBlock() {
         const mainBlock = document.querySelector('.main__article');
         const mainBlockChilds = mainBlock.childNodes;
 
@@ -36,7 +37,7 @@ export default class ContactsBook {
         })
     }
 
-    mobileOpen() {
+    static mobileOpen() {
         if (document.documentElement.clientWidth <= 720) {
             let mainLeftBlock = document.querySelector('.main__left-side');
             let mainRightBlock = document.querySelector('.main__article');
@@ -58,7 +59,7 @@ export default class ContactsBook {
         }
     }
 
-    offlineSynchronization() {
+    static offlineSynchronization() {
         let activeUser = Session.getInstance().getActiveUser();
         let usersArray = JSON.parse(localStorage.getItem('Users'));
 
@@ -69,5 +70,35 @@ export default class ContactsBook {
         });
 
         localStorage.setItem('Users', JSON.stringify(usersArray))
+    }
+
+    rageXPCheck(rageXP, element, allFieldsArray) {
+        if (!rageXP.test(element.value)) {
+            element.classList.add('wrong-info');
+            element.setAttribute('placeholder', 'Incorrect');
+            return false;
+        } else {
+            element.classList.remove('wrong-info');
+            element.removeAttribute('placeholder');
+        }
+
+        let emptyField = allFieldsArray.find(emptyElement => {
+            if (emptyElement.value.length === 0) {
+                emptyElement.classList.add('wrong-info');
+                emptyElement.setAttribute('placeholder', 'Incorrect');
+                return false;
+
+            }
+        });
+
+        return !emptyField;
+
+    }
+
+    static isMobileDevice(){
+        if (document.documentElement.clientWidth <= 720) {
+            let title = document.querySelector('.ls__title');
+            title.style.display = 'block';
+        }
     }
 }

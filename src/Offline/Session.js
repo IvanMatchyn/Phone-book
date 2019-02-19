@@ -11,7 +11,7 @@ export default class Session {
     }
 
     saveToStorage() {
-        localStorage.setItem('Active User', JSON.stringify(this.user))
+        localStorage.setItem('Active User', JSON.stringify(this.getActiveUser()))
     }
 
     static getInstance() {

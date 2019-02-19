@@ -1,6 +1,7 @@
-import CategoryMenu from '../Categories/categoryMenu.js'
+import CategoryFunctions from '../Categories/CategoryFunctions.js'
 import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
+import ContactsBook from "../Module";
 
 export default class ContactMenu {
     constructor() {
@@ -17,6 +18,7 @@ export default class ContactMenu {
         });
 
         main.addEventListener('click', (ev) => {
+            ev.stopPropagation();
             menu.classList.remove('show');
             menu.classList.add('hidden');
             hiddenMenu.classList.remove('show');
@@ -24,10 +26,11 @@ export default class ContactMenu {
         });
     }
 
-    createGroup(button) {
-        const groupMenu = new CategoryMenu();
+    addCreateGroupEvent(button) {
+        const groupMenu = new CategoryFunctions();
 
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
             groupMenu.onload();
         })
     }
@@ -37,29 +40,22 @@ export default class ContactMenu {
         let activeUser = Session.getInstance().getActiveUser();
         let usersArray = activeUser.contacts;
 
-        button.addEventListener('click', function deleteContact() {
-            let id = Number(parentBlock.getAttribute('data-id'));
+        button.addEventListener('click', function (ev) {
+            ev.stopPropagation();
 
-            usersArray.forEach((elem, i) => {
-                if (elem.id === id) {
-                    usersArray.splice(i, 1);
-                }
+            let searchIndex = contactArray.indexOf(elem => {
+                return elem.id === id
             });
 
-            localStorage.setItem('Active User', JSON.stringify(activeUser));
-            book.offlineSynchronization();
-            parentBlock.remove();
+            contactArray.splice(searchIndex, 1);
+            Session.getInstance().saveToStorage();
+            ContactBook.offlineSynchronization();
+            button.parentElement.parentElement.remove();
         })
     }
 
-    addContactToGroup(link, menu, groupLinks, contact) {
-        let book = new ContactBook();
+    addEventMoveContactToGroup(link, menu, groupLinks, contact) {
         let contactID = Number(contact.getAttribute('data-id'));
-
-        link.addEventListener('click', function (e) {
-            e.stopPropagation();
-            menu.classList.add('show')
-        });
 
         groupLinks.addEventListener('click', (ev) => {
             ev.stopPropagation();
@@ -76,14 +72,14 @@ export default class ContactMenu {
 
                 if (contact === undefined) {
                     category.contacts.push(contactID);
+                    localStorage.setItem('Active User', JSON.stringify(Session.getInstance().getActiveUser()));
+                    ContactBook.offlineSynchronization();
                 }
             }
 
-            localStorage.setItem('Active User', JSON.stringify(Session.getInstance().getActiveUser()));
-            book.offlineSynchronization();
-            menu.classList.remove('show');
-            menu.classList.add('hidden');
+            let mainMenu = menu.previousSibling;
+            menu.remove();
+            mainMenu.remove();
         });
-
     }
 }
