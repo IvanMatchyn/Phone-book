@@ -19,6 +19,7 @@ export default class ContactsBook {
         }
 
         let url = new URLSearchParams(window.location.search.substring(1));
+
         let page = url.get("page");
 
         if (page === null) {
@@ -27,7 +28,7 @@ export default class ContactsBook {
         LoadPage.load(PageType.LOGIN_PAGE);
     }
 
-    clearMainBlock() {
+    static clearMainBlock() {
         const mainBlock = document.querySelector('.main__article');
         const mainBlockChilds = mainBlock.childNodes;
 
@@ -36,7 +37,7 @@ export default class ContactsBook {
         })
     }
 
-    mobileOpen() {
+    static mobileOpen() {
         if (document.documentElement.clientWidth <= 720) {
             let mainLeftBlock = document.querySelector('.main__left-side');
             let mainRightBlock = document.querySelector('.main__article');
@@ -58,7 +59,7 @@ export default class ContactsBook {
         }
     }
 
-    offlineSynchronization() {
+    static offlineSynchronization() {
         let activeUser = Session.getInstance().getActiveUser();
         let usersArray = JSON.parse(localStorage.getItem('Users'));
 
@@ -78,7 +79,7 @@ export default class ContactsBook {
             return false;
         } else {
             element.classList.remove('wrong-info');
-            element.removeAttribute('placeholder', 'Incorrect');
+            element.removeAttribute('placeholder');
         }
 
         let emptyField = allFieldsArray.find(emptyElement => {
@@ -92,5 +93,12 @@ export default class ContactsBook {
 
         return !emptyField;
 
+    }
+
+    static isMobileDevice(){
+        if (document.documentElement.clientWidth <= 720) {
+            let title = document.querySelector('.ls__title');
+            title.style.display = 'block';
+        }
     }
 }

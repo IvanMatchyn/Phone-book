@@ -1,19 +1,19 @@
 import * as constants from "../Constants";
-import AllContact from "../AllContacts/AllContacts.js"
+import AllContact from "../AllContacts/ContactHtmlBuilder.js"
 import Session from "../Offline/Session";
 import ContactBook from "../Module";
-import CategoryFunctions from "./categoryFunctions";
+import CategoryFunctions from "./CategoryFunctions";
 
 export default class CategoriesLoad {
     constructor() {
 
     }
 
-    addCategories() {
-        this.printCategories();
+    static addCategories() {
+        CategoriesLoad.printCategories();
     }
 
-    printCategories() {
+     static printCategories() {
         let categoriesBlock = document.querySelector('.ls-inner__categories__wrapper');
         let activeUser = Session.getInstance().getActiveUser();
         let dropMenu = CategoriesLoad.categoryDropDownMenu();
@@ -36,17 +36,17 @@ export default class CategoriesLoad {
             categoryOptions.addEventListener('click', function (e) {
                 e.stopPropagation();
                 categoryWrapper.appendChild(dropMenu);
+
                 dropMenu.classList.remove('hidden')
             });
 
             let categoryContactID = obj.contacts;
 
-            this.showAllContactsOnClick(newCategory, categoryContactID, categoryName.innerText)
+            CategoriesLoad.showAllContactsOnClick(newCategory, categoryContactID, categoryName.innerText)
         });
     }
 
-    showAllContactsOnClick(category, contactsArrayID, header) {
-        let book = new ContactBook();
+     static showAllContactsOnClick(category, contactsArrayID, header) {
         let allContactHTML = new AllContact();
         let activeUser = Session.getInstance().getActiveUser();
 

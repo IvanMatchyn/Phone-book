@@ -35,7 +35,6 @@ export default class LoginPage {
         const login = document.querySelector('#login');
         const password = document.querySelector('#log-password');
         const enterButton = document.querySelector('.reg-form-submit');
-        const book = new ContactsBook();
 
         enterButton.addEventListener('click', () => {
             book.clearMainBlock();
@@ -43,18 +42,17 @@ export default class LoginPage {
 
             if (this.validateUserInfo(usersInfo, login, password)) {
                 let currUser = usersInfo.find(e => {
-                    if(login.value === e.email && password.value === e.password){
-                        return e
-                    }
+                    return login.value === e.email && password.value === e.password
                 });
 
-                localStorage.setItem('Active User', JSON.stringify(currUser));
-                LoadPage.load(PageType.HOME_PAGE);
+                if(currUser){
+                    localStorage.setItem('Active User', JSON.stringify(currUser));
+                    LoadPage.load(PageType.HOME_PAGE);
+                    LoginPage.removeTitleIfMobileDevice();
+                    this.createMaxID(usersInfo, login, password);
+                    Session.getInstance().saveToStorage();
+                }
             }
-
-            LoginPage.removeTitleIfMobileDevice();
-            this.createMaxID(usersInfo, login, password);
-            Session.getInstance().saveToStorage();
         });
     }
 
@@ -80,14 +78,14 @@ export default class LoginPage {
         let maxCatIDarray = user.categories;
         let maxContactArray = user.contacts;
 
-        if (maxCatIDarray.length < 1) {
+        if (maxCatIDArray.length < 1) {
             localStorage.setItem('maxCategoryID', '0')
 
         } else if (maxContactArray.length < 1) {
             localStorage.setItem('maxContactID', '0')
 
         } else {
-            let maxCurrentID = maxID(maxCatIDarray);
+            let maxCurrentID = maxID(maxCatIDArray);
             let maxCurrentContactID = maxID(maxContactArray);
 
             localStorage.setItem('maxCategoryID', `${maxCurrentID}`);

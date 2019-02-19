@@ -1,6 +1,7 @@
-import CategoryFunctions from '../Categories/categoryFunctions.js'
+import CategoryFunctions from '../Categories/CategoryFunctions.js'
 import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
+import ContactsBook from "../Module";
 
 export default class ContactMenu {
     constructor() {
@@ -41,28 +42,20 @@ export default class ContactMenu {
 
         button.addEventListener('click', function (ev) {
             ev.stopPropagation();
-            let id = Number(parentBlock.getAttribute('data-id'));
 
-            usersArray.forEach((elem, i) => {
-                if (elem.id === id) {
-                    usersArray.splice(i, 1);
-                }
+            let searchIndex = contactArray.indexOf(elem => {
+                return elem.id === id
             });
 
-            localStorage.setItem('Active User', JSON.stringify(activeUser));
-            book.offlineSynchronization();
-            parentBlock.remove();
+            contactArray.splice(searchIndex, 1);
+            Session.getInstance().saveToStorage();
+            ContactBook.offlineSynchronization();
+            button.parentElement.parentElement.remove();
         })
     }
 
-    addContactToGroup(link, menu, groupLinks, contact) {
-        let book = new ContactBook();
+    addEventMoveContactToGroup(link, menu, groupLinks, contact) {
         let contactID = Number(contact.getAttribute('data-id'));
-
-        link.addEventListener('click', function (e) {
-            e.stopPropagation();
-            menu.classList.add('show')
-        });
 
         groupLinks.addEventListener('click', (ev) => {
             ev.stopPropagation();
@@ -79,18 +72,14 @@ export default class ContactMenu {
 
                 if (contact === undefined) {
                     category.contacts.push(contactID);
+                    localStorage.setItem('Active User', JSON.stringify(Session.getInstance().getActiveUser()));
+                    ContactBook.offlineSynchronization();
                 }
             }
 
-            localStorage.setItem('Active User', JSON.stringify(Session.getInstance().getActiveUser()));
-            book.offlineSynchronization();
-
-            let mainManu = menu.previousSibling;
-            menu.classList.remove('show');
-            menu.classList.add('hidden');
-            mainManu.classList.remove('show');
-            mainManu.classList.add('hidden');
-
+            let mainMenu = menu.previousSibling;
+            menu.remove();
+            mainMenu.remove();
         });
     }
 }

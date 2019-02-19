@@ -20,7 +20,8 @@ export default class Registration {
                 })
             })
             .then(() => {
-                mobileCheck();
+                ContactsBook.mobileOpen();
+                regClass.addEventRegistrationNewUser();
             });
 
         function mobileCheck() {
@@ -32,22 +33,25 @@ export default class Registration {
                     mainLeft.classList.add('hidden');
                     constants.MAIN_RSIDE_BLOCK.style.display = 'block';
                     regClass.addEventRegistrationNewUser();
-
-                    let closeButton = document.createElement('button');
-                    closeButton.classList.add('registration-close-button');
-
-                    let header = document.querySelector('.main__block-header');
-                    header.appendChild(closeButton);
-
-                    let leftBlock = document.querySelector('.main__left-side');
-
-                    closeButton.addEventListener('click', () => {
-                        constants.MAIN_RSIDE_BLOCK.style.display = 'none';
-                        leftBlock.classList.remove('hidden');
-                    });
+                    createCloseButtonIfMobile();
                 });
             } else {
                 regClass.addEventRegistrationNewUser();
+            }
+
+            function createCloseButtonIfMobile(){
+                let closeButton = document.createElement('button');
+                closeButton.classList.add('registration-close-button');
+
+                let header = document.querySelector('.main__block-header');
+                header.appendChild(closeButton);
+
+                let leftBlock = document.querySelector('.main__left-side');
+
+                closeButton.addEventListener('click', () => {
+                    constants.MAIN_RSIDE_BLOCK.style.display = 'none';
+                    leftBlock.classList.remove('hidden');
+                });
             }
         }
     }
@@ -66,24 +70,22 @@ export default class Registration {
         confirmRegistration.addEventListener('click', () => {
             let infoArray = [userEmail, userPassword, userFirstName, userSecondName];
 
-            try {
-                if(Registration.validateUser(userEmail, userPassword, userFirstName, userSecondName)){
-                    if (!this.checkIsUserAlreadyExist(userEmail)) {
-                        Registration.createNewUser(userEmail, userPassword, userFirstName, userSecondName);
-
-                        infoArray.forEach(elem => {
-                            elem.classList.remove('wrong-info');
-                            elem.removeAttribute('placeholder', 'Incorrect');
-                        });
-
-                        Registration.successfulMessage();
-                    }
+            if (Registration.validateUser(userEmail, userPassword, userFirstName, userSecondName)) {
+                if (!this.checkIsUserAlreadyExist(userEmail)) {
+                    Registration.createNewUser(userEmail, userPassword, userFirstName, userSecondName);
+                    Registration.clearFieldsWarnings(infoArray);
+                    Registration.successfulMessage();
                 }
-
-            } catch (e) {
-                console.log(e);
             }
         })
+    }
+
+    static clearFieldsWarnings(array){
+        array.forEach(elem => {
+            elem.classList.remove('wrong-info');
+
+            elem.removeAttribute('placeholder');
+        });
     }
 
     static validateUser(email, pass, firstName, secondName) {
@@ -91,17 +93,16 @@ export default class Registration {
 
         let infoArray = [email, pass, firstName, secondName];
 
-        let emailCheck = book.rageXPCheck(constants.RAGEXP_EMAIL, email, infoArray);
-        let passCheck = book.rageXPCheck(constants.RAGEXP_PASS, pass, infoArray);
-        let nameCheck = book.rageXPCheck(constants.RAGEXP_TEXT, firstName, infoArray);
-        let surnameCheck = book.rageXPCheck(constants.RAGEXP_TEXT, secondName, infoArray);
+        let emailCheck = book.rageXPCheck(constants.RAGXP_EMAIL, email, infoArray);
+        let passCheck = book.rageXPCheck(constants.RAGXP_PASS, pass, infoArray);
+        let nameCheck = book.rageXPCheck(constants.RAGXP_TEXT, firstName, infoArray);
+        let surnameCheck = book.rageXPCheck(constants.RAGXP_TEXT, secondName, infoArray);
 
         return emailCheck && passCheck && nameCheck && surnameCheck
     }
 
     checkIsUserAlreadyExist(email) {
         let usersArray = JSON.parse(localStorage.getItem('Users'));
-
 
         if (usersArray.length === 0) {
             return false;
@@ -110,18 +111,18 @@ export default class Registration {
                 return element.email === email.value
             });
 
-            if (findUser) {
-                let emailBlock = document.querySelector('#email-check')
-                let errorMSG = document.querySelector('#wrong-email');
-                errorMSG.style.display = 'block';
-                emailBlock.appendChild(errorMSG);
-                return true;
-            } else {
-                let errorMSG = document.querySelector('#wrong-email');
-                errorMSG.style.display = 'none';
-                return false;
-            }
+        if (findUser) {
+            let emailBlock = document.querySelector('#email-check');
+            let errorMSG = document.querySelector('#wrong-email');
+            errorMSG.style.display = 'block';
+            emailBlock.appendChild(errorMSG);
+            return true;
+        } else {
+            let errorMSG = document.querySelector('#wrong-email');
+            errorMSG.style.display = 'none';
+            return false;
         }
+
     }
 
     static createNewUser(email, pass, firstName, secondName) {
@@ -148,9 +149,8 @@ export default class Registration {
     }
 
     static successfulMessage() {
-        const confirmRegistration = document.querySelector('.registration-confirm-button');
+        const confirmRegistration = document.querySelector('.confirm-button');
         const regForm = document.querySelector('.registration-main');
-        console.log(regForm)
         let message = document.createElement('div');
         message.classList.add('good-text');
         message.innerText = 'User was created successfully';

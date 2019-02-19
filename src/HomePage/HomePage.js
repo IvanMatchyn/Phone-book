@@ -1,8 +1,9 @@
 import ContactsBook from "../Module.js"
 import * as constants from "../Constants";
-import CategoriesLoad from '../Categories/categoriesLoad.js'
+import CategoriesLoad from '../Categories/CategoriesLoad.js'
 import Session from "../Offline/Session";
 import LoadPage, {PageType} from "../LoadPage/LoadPage";
+import ContactHtmlBuilder from "../AllContacts/ContactHtmlBuilder";
 
 export default class HomePage {
     constructor() {
@@ -25,6 +26,8 @@ export default class HomePage {
                 categories.addCategories();
                 addUserNameToHomePage();
                 addEventLogOutButton();
+                addSearchEvent();
+                addBirthdayReminder();
             });
 
         function addEventCreateCategoryPage() {
@@ -58,7 +61,6 @@ export default class HomePage {
         }
 
         function addEventLogOutButton() {
-            const book = new ContactsBook();
             const logOutButton = document.querySelector('.ls-inner__account__name-logOut-button');
 
             logOutButton.addEventListener('click', () => {
@@ -71,5 +73,62 @@ export default class HomePage {
                 }
             })
         }
+
+        function addSearchEvent() {
+            const allContacts = new ContactHtmlBuilder();
+            const search = document.querySelector('.ls-inner__search-menu-input');
+
+            search.addEventListener('click', () => {
+                allContacts.loadAllContacts();
+            });
+
+            search.addEventListener('keyup', (e) => {
+                const search = document.querySelector('.ls-inner__search-menu-input');
+                let filter = search.value.toUpperCase();
+                const fullName = document.querySelectorAll('.all-contacts__items-desc__name');
+                const filteredItems = document.querySelectorAll('.all-contacts__items');
+
+                filteredItems.forEach((elem, i) => {
+                    if (fullName[i].innerText.split(' ')[0].toUpperCase().indexOf(filter) > -1) {
+                        elem.style.display = ''
+                    } else {
+                        elem.style.display = 'none'
+                    }
+                })
+            })
+        }
+
+        function addBirthdayReminder() {
+            let htmlBuilder = new ContactHtmlBuilder()
+            let contactsArray = Session.getInstance().getActiveUser().contacts;
+            let birthdayBlock = document.querySelector('.ls-inner__birthday-reminder');
+            let today = new Date();
+            let year = today.getFullYear();
+
+            let wrapper = htmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items__wrapper');
+            birthdayBlock.appendChild(wrapper);
+
+            contactsArray.forEach(elem => {
+                let bornDate = Number(elem.bornDate.split('.')[2]);
+
+                let age = year - bornDate;
+
+                let newDateBlock = htmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items');
+                let bornInfo = htmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items__bornInfo');
+                let dateBlock = htmlBuilder.createElementWithClass('div', elem.bornDate, 'ls-inner__birthday-reminder-items__date');
+                let name = htmlBuilder.createElementWithClass('div', elem.name + ' ' + elem.surname, 'ls-inner__birthday-reminder-items__name');
+                let ageBlock = htmlBuilder.createElementWithClass('div', `${age} years old`, 'ls-inner__birthday-reminder-items__age');
+
+                wrapper.appendChild(newDateBlock);
+
+                newDateBlock.appendChild(bornInfo);
+                newDateBlock.appendChild(ageBlock);
+
+                bornInfo.appendChild(name);
+                bornInfo.appendChild(dateBlock)
+
+            });
+        }
     }
 }
+

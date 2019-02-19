@@ -17,8 +17,6 @@ export default class EditContact {
             .then(() => {
                 this.addEventEditContact(link, id);
             });
-
-
     }
 
     addEventEditContact(link, id) {
@@ -34,7 +32,7 @@ export default class EditContact {
         let editContactEmail = document.querySelector('#addContact-email');
         let editContactBirthDate = document.querySelector('#addContact-birthDate');
         let editContactInfo = document.querySelector('#addContact-info');
-        let editContactInstagramm = document.querySelector('#addContact-instagramm');
+        let editContactInstagram = document.querySelector('#addContact-instagramm');
         let editContactFacebook = document.querySelector('#addContact-facebook');
 
         this.loadOldInfo(editContactName, editContactSurName, editContactDescription, editContactPhone, editContactEmail, editContactBirthDate, editContactInfo, editContactInstagramm, editContactFacebook);
@@ -47,9 +45,7 @@ export default class EditContact {
                 console.log(e);
             }
         });
-
     }
-
 
     loadOldInfo(name, surname, description, phone, email, bornDate, information, instagramm, facebook) {
         let usersArray = Session.getInstance().getActiveUser().contacts;
@@ -68,21 +64,22 @@ export default class EditContact {
             email.value = currentElem.email;
             bornDate.value = currentElem.bornDate;
             information.innerText = currentElem.information;
-            instagramm.value = currentElem.instagramm;
+            instagram.value = currentElem.instagramm;
             facebook.value = currentElem.facebook;
         }
     }
-
-    static validateFields(name, surname, description, phone, email, borndate, information) {
+    static validateFields(name, surname, description, phone, email, bornDate, information) {
         let book = new ContactBook();
 
-        book.rageXPCheck(constants.RAGEXP_TEXT, name);
-        book.rageXPCheck(constants.RAGEXP_TEXT, surname);
-        book.rageXPCheck(constants.RAGEXP_TEXT, description);
-        book.rageXPCheck(constants.RAGEXP_TEXT, information);
-        book.rageXPCheck(constants.RAGEXP_EMAIL, email);
-        book.rageXPCheck(constants.RAGEXP_BIRTHDAY, borndate);
-        book.rageXPCheck(constants.RAGEXP_PHONE, phone);
+        let checkName = book.rageXPCheck(constants.RAGXP_TEXT, name);
+        let checkSurname =  book.rageXPCheck(constants.RAGXP_TEXT, surname);
+        let checkDesc = book.rageXPCheck(constants.RAGXP_TEXT, description);
+        let checkInfo = book.rageXPCheck(constants.RAGXP_TEXT, information);
+        let checkEmail = book.rageXPCheck(constants.RAGXP_EMAIL, email);
+        let checkBornDate = book.rageXPCheck(constants.RAGXP_BIRTHDAY, bornDate);
+        let checkPhone = book.rageXPCheck(constants.RAGXP_PHONE, phone);
+
+        return checkName && checkSurname && checkDesc && checkInfo && checkEmail && checkBornDate && checkPhone
     }
 
     static addUIvalueToObj(id, name, surname, description, phone, email, borndate, information, instagramm, facebook) {
@@ -96,26 +93,26 @@ export default class EditContact {
             }
         });
 
-        currentContact.name = name.value;
-        currentContact.surname = surname.value;
-        currentContact.position = description.value;
-        currentContact.phone = phone.value;
-        currentContact.email = email.value;
-        currentContact.bornDate = borndate.value;
-        currentContact.info = information.value;
-        currentContact.instagramm = instagramm.value;
-        currentContact.facebook = facebook.value;
+        if(currentContact){
+            currentContact.name = name.value;
+            currentContact.surname = surname.value;
+            currentContact.position = description.value;
+            currentContact.phone = phone.value;
+            currentContact.email = email.value;
+            currentContact.bornDate = bornDate.value;
+            currentContact.info = information.value;
+            currentContact.instagramm = instagramm.value;
+            currentContact.facebook = facebook.value;
 
-        succesfullEdition();
+            succesfulEdition();
+        }
 
-        function succesfullEdition() {
+        function succesfulEdition() {
             let successfullyEdit = document.createElement('div')
             successfullyEdit.innerText = 'Contact was updated';
             successfullyEdit.classList.add('good-text');
             successfullyEdit.style.fontSize = '18px';
-
             mainBlock.appendChild(successfullyEdit);
-
             Session.getInstance().saveToStorage();
             book.offlineSynchronization();
         }

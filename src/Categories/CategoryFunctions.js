@@ -16,13 +16,13 @@ export default class CategoryFunctions {
                 constants.MAIN_RSIDE_BLOCK.innerHTML = html;
             })
             .then(() => {
+                ContactsBook.mobileOpen();
                 this.create();
             })
     }
 
     delete(parentElem) {
-        let parentID = parentElem.parentElement.getAttribute('data-id');
-        const book = new ContactsBook;
+        const parentID = parentElem.parentElement.getAttribute('data-id');
         const leftBlock = new HomePage;
 
         let activeUser = Session.getInstance().getActiveUser();
@@ -34,8 +34,8 @@ export default class CategoryFunctions {
             }
         });
 
-        localStorage.setItem('Active User', JSON.stringify(activeUser));
-        book.offlineSynchronization();
+        Session.getInstance().saveToStorage();
+        ContactsBook.offlineSynchronization();
         leftBlock.onload();
     }
 
@@ -43,10 +43,9 @@ export default class CategoryFunctions {
         const createButton = document.querySelector('.create-group__confirm');
         const createGroupValue = document.querySelector('.create-group__value');
         const leftBlock = new HomePage;
-        const book = new ContactsBook;
-        let result = document.querySelector('.create-group__result');
-        let createInput = document.querySelector('.create-group__value');
-        let activeUser = Session.getInstance().getActiveUser();
+        const result = document.querySelector('.create-group__result');
+        const createInput = document.querySelector('.create-group__value');
+        const activeUser = Session.getInstance().getActiveUser();
 
         createButton.addEventListener('click', () => {
             let maxCategoryID = localStorage.getItem('maxCategoryID');
@@ -72,26 +71,31 @@ export default class CategoryFunctions {
                 result.classList.remove('good-text');
                 result.style.display = 'block';
             } else {
-                successfulCreation();
+                let maxCategoryID = localStorage.getItem('maxCategoryID');
+
+                let newCategory = {
+                    id: Number(maxCategoryID) + 1,
+                    name: createGroupValue.value,
+                    contacts: []
+                };
+                successfulCreation(newCategory);
             }
 
-
-            function successfulCreation() {
-                result.innerText = 'Category "' + newCategory.name + '" was created';
+            function successfulCreation(category) {
+                result.innerText = 'Category "' + category.name + '" was created';
                 result.classList.remove('wrong-text');
                 result.classList.add('good-text');
                 createInput.classList.remove('wrong-info');
                 result.style.display = 'block';
 
-                let updatedMaxCategoryID = newCategory.id;
-                localStorage.setItem('maxCategoryID', `${updatedMaxCategoryID}`);
+                let updatedMaxCategoryID = category.id;
 
-                activeUser.categories.push(newCategory);
+                localStorage.setItem('maxCategoryID', `${updatedMaxCategoryID}`);
+                activeUser.categories.push(category);
                 Session.getInstance().saveToStorage();
                 book.offlineSynchronization();
 
                 createGroupValue.value = '';
-
                 leftBlock.onload();
             }
         })
