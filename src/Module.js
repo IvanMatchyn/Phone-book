@@ -72,7 +72,7 @@ export default class ContactsBook {
         localStorage.setItem('Users', JSON.stringify(usersArray))
     }
 
-    rageXPCheck(rageXP, element, allFieldsArray) {
+    rageXPCheck(rageXP, element) {
         if (!rageXP.test(element.value)) {
             element.classList.add('wrong-info');
             element.setAttribute('placeholder', 'Incorrect');
@@ -82,17 +82,7 @@ export default class ContactsBook {
             element.removeAttribute('placeholder');
         }
 
-        let emptyField = allFieldsArray.find(emptyElement => {
-            if (emptyElement.value.length === 0) {
-                emptyElement.classList.add('wrong-info');
-                emptyElement.setAttribute('placeholder', 'Incorrect');
-                return false;
-
-            }
-        });
-
-        return !emptyField;
-
+        return true;
     }
 
     static isMobileDevice(){

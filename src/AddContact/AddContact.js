@@ -8,7 +8,7 @@ export default class NewContact {
 
     onload() {
 
-        book.clearMainBlock();
+        ContactsBook.clearMainBlock();
         fetch('./AddContact/AddContact.html')
             .then(response => {
                 return response.text().then(function (text) {
@@ -16,13 +16,13 @@ export default class NewContact {
                 })
             })
             .then(() => {
-                book.mobileOpen();
-                this.saveContact();
-                this.cancelSavingInfo();
+                ContactsBook.mobileOpen();
+                this.addEventSaveContact();
+                this.AddEventCancelSavingInfo();
             })
     }
 
-    saveContact() {
+    addEventSaveContact() {
         const book = new ContactsBook();
         const saveButton = document.querySelector('.add-contact__buttons__save');
         let activeUser = Session.getInstance().getActiveUser();
@@ -35,82 +35,21 @@ export default class NewContact {
         let birthdayVal = document.querySelector('#addContact-birthday');
         let infoVal = document.querySelector('#addContact-information');
         let facebookVal = document.querySelector('#addContact-facebook');
-        let instagrammVal = document.querySelector('#addContact-instagramm');
+
+        let instagramVal = document.querySelector('#addContact-instagramm');
 
         let dataArray = [nameVal, surNameVal, descVal, phoneVal, emailVal, birthdayVal, infoVal];
 
         saveButton.addEventListener('click', function save() {
             let newContact = {};
 
-            if(!constants.RAGEXP_TEXT.test(nameVal.value)){
-                nameVal.classList.add('wrong-info');
-                nameVal.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                nameVal.classList.remove('wrong-info');
-                nameVal.removeAttribute('placeholder', 'Incorrect');
-            }
-
-            if(!constants.RAGEXP_TEXT.test(surNameVal.value)){
-                surNameVal.classList.add('wrong-info');
-                surNameVal.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                surNameVal.classList.remove('wrong-info');
-                surNameVal.removeAttribute('placeholder', 'Incorrect');
-            }
-
-            if(!constants.RAGEXP_TEXT.test(descVal.value)){
-                descVal.classList.add('wrong-info');
-                descVal.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                descVal.classList.remove('wrong-info');
-                descVal.removeAttribute('placeholder', 'Incorrect');
-            }
-
-            if(!constants.RAGEXP_TEXT.test(infoVal.value)){
-                infoVal.classList.add('wrong-info');
-                infoVal.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                infoVal.classList.remove('wrong-info');
-                infoVal.removeAttribute('placeholder', 'Incorrect');
-            }
-
-            if (!constants.RAGEXP_EMAIL.test(emailVal.value)) {
-                emailVal.classList.add('wrong-info');
-                emailVal.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                emailVal.classList.remove('wrong-info');
-                emailVal.removeAttribute('placeholder', 'Incorrect');
-            }
-
-            if (!constants.RAGEXP_BIRTHDAY.test(birthdayVal.value)) {
-                birthdayVal.classList.add('wrong-info');
-                birthdayVal.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                birthdayVal.classList.remove('wrong-info');
-                birthdayVal.removeAttribute('placeholder', 'Incorrect');
-            }
-
-            if (!constants.RAGEXP_PHONE.test(phoneVal.value)) {
-                phoneVal.classList.add('wrong-info');
-                phoneVal.setAttribute('placeholder', 'Incorrect');
-                allDone = false;
-            } else {
-                allDone = true;
-                phoneVal.classList.remove('wrong-info');
-                phoneVal.removeAttribute('placeholder', 'Incorrect');
-            }
+            let nameCheck = book.rageXPCheck(constants.RAGXP_TEXT, nameVal);
+            let surnameCheck = book.rageXPCheck(constants.RAGXP_TEXT, surNameVal);
+            let descriptionCheck = book.rageXPCheck(constants.RAGXP_TEXT, descVal);
+            let infoCheck = book.rageXPCheck(constants.RAGXP_TEXT, infoVal);
+            let emailCheck = book.rageXPCheck(constants.RAGXP_EMAIL, emailVal);
+            let bornDateCheck = book.rageXPCheck(constants.RAGXP_BIRTHDAY, birthdayVal);
+            let phoneCheck = book.rageXPCheck(constants.RAGXP_PHONE, phoneVal);
 
             if (nameCheck && surnameCheck && descriptionCheck && infoCheck && emailCheck && bornDateCheck
                 && phoneCheck) {
@@ -135,7 +74,7 @@ export default class NewContact {
                 let activeUserContacts = activeUser.contacts;
                 activeUserContacts.push(newContact);
                 localStorage.setItem('Active User', JSON.stringify(activeUser));
-                book.offlineSynchronization();
+                ContactsBook.offlineSynchronization();
 
                 dataArray.forEach(elem => {
                     elem.value = '';
@@ -153,13 +92,11 @@ export default class NewContact {
         })
     }
 
-    cancelSavingInfo() {
+    AddEventCancelSavingInfo() {
         const cancelButton = document.querySelector('.add-contact__buttons__cancel');
         cancelButton.addEventListener('click', () => {
-            book.clearMainBlock();
-            if (document.documentElement.clientWidth <= 720) {
-                mainLeftBlock.style.display = 'block';
-            }
+            ContactsBook.clearMainBlock();
+            ContactsBook.isMobileDevice();
         });
     }
 }

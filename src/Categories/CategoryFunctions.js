@@ -3,6 +3,7 @@ import HomePage from "../HomePage/HomePage.js"
 import ContactsBook from "../Module.js"
 import Session from "../Offline/Session";
 
+
 export default class CategoryFunctions {
     constructor() {
     }
@@ -48,20 +49,8 @@ export default class CategoryFunctions {
         const activeUser = Session.getInstance().getActiveUser();
 
         createButton.addEventListener('click', () => {
-            let maxCategoryID = localStorage.getItem('maxCategoryID');
-
-            let newCategory = {
-                id: Number(maxCategoryID) + 1,
-                name: createGroupValue.value,
-                contacts: []
-            };
-
-            let groupAlreadyExist = false;
-
-            activeUser.categories.forEach(elem => {
-                if (elem.name === createGroupValue.value) {
-                    groupAlreadyExist = true;
-                }
+            let groupAlreadyExist = activeUser.categories.find(elem => {
+                return elem.name === createGroupValue.value
             });
 
             if (groupAlreadyExist) {
@@ -93,8 +82,7 @@ export default class CategoryFunctions {
                 localStorage.setItem('maxCategoryID', `${updatedMaxCategoryID}`);
                 activeUser.categories.push(category);
                 Session.getInstance().saveToStorage();
-                book.offlineSynchronization();
-
+                ContactsBook.offlineSynchronization();
                 createGroupValue.value = '';
                 leftBlock.onload();
             }

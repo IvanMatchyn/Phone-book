@@ -69,12 +69,9 @@ export default class Registration {
     checkIsUserAlreadyExist(email) {
         let usersArray = JSON.parse(localStorage.getItem('Users'));
 
-        if (usersArray.length === 0) {
-            return false;
-        } else {
-            let findUser = usersArray.find(element => {
-                return element.email === email.value
-            });
+        let findUser = usersArray.find(element => {
+            return element.email === email.value
+        });
 
         if (findUser) {
             let emailBlock = document.querySelector('#email-check');
@@ -92,7 +89,6 @@ export default class Registration {
 
     static createNewUser(email, pass, firstName, secondName) {
         let infoUserObject = {};
-
         let usersArray = JSON.parse(localStorage.getItem('Users'));
         let userID = Number(localStorage.getItem('maxUserID')) + 1;
 

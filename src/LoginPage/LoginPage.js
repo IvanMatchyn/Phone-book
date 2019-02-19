@@ -37,7 +37,7 @@ export default class LoginPage {
         const enterButton = document.querySelector('.reg-form-submit');
 
         enterButton.addEventListener('click', () => {
-            book.clearMainBlock();
+            ContactsBook.clearMainBlock();
             let usersInfo = JSON.parse(localStorage.getItem('Users'));
 
             if (this.validateUserInfo(usersInfo, login, password)) {
@@ -73,9 +73,7 @@ export default class LoginPage {
         Session.getInstance().loadActiveUser();
         let user = Session.getInstance().getActiveUser();
 
-        console.log(user)
-
-        let maxCatIDarray = user.categories;
+        let maxCatIDArray = user.categories;
         let maxContactArray = user.contacts;
 
         if (maxCatIDArray.length < 1) {
