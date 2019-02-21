@@ -1,21 +1,22 @@
 import Session from "./Offline/Session";
 import LoadPage, {PageType} from "./LoadPage/LoadPage";
+import * as constants from './Constants.js'
 
 export default class ContactsBook {
     constructor() {
     }
 
-    onload() {
+    static onload() {
         let maxUserID = localStorage.getItem('maxUserID');
 
         if (maxUserID == null) {
             localStorage.setItem('maxUserID', '0');
         }
 
-        if (localStorage.getItem('Users') == null) {
+        if (localStorage.getItem(constants.ALL_USERS) == null) {
             let newUsers = [];
             let newUsersToJSON = JSON.stringify(newUsers);
-            localStorage.setItem('Users', newUsersToJSON);
+            localStorage.setItem(constants.ALL_USERS, newUsersToJSON);
         }
 
         let url = new URLSearchParams(window.location.search.substring(1));
@@ -23,16 +24,17 @@ export default class ContactsBook {
         let page = url.get("page");
 
         if (page === null) {
-            page = "login";
+            page = PageType.LOGIN_PAGE;
         }
-        LoadPage.load(PageType.LOGIN_PAGE);
+
+        LoadPage.load(page);
     }
 
     static clearMainBlock() {
         const mainBlock = document.querySelector('.main__article');
-        const mainBlockChilds = mainBlock.childNodes;
+        const mainBlockChildren = mainBlock.childNodes;
 
-        mainBlockChilds.forEach(elem => {
+        mainBlockChildren.forEach(elem => {
             mainBlock.removeChild(elem);
         })
     }
@@ -61,18 +63,18 @@ export default class ContactsBook {
 
     static offlineSynchronization() {
         let activeUser = Session.getInstance().getActiveUser();
-        let usersArray = JSON.parse(localStorage.getItem('Users'));
+        let usersArray = JSON.parse(localStorage.getItem(constants.ALL_USERS));
 
         usersArray.forEach((elem, i) => {
-            if (activeUser.ID = elem.ID) {
+            if (activeUser.ID === elem.ID) {
                 usersArray[i] = activeUser;
             }
         });
 
-        localStorage.setItem('Users', JSON.stringify(usersArray))
+        localStorage.setItem(constants.ALL_USERS, JSON.stringify(usersArray))
     }
 
-    rageXPCheck(rageXP, element) {
+    static rageXPCheck(rageXP, element) {
         if (!rageXP.test(element.value)) {
             element.classList.add('wrong-info');
             element.setAttribute('placeholder', 'Incorrect');
@@ -85,7 +87,7 @@ export default class ContactsBook {
         return true;
     }
 
-    static isMobileDevice(){
+    static isMobileDevice() {
         if (document.documentElement.clientWidth <= 720) {
             let title = document.querySelector('.ls__title');
             title.style.display = 'block';

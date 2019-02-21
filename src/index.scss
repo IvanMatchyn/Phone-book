@@ -148,8 +148,24 @@ input::-webkit-inner-spin-button {
         border-radius: 50%;
         width: 48px;
         height: 48px;
-        border: 1px solid #ffffff;
-        background: url("img/login-photo.png") no-repeat center center / cover;
+
+        &__choose {
+          width: 48px;
+          height: 48px;
+          opacity: 0;
+          outline: none;
+          top: 0;
+          position: absolute;
+          cursor: pointer;
+        }
+
+        &__fake {
+          top: 0;
+          position: absolute;
+          width: 48px;
+          height: 48px;
+          background: url("./img/addContactImg.png") no-repeat center center / cover;
+        }
       }
 
       &__name {
@@ -264,6 +280,10 @@ input::-webkit-inner-spin-button {
           font-size: 15px;
           font-weight: 400;
           line-height: 48px;
+
+          &::first-letter{
+            text-transform: uppercase;
+          }
         }
 
         &__option {
@@ -789,6 +809,12 @@ input::-webkit-inner-spin-button {
 .add-contact {
   padding: 56px 48px 0 48px;
 
+  &__inner-wrapper {
+    display: inline-block;
+    max-width: 983px;
+    width: 100%;
+  }
+
   &__initials {
     width: 100%;
     display: flex;
@@ -1092,7 +1118,6 @@ input::-webkit-inner-spin-button {
           &-p {
             margin: 0;
           }
-        ;
 
           &:hover {
             background: #41465c;
@@ -1118,7 +1143,7 @@ input::-webkit-inner-spin-button {
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      background: url("./img/contact__info.png") no-repeat center center;
+      background: url("./img/addContactImg.png") no-repeat center center / cover;
     }
 
     &-desc {
@@ -1369,7 +1394,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-
 .wrong-text {
   color: red;
   font-family: 'Roboto', serif;
@@ -1390,6 +1414,15 @@ input::-webkit-inner-spin-button {
 
 .show {
   display: block;
+}
+
+.star-field {
+  text-align: right;;
+  font-family: 'Roboto', serif;
+  font-size: 16px;
+  font-weight: 900;
+  margin-top: 48px;
+
 }
 
 @media screen and (max-width: 1366px) {
@@ -1725,6 +1758,7 @@ input::-webkit-inner-spin-button {
 
       &__header {
         margin-bottom: 8px;
+        margin-top: 8px;
         padding-top: 0;
         text-align: left;
       }
@@ -1735,7 +1769,7 @@ input::-webkit-inner-spin-button {
     }
 
     &__buttons {
-      padding: 0 24px;
+      padding: 45px 24px;
       margin: 48px 0;
       bottom: 0;
       display: grid;
@@ -1873,6 +1907,10 @@ input::-webkit-inner-spin-button {
 
   .all-contacts__items-options__menu-items-img {
     transform: rotate(270deg);
+  }
+
+  .star-field {
+    margin-top: 30px;
   }
 }
 
