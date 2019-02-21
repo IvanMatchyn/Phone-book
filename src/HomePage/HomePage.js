@@ -96,27 +96,15 @@ export default class HomePage {
             let htmlBuilder = new ContactHtmlBuilder()
             let contactsArray = Session.getInstance().getActiveUser().contacts;
             let birthdayBlock = document.querySelector('.ls-inner__birthday-reminder');
-            let today = new Date();
-            let year = today.getFullYear();
-
-            let wrapper = htmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items__wrapper');
+            let wrapper = ContactHtmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items__wrapper');
             birthdayBlock.appendChild(wrapper);
-
             contactsArray.forEach(elem => {
-                let bornDate = Number(elem.bornDate.split('.')[2]);
-
-                let age = year - bornDate;
-
-                let newDateBlock = htmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items');
-                let bornInfo = htmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items__bornInfo');
-                let dateBlock = htmlBuilder.createElementWithClass('div', elem.bornDate, 'ls-inner__birthday-reminder-items__date');
-                let name = htmlBuilder.createElementWithClass('div', elem.name + ' ' + elem.surname, 'ls-inner__birthday-reminder-items__name');
-                let ageBlock = htmlBuilder.createElementWithClass('div', `${age} years old`, 'ls-inner__birthday-reminder-items__age');
-
+                let newDateBlock = ContactHtmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items');
+                let bornInfo = ContactHtmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items__bornInfo');
+                let dateBlock = ContactHtmlBuilder.createElementWithClass('div', elem.bornDate, 'ls-inner__birthday-reminder-items__date');
+                let name = ContactHtmlBuilder.createElementWithClass('div', elem.name + ' ' + elem.surname, 'ls-inner__birthday-reminder-items__name');
                 wrapper.appendChild(newDateBlock);
-
                 newDateBlock.appendChild(bornInfo);
-                newDateBlock.appendChild(ageBlock);
 
                 bornInfo.appendChild(name);
                 bornInfo.appendChild(dateBlock)

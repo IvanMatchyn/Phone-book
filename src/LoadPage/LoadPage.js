@@ -4,6 +4,7 @@ import HomePage from "../HomePage/HomePage.js";
 import NewContact from "../AddContact/AddContact.js";
 import ContactHtmlBuilder from "../AllContacts/ContactHtmlBuilder.js";
 import CategoryFunctions from "../Categories/CategoryFunctions.js";
+import Session from "../Offline/Session";
 
 export const PageType = {
     LOGIN_PAGE: 'login',
@@ -36,6 +37,7 @@ export default class LoadPage {
 
         switch (page) {
             case PageType.LOGIN_PAGE :
+                Session.getInstance().loadActiveUser();
                 loginPage.onload();
                 break;
             case PageType.REGISTRATION_PAGE :
@@ -43,17 +45,21 @@ export default class LoadPage {
                 reg.onload();
                 break;
             case PageType.HOME_PAGE :
+                Session.getInstance().loadActiveUser();
                 homePage.onload();
                 break;
             case PageType.CREATE_CONTACT_PAGE :
+                Session.getInstance().loadActiveUser();
                 homePage.onload();
                 newContact.onload();
                 break;
             case PageType.ALL_CONTACT_PAGE :
+                Session.getInstance().loadActiveUser();
                 homePage.onload();
                 allContacts.loadAllContacts();
                 break;
             case PageType.CREATE_CATEGORY_PAGE :
+                Session.getInstance().loadActiveUser();
                 homePage.onload();
                 categoryMenu.onload();
                 break;

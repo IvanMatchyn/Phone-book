@@ -45,29 +45,24 @@ export default class Registration {
         })
     }
 
-    static clearFieldsWarnings(array){
+    static clearFieldsWarnings(array) {
         array.forEach(elem => {
             elem.classList.remove('wrong-info');
-
             elem.removeAttribute('placeholder');
         });
     }
 
     static validateUser(email, pass, firstName, secondName) {
-        const book = new ContactsBook();
-
-        let infoArray = [email, pass, firstName, secondName];
-
-        let emailCheck = book.rageXPCheck(constants.RAGXP_EMAIL, email, infoArray);
-        let passCheck = book.rageXPCheck(constants.RAGXP_PASS, pass, infoArray);
-        let nameCheck = book.rageXPCheck(constants.RAGXP_TEXT, firstName, infoArray);
-        let surnameCheck = book.rageXPCheck(constants.RAGXP_TEXT, secondName, infoArray);
+        let emailCheck = ContactsBook.rageXPCheck(constants.RAGXP_EMAIL, email);
+        let passCheck = ContactsBook.rageXPCheck(constants.RAGXP_PASS, pass);
+        let nameCheck = ContactsBook.rageXPCheck(constants.RAGXP_TEXT, firstName);
+        let surnameCheck = ContactsBook.rageXPCheck(constants.RAGXP_TEXT, secondName);
 
         return emailCheck && passCheck && nameCheck && surnameCheck
     }
 
     checkIsUserAlreadyExist(email) {
-        let usersArray = JSON.parse(localStorage.getItem('Users'));
+        let usersArray = JSON.parse(localStorage.getItem(constants.ALL_USERS));
 
         let findUser = usersArray.find(element => {
             return element.email === email.value
@@ -89,11 +84,11 @@ export default class Registration {
 
     static createNewUser(email, pass, firstName, secondName) {
         let infoUserObject = {};
-        let usersArray = JSON.parse(localStorage.getItem('Users'));
-        let userID = Number(localStorage.getItem('maxUserID')) + 1;
+        let usersArray = JSON.parse(localStorage.getItem(constants.ALL_USERS));
+        let userID = Number(localStorage.getItem(constants.MAX_USER_ID)) + 1;
 
         infoUserObject.ID = userID;
-        localStorage.setItem('maxUserID', `${userID}`);
+        localStorage.setItem(constants.MAX_USER_ID, `${userID}`);
 
         infoUserObject.email = email.value;
         infoUserObject.password = pass.value;
@@ -106,15 +101,27 @@ export default class Registration {
         usersArray.push(infoUserObject);
 
         let usersArrayToJSON = JSON.stringify(usersArray);
-        localStorage.setItem('Users', usersArrayToJSON);
+        localStorage.setItem(constants.ALL_USERS, usersArrayToJSON);
     }
 
     static successfulMessage() {
         const confirmRegistration = document.querySelector('.confirm-button');
         const regForm = document.querySelector('.registration-main');
-        let message = document.createElement('div');
+        const message = document.createElement('div');
+        const regFormChildren = [...regForm.children];
+
         message.classList.add('good-text');
         message.innerText = 'User was created successfully';
-        regForm.insertBefore(message, confirmRegistration);
+        message.style.marginTop = '20px';
+        message.style.textAlign = 'right';
+        message.style.fontSize = '16px';
+
+        const msgCheck = regFormChildren.find(msg => {
+            return msg.classList.contains('good-text');
+        });
+
+        if (!msgCheck) {
+            regForm.insertBefore(message, confirmRegistration);
+        }
     }
 }
