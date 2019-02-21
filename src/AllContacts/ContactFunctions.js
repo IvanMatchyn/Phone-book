@@ -1,7 +1,6 @@
 import CategoryFunctions from '../Categories/CategoryFunctions.js'
 import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
-import ContactsBook from "../Module";
 
 export default class ContactFunctions {
     constructor() {
@@ -24,8 +23,18 @@ export default class ContactFunctions {
         button.addEventListener('click', function (ev) {
             ev.stopPropagation();
 
-            let searchIndex = contactArray.indexOf(elem => {
+
+            let searchElem = contactArray.find(elem => {
                 return elem.id === id
+            });
+
+            let searchIndex = contactArray.indexOf(searchElem)
+
+            activeUser.categories.forEach(elem => {
+                if (elem.contacts.includes(id)) {
+                    let indexSearchedID = elem.contacts.indexOf(id);
+                    elem.contacts.splice(indexSearchedID, 1);
+                }
             });
 
             contactArray.splice(searchIndex, 1);
@@ -62,5 +71,24 @@ export default class ContactFunctions {
             menu.remove();
             mainMenu.remove();
         });
+    }
+
+    addEventRemoveFromCategory(contactID, parent) {
+        let categoryName = document.querySelector('.main__block-header__text__add-contact');
+        let activeUser = Session.getInstance().getActiveUser();
+        let categoryArray = activeUser.categories;
+
+        let searchedCategory = categoryArray.find(category => {
+            return category.name === categoryName.innerText
+        });
+
+        let searchedContactID = searchedCategory.contacts.indexOf(contactID);
+
+        searchedCategory.contacts.splice(searchedContactID, 1);
+
+        Session.getInstance().saveToStorage();
+        ContactBook.offlineSynchronization();
+
+        parent.remove();
     }
 }

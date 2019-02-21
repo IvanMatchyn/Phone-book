@@ -92,6 +92,8 @@ export default class ContactHtmlBuilder {
             addToGroupElem.appendChild(addToGroupNameElem);
             addToGroupElem.appendChild(addToGroupArrowElem);
 
+
+
             addEventsToDropDownMenuItems(editContactLinkElem, createGroupLinkElementElem, deleteContactLinkElem, addToGroupElem, parentElement);
             deleteDropDownMenu(contactOptionMenuElem);
             addRemoveFromCategoryLink(forCategories, contactOptionMenuElem, addToGroupElem);
@@ -130,6 +132,8 @@ export default class ContactHtmlBuilder {
                 let addToGroupMenuItems = thisClass.createElementWithClass('div', category.name, 'all-contacts__items-options__menu-items');
                 addToGroupMenuItems.dataset.id = category.id;
                 addToGroupMenuElem.appendChild(addToGroupMenuItems);
+
+                addToGroupMenuItems.style.textTransform = 'capitalize';
                 contactMenu.addEventMoveContactToGroup(addToCategoryLink, addToGroupMenuElem, addToGroupMenuItems, parentElement);
             });
 
@@ -163,7 +167,7 @@ export default class ContactHtmlBuilder {
 
                 remove.addEventListener('click', ev => {
                     ev.stopPropagation();
-                    console.log(id)
+                    contactMenu.addEventRemoveFromCategory(id, dropDownMenu.parentElement)
                 })
             }
         }
@@ -219,14 +223,20 @@ export default class ContactHtmlBuilder {
                 phone.innerText = searchContact.phone;
                 birthDate.innerText = searchContact.bornDate;
                 email.innerText = searchContact.email;
-                info.innerText = searchContact.information;
+                info.innerText = checkEmptyField(searchContact.information);
             }
 
             infoArray.forEach(elem => {
                 if (elem.innerText === 'undefined') {
                     elem.innerText = '';
                 }
-            })
+            });
+
+            function checkEmptyField(field){
+                if(field === undefined){
+                    return field = '';
+                }
+            }
         }
     }
 }

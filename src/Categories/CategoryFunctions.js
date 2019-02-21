@@ -29,11 +29,12 @@ export default class CategoryFunctions {
         let activeUser = Session.getInstance().getActiveUser();
         let categoriesArray = activeUser.categories;
 
-        categoriesArray.forEach((elem, i) => {
-            if (elem.id === Number(parentID)) {
-                categoriesArray.splice(i, 1);
-            }
+        let categoryIndex = categoriesArray.indexOf(elem => {
+            return elem.id === Number(parentID);
         });
+
+        categoriesArray.splice(categoryIndex, 1);
+
 
         Session.getInstance().saveToStorage();
         ContactsBook.offlineSynchronization();
