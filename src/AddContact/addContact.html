@@ -2,88 +2,93 @@
     <h1 class="main__block-header__text__add-contact">Add New Contact</h1>
 </div>
 <div class="add-contact">
-    <div class="add-contact__initials">
-        <div class="add-contact__initials__photo">
-            <div class="add-contact__initials__photo__fake"></div>
-            <input type="file" class="add-contact__initials__photo__choose">
-        </div>
-        <div class="add-contact__initials__desc">
-            <div class="add-contact__initials__desc__full-name">
-                <div class="add-contact__initials__desc__full-name__wrapper">
-                    <div class="add-contact__tooltip">
-                        <h2 class="add-contact__tooltip__h2">Name</h2>
+    <div class="add-contact__inner-wrapper">
+        <div class="add-contact__initials">
+            <div class="add-contact__initials__photo">
+                <div class="add-contact__initials__photo__fake"></div>
+                <input type="file" class="add-contact__initials__photo__choose">
+            </div>
+            <div class="add-contact__initials__desc">
+                <div class="add-contact__initials__desc__full-name">
+                    <div class="add-contact__initials__desc__full-name__wrapper">
+                        <div class="add-contact__tooltip">
+                            <h2 class="add-contact__tooltip__h2">Name*</h2>
+                        </div>
+                        <input type="text" class="add-contact__initials__desc__full-name__text" id="addContact-name">
                     </div>
-                    <input type="text" class="add-contact__initials__desc__full-name__text" id="addContact-name">
+                    <div class="add-contact__initials__desc__full-name__wrapper">
+                        <div class="add-contact__tooltip">
+                            <h2 class="add-contact__tooltip__h2">Surname*</h2>
+                        </div>
+                        <input type="text" class="add-contact__initials__desc__full-name__text" id="addContact-surname">
+                    </div>
                 </div>
-                <div class="add-contact__initials__desc__full-name__wrapper">
+                <div class="add-contact__initials__desc__textarea__wrapper">
                     <div class="add-contact__tooltip">
-                        <h2 class="add-contact__tooltip__h2">Surname</h2>
+                        <h2 class="add-contact__tooltip__h2">Description*</h2>
                     </div>
-                    <input type="text" class="add-contact__initials__desc__full-name__text" id="addContact-surname">
+                    <textarea name="Description" id="addContact-desc" cols="30" rows="10"
+                              class="add-contact__initials__desc__textarea"></textarea>
                 </div>
             </div>
-            <div class="add-contact__initials__desc__textarea__wrapper">
-                <div class="add-contact__tooltip">
-                    <h2 class="add-contact__tooltip__h2">Description</h2>
-                </div>
-                <textarea name="Description" id="addContact-desc" cols="30" rows="10"
-                          class="add-contact__initials__desc__textarea"></textarea>
+        </div>
+        <div class="add-contact__block">
+            <div class="add-contact__block__header">
+                <h2 class="add-contact__tooltip__h2">Phone*</h2>
+            </div>
+            <div class="add-contact__block__text">
+                <input type="text" class="add-contact__block__text__input" id="addContact-phone" placeholder="Example: +380954873245">
             </div>
         </div>
-    </div>
-    <div class="add-contact__block">
-        <div class="add-contact__block__header">
-            <h2 class="add-contact__tooltip__h2">Phone</h2>
+        <div class="add-contact__block">
+            <div class="add-contact__block__header">
+                <h2 class="add-contact__tooltip__h2">Email*</h2>
+            </div>
+            <div class="add-contact__block__text">
+                <input type="email" class="add-contact__block__text__input" id="addContact-email">
+            </div>
         </div>
-        <div class="add-contact__block__text">
-            <input type="text" class="add-contact__block__text__input" id="addContact-phone" placeholder="Example: +380954873245">
+        <div class="add-contact__block">
+            <div class="add-contact__block__header">
+                <h2 class="add-contact__tooltip__h2">Birthday*</h2>
+            </div>
+            <div class="add-contact__block__text">
+                <input type="text" class="add-contact__block__text__input" id="addContact-birthday" placeholder="Example: 25.11.1979">
+            </div>
         </div>
-    </div>
-    <div class="add-contact__block">
-        <div class="add-contact__block__header">
-            <h2 class="add-contact__tooltip__h2">Email</h2>
+        <div class="add-contact__block">
+            <div class="add-contact__block__header">
+                <h2 class="add-contact__tooltip__h2">Information</h2>
+            </div>
+            <textarea name="Information" cols="30" rows="10" class="add-contact__block__textarea" id="addContact-information"></textarea>
         </div>
-        <div class="add-contact__block__text">
-            <input type="email" class="add-contact__block__text__input" id="addContact-email">
+        <div class="add-contact__block">
+            <div class="add-contact__block__header">
+                <h2 class="add-contact__tooltip__h2">Instagramm</h2>
+            </div>
+            <div class="add-contact__block__text">
+                <input type="text" class="add-contact__block__text__input" id="addContact-instagramm">
+            </div>
         </div>
-    </div>
-    <div class="add-contact__block">
-        <div class="add-contact__block__header">
-            <h2 class="add-contact__tooltip__h2">Birthday</h2>
+        <div class="add-contact__block">
+            <div class="add-contact__block__header">
+                <h2 class="add-contact__tooltip__h2">Facebook</h2>
+            </div>
+            <div class="add-contact__block__text">
+                <input type="text" class="add-contact__block__text__input" id="addContact-facebook">
+            </div>
         </div>
-        <div class="add-contact__block__text">
-            <input type="text" class="add-contact__block__text__input" id="addContact-birthday" placeholder="Example: 25.11.1979">
-        </div>
-    </div>
-    <div class="add-contact__block">
-        <div class="add-contact__block__header">
-            <h2 class="add-contact__tooltip__h2">Information</h2>
-        </div>
-        <textarea name="Information" cols="30" rows="10" class="add-contact__block__textarea" id="addContact-information"></textarea>
-    </div>
-    <div class="add-contact__block">
-        <div class="add-contact__block__header">
-            <h2 class="add-contact__tooltip__h2">Instagramm</h2>
-        </div>
-        <div class="add-contact__block__text">
-            <input type="text" class="add-contact__block__text__input" id="addContact-instagramm">
-        </div>
-    </div>
-    <div class="add-contact__block">
-        <div class="add-contact__block__header">
-            <h2 class="add-contact__tooltip__h2">Facebook</h2>
-        </div>
-        <div class="add-contact__block__text">
-            <input type="text" class="add-contact__block__text__input" id="addContact-facebook">
+        <div class="star-field">
+            <div>* - Required fields </div>
         </div>
     </div>
 </div>
 <div class="add-contact__buttons">
     <div class="add-contact__buttons__line"></div>
     <button class="add-contact__buttons__save">
-        <p class="add-contact__buttons__text">Save Changes</p>
+        <span class="add-contact__buttons__text">Save Changes</span>
     </button>
     <button class="add-contact__buttons__cancel">
-        <p class="add-contact__buttons__text">Cancel</p>
+        <span class="add-contact__buttons__text">Cancel</span>
     </button>
 </div>
