@@ -231,8 +231,9 @@ export default class ContactHtmlBuilder {
 
             function checkEmptyField(field) {
                 if (field === undefined) {
-                    return field = '';
+                    return '';
                 }
+                return field
             }
         }
     }
