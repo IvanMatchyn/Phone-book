@@ -5,9 +5,6 @@ import Session from "../Offline/Session";
 import EditContact from '../EditContact/EditContact.js'
 
 export default class ContactHtmlBuilder {
-    constructor() {
-    }
-
     loadAllContacts() {
         let contactsArray = Session.getInstance().getActiveUser().contacts;
         this.showAllContacts(contactsArray);
@@ -17,7 +14,7 @@ export default class ContactHtmlBuilder {
         fetch('./AllContacts/AllContacts.html')
             .then(response => {
                 return response.text().then(function (text) {
-                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                    constants.mainRightSideBlock.innerHTML = text;
                 })
             })
             .then(() => {
@@ -57,9 +54,9 @@ export default class ContactHtmlBuilder {
             contactOptionButtonElem.addEventListener('click', (e) => {
                 e.stopPropagation();
                 let childrenArray = [...contactItemElem.children];
-                let dropDownMenuFind = childrenArray.find(menu => {
-                    return menu.classList.contains('all-contacts__items-options__menu');
-                });
+                let dropDownMenuFind = childrenArray.find(menu =>
+                    menu.classList.contains('all-contacts__items-options__menu')
+                );
 
                 if (!dropDownMenuFind) {
                     contactItemElem.appendChild(createDropDownMenu(contactItemElem));
@@ -91,7 +88,6 @@ export default class ContactHtmlBuilder {
 
             addToGroupElem.appendChild(addToGroupNameElem);
             addToGroupElem.appendChild(addToGroupArrowElem);
-
 
 
             addEventsToDropDownMenuItems(editContactLinkElem, createGroupLinkElementElem, deleteContactLinkElem, addToGroupElem, parentElement);
@@ -138,9 +134,9 @@ export default class ContactHtmlBuilder {
             });
 
             let childrenArray = [...parentElement.children];
-            let dropDownMenuFind = childrenArray.find(menu => {
-                return menu.classList.contains('all-contacts__items-options__menu-addToGroup');
-            });
+            let dropDownMenuFind = childrenArray.find(menu =>
+                menu.classList.contains('all-contacts__items-options__menu-addToGroup')
+            );
 
             if (!dropDownMenuFind) {
                 parentElement.appendChild(addToGroupMenuElem);
@@ -193,7 +189,7 @@ export default class ContactHtmlBuilder {
         fetch('../ContactInfo/ContactInfo.html')
             .then(response => {
                 return response.text().then(function (text) {
-                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                    constants.mainRightSideBlock.innerHTML = text;
                 })
             })
             .then(() => {
@@ -213,9 +209,9 @@ export default class ContactHtmlBuilder {
 
             let infoArray = [name, description, phone, email, birthDate, info];
 
-            let searchContact = contactsArray.find(elem => {
-                return elem.id === id
-            });
+            let searchContact = contactsArray.find(elem =>
+                elem.id === id
+            );
 
             if (searchContact) {
                 name.innerText = `${searchContact.name} ${searchContact.surname}`;
@@ -232,8 +228,8 @@ export default class ContactHtmlBuilder {
                 }
             });
 
-            function checkEmptyField(field){
-                if(field === undefined){
+            function checkEmptyField(field) {
+                if (field === undefined) {
                     return field = '';
                 }
             }

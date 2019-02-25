@@ -63,6 +63,11 @@ export default class LoadPage {
                 homePage.onload();
                 categoryMenu.onload();
                 break;
+
+            default :
+                Session.getInstance().loadActiveUser();
+                loginPage.onload();
+                break;
         }
     }
 }

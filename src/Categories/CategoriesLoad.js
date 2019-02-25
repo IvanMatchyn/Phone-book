@@ -5,10 +5,6 @@ import ContactBook from "../Module";
 import CategoryFunctions from "./CategoryFunctions";
 
 export default class CategoriesLoad {
-    constructor() {
-
-    }
-
     static addCategories() {
         CategoriesLoad.printCategories();
     }
@@ -49,14 +45,13 @@ export default class CategoriesLoad {
      static showAllContactsOnClick(category, contactsArrayID, header) {
         let allContactHTML = new AllContact();
         let activeUser = Session.getInstance().getActiveUser();
-
         let contacts = activeUser.contacts;
 
         category.addEventListener('click', () => {
             fetch('./AllContacts/AllContacts.html')
                 .then(response => {
                     return response.text().then(function (text) {
-                        constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                        constants.mainRightSideBlock.innerHTML = text;
                     })
                 })
                 .then(() => {
@@ -67,9 +62,9 @@ export default class CategoriesLoad {
                     contacts.forEach(elem => {
                         let contactInfo = elem;
 
-                        let currentContact = contactsArrayID.find(element => {
-                            return contactInfo.id === element
-                        });
+                        let currentContact = contactsArrayID.find(element =>
+                            contactInfo.id === element
+                        );
 
                         if (currentContact) {
                             const allContactsBlock = document.querySelector('.all-contacts');
@@ -110,7 +105,7 @@ export default class CategoriesLoad {
             event.stopPropagation();
         });
 
-        constants.MAIN.addEventListener('click', () => {
+        constants.main.addEventListener('click', () => {
             dropDownMenu.classList.remove('show');
             dropDownMenu.classList.add('hidden')
         });

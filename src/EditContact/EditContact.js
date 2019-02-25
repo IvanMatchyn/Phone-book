@@ -3,15 +3,11 @@ import Session from "../Offline/Session";
 import ContactBook from "../Module.js"
 
 export default class EditContact {
-    constructor() {
-
-    }
-
     onload(link, id) {
         fetch('../EditContact/EditContact.html')
             .then(response => {
                 return response.text().then(text => {
-                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                    constants.mainRightSideBlock.innerHTML = text;
                 })
             })
             .then(() => {
@@ -44,16 +40,15 @@ export default class EditContact {
 
             EditContact.addUIValueToObj(id, editContactName, editContactSurName, editContactDescription, editContactPhone,
                 editContactEmail, editContactBirthDate, editContactInfo, editContactInstagram, editContactFacebook);
-
         });
     }
 
     loadOldInfo(id ,name, surname, description, phone, email, bornDate, information, instagram, facebook) {
         let usersArray = Session.getInstance().getActiveUser().contacts;
 
-        let currentElem = usersArray.find(elem => {
-            return elem.id === id
-        });
+        let currentElem = usersArray.find(elem =>
+            elem.id === id
+        );
 
         if (currentElem) {
             name.value = currentElem.name;

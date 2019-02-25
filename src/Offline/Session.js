@@ -1,7 +1,6 @@
-export default class Session {
-    constructor() {
-    }
+import * as constants from "../Constants";
 
+export default class Session {
     getActiveUser() {
         return this.user;
     }

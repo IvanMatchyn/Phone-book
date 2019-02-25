@@ -24,11 +24,11 @@ export default class ContactFunctions {
             ev.stopPropagation();
 
 
-            let searchElem = contactArray.find(elem => {
-                return elem.id === id
-            });
+            let searchElem = contactArray.find(elem =>
+                elem.id === id
+            );
 
-            let searchIndex = contactArray.indexOf(searchElem)
+            let searchIndex = contactArray.indexOf(searchElem);
 
             activeUser.categories.forEach(elem => {
                 if (elem.contacts.includes(id)) {
@@ -51,14 +51,14 @@ export default class ContactFunctions {
             ev.stopPropagation();
             let id = Number(groupLinks.getAttribute('data-id'));
 
-            let category = Session.getInstance().getActiveUser().categories.find(function (elem) {
-                return id === elem.id;
-            });
+            let category = Session.getInstance().getActiveUser().categories.find(elem =>
+                id === elem.id
+            );
 
             if (category !== undefined) {
-                let contact = category.contacts.find(function (number) {
-                    return number === contactID
-                });
+                let contact = category.contacts.find(number =>
+                    number === contactID
+                );
 
                 if (contact === undefined) {
                     category.contacts.push(contactID);
@@ -78,9 +78,9 @@ export default class ContactFunctions {
         let activeUser = Session.getInstance().getActiveUser();
         let categoryArray = activeUser.categories;
 
-        let searchedCategory = categoryArray.find(category => {
-            return category.name === categoryName.innerText
-        });
+        let searchedCategory = categoryArray.find(category =>
+            category.name === categoryName.innerText
+        );
 
         let searchedContactID = searchedCategory.contacts.indexOf(contactID);
 

@@ -5,16 +5,13 @@ import Session from "../Offline/Session";
 
 
 export default class CategoryFunctions {
-    constructor() {
-    }
-
     onload() {
         fetch('../Categories/createCategory.html')
             .then(response => {
                 return response.text()
             })
             .then(html => {
-                constants.MAIN_RSIDE_BLOCK.innerHTML = html;
+                constants.mainRightSideBlock.innerHTML = html;
             })
             .then(() => {
                 ContactsBook.mobileOpen();
@@ -29,9 +26,9 @@ export default class CategoryFunctions {
         let activeUser = Session.getInstance().getActiveUser();
         let categoriesArray = activeUser.categories;
 
-        let categoryIndex = categoriesArray.indexOf(elem => {
-            return elem.id === Number(parentID);
-        });
+        let categoryIndex = categoriesArray.indexOf(elem =>
+             elem.id === Number(parentID)
+        );
 
         categoriesArray.splice(categoryIndex, 1);
 
@@ -50,9 +47,9 @@ export default class CategoryFunctions {
         const activeUser = Session.getInstance().getActiveUser();
 
         createButton.addEventListener('click', () => {
-            let groupAlreadyExist = activeUser.categories.find(elem => {
-                return elem.name === createGroupValue.value
-            });
+            let groupAlreadyExist = activeUser.categories.find(elem =>
+               elem.name === createGroupValue.value
+            );
 
             if (groupAlreadyExist) {
                 createGroupValue.classList.add('wrong-info');

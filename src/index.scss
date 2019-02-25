@@ -75,7 +75,7 @@ input::-webkit-inner-spin-button {
   &__left-side {
     position: relative;
     min-height: 890px;
-    background: url("img/left-side-bg.png") no-repeat center center / cover;
+    background: url("../assets/img/left-side-bg.png") no-repeat center center / cover;
   }
 
   &__article {
@@ -164,7 +164,7 @@ input::-webkit-inner-spin-button {
           position: absolute;
           width: 48px;
           height: 48px;
-          background: url("./img/addContactImg.png") no-repeat center center / cover;
+          background: url("../assets/img/addContactImg.png") no-repeat center center / cover;
         }
       }
 
@@ -193,7 +193,7 @@ input::-webkit-inner-spin-button {
         width: 15px;
         height: 25px;
         cursor: pointer;
-        background: url("img/dots-img.png") no-repeat center center;
+        background: url("../assets/img/dots-img.png") no-repeat center center;
       }
     }
 
@@ -209,7 +209,7 @@ input::-webkit-inner-spin-button {
         left: 0;
         width: 14px;
         height: 14px;
-        background: url("./img/search_icon.png") no-repeat center center / cover;
+        background: url("../assets/img/search_icon.png") no-repeat center center / cover;
         cursor: pointer;
         outline: none;
       }
@@ -294,7 +294,7 @@ input::-webkit-inner-spin-button {
           width: 15px;
           height: 25px;
           cursor: pointer;
-          background: url("img/dots-img.png") no-repeat center center;
+          background: url("../assets/img/dots-img.png") no-repeat center center;
         }
       }
     }
@@ -615,7 +615,7 @@ input::-webkit-inner-spin-button {
     border: 0;
     width: 35px;
     height: 32px;
-    background: url("img/cancel.png") no-repeat center center / cover;
+    background: url("../assets/img/cancel.png") no-repeat center center / cover;
   }
 }
 
@@ -803,7 +803,7 @@ input::-webkit-inner-spin-button {
   height: 150px;
   position: absolute;
   left: 0;
-  background: url("img/file.png") no-repeat center center / cover;
+  background: url("../assets/img/file.png") no-repeat center center / cover;
 }
 
 .add-contact {
@@ -840,7 +840,7 @@ input::-webkit-inner-spin-button {
         position: absolute;
         width: 150px;
         height: 150px;
-        background: url("./img/addContactImg.png") no-repeat center center / cover;
+        background: url("../assets/img/addContactImg.png") no-repeat center center / cover;
       }
     }
 
@@ -1065,7 +1065,7 @@ input::-webkit-inner-spin-button {
       right: -10px;
       width: 40px;
       height: 30px;
-      background: url("./img/dots-img.png") no-repeat center center;
+      background: url("../assets/img/dots-img.png") no-repeat center center;
       outline: none;
 
       &__menu {
@@ -1143,7 +1143,7 @@ input::-webkit-inner-spin-button {
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      background: url("./img/addContactImg.png") no-repeat center center / cover;
+      background: url("../assets/img/addContactImg.png") no-repeat center center / cover;
     }
 
     &-desc {
@@ -1260,7 +1260,7 @@ input::-webkit-inner-spin-button {
     border: 0;
     width: 35px;
     height: 35px;
-    background: url("img/cancel.png") no-repeat center center / cover;
+    background: url("../assets/img/cancel.png") no-repeat center center / cover;
   }
 
   &__header {

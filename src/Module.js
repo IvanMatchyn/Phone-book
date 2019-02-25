@@ -3,9 +3,6 @@ import LoadPage, {PageType} from "./LoadPage/LoadPage";
 import * as constants from './Constants.js'
 
 export default class ContactsBook {
-    constructor() {
-    }
-
     static onload() {
         let maxUserID = localStorage.getItem('maxUserID');
 
@@ -34,9 +31,9 @@ export default class ContactsBook {
         const mainBlock = document.querySelector('.main__article');
         const mainBlockChildren = mainBlock.childNodes;
 
-        mainBlockChildren.forEach(elem => {
-            mainBlock.removeChild(elem);
-        })
+        mainBlockChildren.forEach(elem =>
+            mainBlock.removeChild(elem)
+        )
     }
 
     static mobileOpen() {
@@ -79,10 +76,10 @@ export default class ContactsBook {
             element.classList.add('wrong-info');
             element.setAttribute('placeholder', 'Incorrect');
             return false;
-        } else {
-            element.classList.remove('wrong-info');
-            element.removeAttribute('placeholder');
         }
+
+        element.classList.remove('wrong-info');
+        element.removeAttribute('placeholder');
 
         return true;
     }

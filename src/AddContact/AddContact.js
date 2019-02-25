@@ -3,16 +3,13 @@ import * as constants from "../Constants";
 import Session from "../Offline/Session";
 
 export default class NewContact {
-    constructor() {
-    }
-
     onload() {
 
         ContactsBook.clearMainBlock();
         fetch('./AddContact/AddContact.html')
             .then(response => {
                 return response.text().then(function (text) {
-                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                    constants.mainRightSideBlock.innerHTML = text;
                 })
             })
             .then(() => {
