@@ -4,16 +4,13 @@ import Session from "../Offline/Session";
 import LoadPage, {PageType} from "../LoadPage/LoadPage";
 
 export default class LoginPage {
-    constructor() {
-    }
-
     onload() {
         const thisClass = new LoginPage();
 
         fetch('./LoginPage/login.html')
             .then(function (response) {
                 return response.text().then(function (text) {
-                    constants.MAIN_LSIDE_BLOCK.innerHTML = text;
+                    constants.mainLeftSideBlock.innerHTML = text;
                 })
             })
             .then(function () {
@@ -51,9 +48,9 @@ export default class LoginPage {
     }
 
     validateUserInfo(array, login, password) {
-        return array.find(element => {
-            return login.value === element.email && password.value === element.password
-        });
+        return array.find(element =>
+            login.value === element.email && password.value === element.password
+        )
     }
 
     static removeTitleIfMobileDevice() {
@@ -87,9 +84,10 @@ export default class LoginPage {
         function maxID(array) {
             let arrayNumber = [];
 
-            array.forEach(elem => {
+            array.forEach(elem =>
                 arrayNumber.push(elem.id)
-            });
+            );
+
             return Math.max.apply(null, arrayNumber)
         }
     }

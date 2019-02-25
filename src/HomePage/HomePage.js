@@ -6,14 +6,11 @@ import LoadPage, {PageType} from "../LoadPage/LoadPage";
 import ContactHtmlBuilder from "../AllContacts/ContactHtmlBuilder";
 
 export default class HomePage {
-    constructor() {
-    }
-
     onload() {
         fetch('./HomePage/HomePage.html')
             .then(function (response) {
                 return response.text().then(function (text) {
-                    constants.MAIN_LSIDE_BLOCK.innerHTML = text;
+                    constants.mainLeftSideBlock.innerHTML = text;
                 })
             })
 
@@ -31,31 +28,31 @@ export default class HomePage {
         function addEventCreateCategoryPage() {
             const createButton2 = document.querySelector('.ls-inner__add-group__wrapper');
 
-            createButton2.addEventListener('click', () => {
-                LoadPage.load(PageType.CREATE_CATEGORY_PAGE);
-            })
+            createButton2.addEventListener('click', () =>
+                LoadPage.load(PageType.CREATE_CATEGORY_PAGE)
+            )
         }
 
         function addEventShowAllContactsPage() {
             const allContactsButton = document.querySelector('#all-contacts-button');
 
-            allContactsButton.addEventListener('click', () => {
-                LoadPage.load(PageType.ALL_CONTACT_PAGE);
-            })
+            allContactsButton.addEventListener('click', () =>
+                LoadPage.load(PageType.ALL_CONTACT_PAGE)
+            )
         }
 
         function addEventCreateContactPage() {
             const addButton = document.querySelector('.ls-inner__add-contact__wrapper');
 
-            addButton.addEventListener('click', () => {
-                LoadPage.load(PageType.CREATE_CONTACT_PAGE);
-            })
+            addButton.addEventListener('click', () =>
+                LoadPage.load(PageType.CREATE_CONTACT_PAGE)
+            )
         }
 
         function addUserNameToHomePage() {
             let userFullName = document.querySelector('.ls-inner__account__name-text');
             let activeUser = Session.getInstance().getActiveUser();
-            userFullName.innerText = activeUser.name + ' ' + activeUser.surname
+            userFullName.innerText = `${activeUser.name} ${activeUser.surname}`
         }
 
         function addEventLogOutButton() {
@@ -72,9 +69,9 @@ export default class HomePage {
             const allContacts = new ContactHtmlBuilder();
             const search = document.querySelector('.ls-inner__search-menu-input');
 
-            search.addEventListener('click', () => {
-                allContacts.loadAllContacts();
-            });
+            search.addEventListener('click', () =>
+                allContacts.loadAllContacts()
+            );
 
             search.addEventListener('keyup', (e) => {
                 const search = document.querySelector('.ls-inner__search-menu-input');

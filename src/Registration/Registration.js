@@ -2,10 +2,6 @@ import * as constants from '../Constants.js'
 import ContactsBook from "../Module";
 
 export default class Registration {
-    constructor() {
-
-    }
-
     onload() {
         const regClass = this;
 
@@ -16,7 +12,7 @@ export default class Registration {
         })
             .then(response => {
                 return response.text().then(text => {
-                    constants.MAIN_RSIDE_BLOCK.innerHTML = text;
+                    constants.mainRightSideBlock.innerHTML = text;
                 })
             })
             .then(() => {
@@ -53,10 +49,10 @@ export default class Registration {
     }
 
     static validateUser(email, pass, firstName, secondName) {
-        let emailCheck = ContactsBook.rageXPCheck(constants.RAGXP_EMAIL, email);
-        let passCheck = ContactsBook.rageXPCheck(constants.RAGXP_PASS, pass);
-        let nameCheck = ContactsBook.rageXPCheck(constants.RAGXP_TEXT, firstName);
-        let surnameCheck = ContactsBook.rageXPCheck(constants.RAGXP_TEXT, secondName);
+        let emailCheck = ContactsBook.rageXPCheck(constants.REGEXP_EMAIL, email);
+        let passCheck = ContactsBook.rageXPCheck(constants.REGEXP_PASS, pass);
+        let nameCheck = ContactsBook.rageXPCheck(constants.REGEXP_TEXT, firstName);
+        let surnameCheck = ContactsBook.rageXPCheck(constants.REGEXP_TEXT, secondName);
 
         return emailCheck && passCheck && nameCheck && surnameCheck
     }
@@ -64,22 +60,21 @@ export default class Registration {
     checkIsUserAlreadyExist(email) {
         let usersArray = JSON.parse(localStorage.getItem(constants.ALL_USERS));
 
-        let findUser = usersArray.find(element => {
-            return element.email === email.value
-        });
+        let findUser = usersArray.find(element =>
+            element.email === email.value
+        );
 
-        if (findUser) {
-            let emailBlock = document.querySelector('#email-check');
-            let errorMSG = document.querySelector('#wrong-email');
-            errorMSG.style.display = 'block';
-            emailBlock.appendChild(errorMSG);
-            return true;
-        } else {
+        if (!findUser) {
             let errorMSG = document.querySelector('#wrong-email');
             errorMSG.style.display = 'none';
             return false;
         }
 
+        let emailBlock = document.querySelector('#email-check');
+        let errorMSG = document.querySelector('#wrong-email');
+        errorMSG.style.display = 'block';
+        emailBlock.appendChild(errorMSG);
+        return true;
     }
 
     static createNewUser(email, pass, firstName, secondName) {
@@ -116,9 +111,9 @@ export default class Registration {
         message.style.textAlign = 'right';
         message.style.fontSize = '16px';
 
-        const msgCheck = regFormChildren.find(msg => {
-            return msg.classList.contains('good-text');
-        });
+        const msgCheck = regFormChildren.find(msg =>
+            msg.classList.contains('good-text')
+        );
 
         if (!msgCheck) {
             regForm.insertBefore(message, confirmRegistration);
