@@ -71,7 +71,7 @@ export default class ContactsBook {
         localStorage.setItem(constants.ALL_USERS, JSON.stringify(usersArray))
     }
 
-    static rageXPCheck(rageXP, element) {
+    static regEXPCheck(rageXP, element) {
         if (!rageXP.test(element.value)) {
             element.classList.add('wrong-info');
             element.setAttribute('placeholder', 'Incorrect');

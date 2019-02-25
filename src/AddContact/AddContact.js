@@ -40,13 +40,12 @@ export default class NewContact {
         saveButton.addEventListener('click', function save() {
             let newContact = {};
 
-            let nameCheck = book.rageXPCheck(constants.RAGXP_TEXT, nameVal);
-            let surnameCheck = book.rageXPCheck(constants.RAGXP_TEXT, surNameVal);
-            let descriptionCheck = book.rageXPCheck(constants.RAGXP_TEXT, descVal);
-            let infoCheck = book.rageXPCheck(constants.RAGXP_TEXT, infoVal);
-            let emailCheck = book.rageXPCheck(constants.RAGXP_EMAIL, emailVal);
-            let bornDateCheck = book.rageXPCheck(constants.RAGXP_BIRTHDAY, birthdayVal);
-            let phoneCheck = book.rageXPCheck(constants.RAGXP_PHONE, phoneVal);
+            let nameCheck = ContactsBook.regEXPCheck(constants.REGEXP_TEXT, nameVal);
+            let surnameCheck = ContactsBook.regEXPCheck(constants.REGEXP_TEXT, surNameVal);
+            let descriptionCheck = ContactsBook.regEXPCheck(constants.REGEXP_TEXT, descVal);
+            let emailCheck = ContactsBook.regEXPCheck(constants.REGEXP_EMAIL, emailVal);
+            let bornDateCheck = ContactsBook.regEXPCheck(constants.REGEXP_BIRTHDAY, birthdayVal);
+            let phoneCheck = ContactsBook.regEXPCheck(constants.REGEXP_PHONE, phoneVal);
 
             if (nameCheck && surnameCheck && descriptionCheck && infoCheck && emailCheck && bornDateCheck
                 && phoneCheck) {

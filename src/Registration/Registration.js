@@ -49,10 +49,10 @@ export default class Registration {
     }
 
     static validateUser(email, pass, firstName, secondName) {
-        let emailCheck = ContactsBook.rageXPCheck(constants.REGEXP_EMAIL, email);
-        let passCheck = ContactsBook.rageXPCheck(constants.REGEXP_PASS, pass);
-        let nameCheck = ContactsBook.rageXPCheck(constants.REGEXP_TEXT, firstName);
-        let surnameCheck = ContactsBook.rageXPCheck(constants.REGEXP_TEXT, secondName);
+        let emailCheck = ContactsBook.regEXPCheck(constants.REGEXP_EMAIL, email);
+        let passCheck = ContactsBook.regEXPCheck(constants.REGEXP_PASS, pass);
+        let nameCheck = ContactsBook.regEXPCheck(constants.REGEXP_TEXT, firstName);
+        let surnameCheck = ContactsBook.regEXPCheck(constants.REGEXP_TEXT, secondName);
 
         return emailCheck && passCheck && nameCheck && surnameCheck
     }
