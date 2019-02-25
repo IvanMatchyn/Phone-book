@@ -31,7 +31,7 @@ export default class EditContact {
         let editContactInstagram = document.querySelector('#addContact-instagramm');
         let editContactFacebook = document.querySelector('#addContact-facebook');
 
-        this.loadOldInfo(id ,editContactName, editContactSurName, editContactDescription, editContactPhone, editContactEmail,
+        this.loadOldInfo(id, editContactName, editContactSurName, editContactDescription, editContactPhone, editContactEmail,
             editContactBirthDate, editContactInfo, editContactInstagram, editContactFacebook);
 
         saveButton.addEventListener('click', () => {
@@ -43,7 +43,7 @@ export default class EditContact {
         });
     }
 
-    loadOldInfo(id ,name, surname, description, phone, email, bornDate, information, instagram, facebook) {
+    loadOldInfo(id, name, surname, description, phone, email, bornDate, information, instagram, facebook) {
         let usersArray = Session.getInstance().getActiveUser().contacts;
 
         let currentElem = usersArray.find(elem =>
@@ -62,16 +62,15 @@ export default class EditContact {
             facebook.value = currentElem.facebook;
         }
     }
-    static validateFields(name, surname, description, phone, email, bornDate, information) {
-        let book = new ContactBook();
 
-        let checkName = book.rageXPCheck(constants.RAGXP_TEXT, name);
-        let checkSurname =  book.rageXPCheck(constants.RAGXP_TEXT, surname);
-        let checkDesc = book.rageXPCheck(constants.RAGXP_TEXT, description);
-        let checkInfo = book.rageXPCheck(constants.RAGXP_TEXT, information);
-        let checkEmail = book.rageXPCheck(constants.RAGXP_EMAIL, email);
-        let checkBornDate = book.rageXPCheck(constants.RAGXP_BIRTHDAY, bornDate);
-        let checkPhone = book.rageXPCheck(constants.RAGXP_PHONE, phone);
+    static validateFields(name, surname, description, phone, email, bornDate, information) {
+        let checkName = ContactBook.regEXPCheck(constants.REGEXP_TEXT, name);
+        let checkSurname = ContactBook.regEXPCheck(constants.REGEXP_TEXT, surname);
+        let checkDesc = ContactBook.regEXPCheck(constants.REGEXP_TEXT, description);
+        let checkInfo = ContactBook.regEXPCheck(constants.REGEXP_TEXT, information);
+        let checkEmail = ContactBook.regEXPCheck(constants.REGEXP_EMAIL, email);
+        let checkBornDate = ContactBook.regEXPCheck(constants.REGEXP_BIRTHDAY, bornDate);
+        let checkPhone = ContactBook.regEXPCheck(constants.REGEXP_PHONE, phone);
 
         return checkName && checkSurname && checkDesc && checkInfo && checkEmail && checkBornDate && checkPhone
     }
@@ -84,7 +83,7 @@ export default class EditContact {
             return elem.id === id
         });
 
-        if(currentContact){
+        if (currentContact) {
             currentContact.name = name.value;
             currentContact.surname = surname.value;
             currentContact.position = description.value;
@@ -95,10 +94,10 @@ export default class EditContact {
             currentContact.instagramm = instagramm.value;
             currentContact.facebook = facebook.value;
 
-            succesfulEdition();
+            successfulEdition();
         }
 
-        function succesfulEdition() {
+        function successfulEdition() {
             let successfullyEdit = document.createElement('div');
             successfullyEdit.innerText = 'Contact was updated';
             successfullyEdit.classList.add('good-text');

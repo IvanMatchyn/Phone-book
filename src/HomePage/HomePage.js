@@ -73,9 +73,9 @@ export default class HomePage {
                 allContacts.loadAllContacts()
             );
 
-            search.addEventListener('keyup', (e) => {
+            search.addEventListener('keyup', () => {
                 const search = document.querySelector('.ls-inner__search-menu-input');
-                let filter = search.value.toUpperCase();
+                const filter = search.value.toUpperCase();
                 const fullName = document.querySelectorAll('.all-contacts__items-desc__name');
                 const filteredItems = document.querySelectorAll('.all-contacts__items');
 
@@ -90,7 +90,6 @@ export default class HomePage {
         }
 
         function addBirthdayReminder() {
-            let htmlBuilder = new ContactHtmlBuilder()
             let contactsArray = Session.getInstance().getActiveUser().contacts;
             let birthdayBlock = document.querySelector('.ls-inner__birthday-reminder');
             let wrapper = ContactHtmlBuilder.createElementWithClass('div', null, 'ls-inner__birthday-reminder-items__wrapper');
