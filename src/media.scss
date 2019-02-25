@@ -1,0 +1,496 @@
+@media screen and (max-width: 1366px) {
+  .add-contact {
+    padding: 64px 24px 0 24px;
+
+    &__initials__photo {
+      margin-right: 16px;
+      min-width: 106px;
+
+      &__fake {
+        height: 106px;
+        width: 106px;
+      }
+
+      &__choose {
+        height: 106px;
+        width: 106px;
+      }
+    }
+
+    &__block {
+      &__header {
+        margin-right: 16px;
+        min-width: 106px;
+      }
+    }
+
+    &__buttons {
+      margin-right: 24px;
+      margin-left: 24px;
+    }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .add-contact {
+    &__block {
+      &__header {
+        margin-right: 30px;
+      }
+    }
+  }
+
+  .ls-inner__birthday-reminder-items__wrapper{
+    max-height: 170px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main {
+    &__block {
+      &-header__text-reg {
+        margin-left: 150px;
+      }
+    }
+  }
+
+  .registration {
+    &-main {
+      margin-left: 150px;
+    }
+  }
+
+  .add-contact {
+    padding: 64px 24px 0 24px;
+
+    &__initials__photo {
+      margin-right: 35px;
+      min-width: 106px;
+
+      &__fake {
+        height: 106px;
+        width: 106px;
+      }
+
+      &__choose {
+        height: 106px;
+        width: 106px;
+      }
+    }
+
+    &__block {
+      &__header {
+        margin-right: 35px;
+        width: 106px;
+      }
+    }
+
+    &__buttons {
+      margin-left: 24px;
+      &__line {
+        width: 210px;
+      }
+    }
+  }
+
+  .contact-info {
+    margin: 24px 24px 58px 24px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    grid-template-columns: 292px 1fr;
+
+    &__block-header__text-reg {
+      margin-left: 48px;
+    }
+  }
+
+  .login-form__wrapper {
+    padding: 0 30px 0 40px;
+  }
+
+  .login-nav-menu {
+    margin: 0;
+  }
+
+  .ls {
+    &__title {
+      padding: 15px 30px 52px 40px;
+    }
+
+    &-inner {
+      &__add-contact {
+        margin: 0 30px 0 40px;
+      }
+
+      &__account {
+        margin: 0 30px 55px 40px;
+      }
+    }
+  }
+
+  .registration {
+    &-main {
+      margin-left: 48px;
+    }
+  }
+
+  .contact-info {
+    &__items-header {
+      min-width: 111px;
+    }
+  }
+
+  .add-contact {
+    padding-top: 48px;
+
+    &__initials__desc__full-name {
+      flex-flow: column nowrap;
+    }
+
+    &__tooltip {
+      margin-top: 16px;
+    }
+
+    &__initials__desc__textarea__wrapper {
+      margin-top: 0;
+    }
+
+    &__block__header {
+      margin-right: 16px;
+    }
+
+    &__initials__photo {
+      margin-top: 16px;
+      margin-right: 15px;
+    }
+
+    &__initials__desc__textarea__wrapper {
+      margin-bottom: 32px;
+    }
+
+    &__buttons {
+      &__save {
+        margin-right: 16px;
+        width: 160px;
+      }
+
+      &__cancel {
+        width: 160px;
+      }
+
+      &__line {
+        margin-right: 24px;
+        width: 68px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .main {
+    grid-template-columns: 1fr;
+
+    &__article {
+      display: none;
+    }
+
+    &__block-header {
+      justify-content: center;
+
+      &__text__add-contact {
+        margin-left: 0;
+      }
+    }
+
+  }
+
+  .ls {
+    &-inner {
+      margin-top: 15px;
+
+      &__birthday-reminder-items {
+        padding: 0 26px 0 24px;
+      }
+
+      &__birthday-reminder-items__wrapper {
+        margin-top: 10px;
+      }
+
+      &__account {
+        margin: 0 26px 29px 24px;
+      }
+
+      &__search-menu {
+        margin: 0 26px 0 24px;
+      }
+
+      &__categories {
+        &__header {
+          margin: 0 26px 0 24px;
+        }
+
+        &__contacts__header {
+          padding: 0 26px 0 24px;
+        }
+
+        &__contacts__option {
+          right: 26px;
+        }
+      }
+
+      &__add-group {
+        margin: 0 26px 25px 24px;
+        width: auto;
+      }
+
+      &__add-contact {
+        padding: 0 26px 0 24px;
+        width: 100%;
+        margin: 0;
+      }
+    }
+
+    &__content-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-content: center;
+      align-items: start;
+    }
+
+    &__title {
+      text-align: center;
+    }
+  }
+
+  .add-contact {
+    display: grid;
+    grid-row-gap: 16px;
+    grid-template-rows: 370px 53px 53px 53px 129px 53px 53px;
+
+    &__initials {
+      display: grid;
+      grid-template-rows: repeat(auto-fill, 132px 222px);
+      grid-row-gap: 16px;
+
+      &__photo {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 132px;
+        align-items: center;
+        margin: 0;
+
+        &__fake {
+          width: 132px;
+          height: 132px;
+          position: relative;
+        }
+
+        &__choose {
+          left: 26%;
+          width: 132px;
+          height: 132px;
+          position: absolute;
+        }
+      }
+
+      &__desc {
+        display: grid;
+        grid-template-rows: repeat(auto-fill, 125px 79px);
+        grid-row-gap: 16px;
+
+        &__textarea__wrapper {
+          margin: 0;
+        }
+
+        &__full-name {
+          display: grid;
+          grid-row-gap: 16px;
+          grid-template-columns: 1fr;
+          grid-template-rows: 53px 53px;
+
+          &__wrapper {
+            margin: 0;
+            width: 100%;
+            max-width: 720px;
+          }
+
+          &__text {
+            width: 100%;
+            max-width: 720px;
+          }
+        }
+      }
+    }
+
+    &__block {
+      display: block;
+      margin: 0;
+
+      &__header {
+        margin-bottom: 8px;
+        margin-top: 8px;
+        padding-top: 0;
+        text-align: left;
+      }
+    }
+
+    &__tooltip {
+      margin-top: 0;
+    }
+
+    &__buttons {
+      padding: 45px 24px;
+      margin: 48px 0;
+      bottom: 0;
+      display: grid;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      grid-template-columns: minmax(280px, 327px);
+      grid-template-rows: 46px 46px;
+      grid-row-gap: 16px;
+
+      &__save {
+        width: 100%;
+        max-width: 327px;
+        min-width: 280px;
+      }
+
+      &__cancel {
+        width: 100%;
+        max-width: 327px;
+        min-width: 280px;
+      }
+
+      &__line {
+        display: none;
+      }
+    }
+  }
+
+  .login-form__wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .registration-main {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 26px 26px 0 24px;
+    margin: 0;
+  }
+
+  .registration-fullName {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 25px;
+    width: 100%;
+  }
+
+  #registration-name {
+    margin-right: 5px;
+  }
+
+  .form-wrapper {
+    width: 100%;
+  }
+
+  .registration-text {
+    width: 100%;
+  }
+
+  .registration-name-field {
+    width: 100%;
+  }
+
+  .main__block-header__text-reg {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .create-group {
+    padding: 0 24px;
+    margin: 0;
+  }
+
+  .contact-info {
+    display: grid;
+    grid-template-rows: 255px;
+    grid-row-gap: 16px;
+
+    &__header {
+      margin-bottom: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 150px 105px;
+      justify-content: center;
+      align-items: center;
+
+      &-photo__wrapper {
+        display: grid;
+        justify-content: center;
+        grid-template-rows: 150px;
+        grid-template-columns: 150px;
+      }
+
+      &-desc__information {
+        text-align: center;
+      }
+
+      &-desc__initials {
+        text-align: center;
+      }
+    }
+
+    &__items {
+      margin: 0;
+      display: grid;
+
+      &-header {
+        &-h2 {
+          margin-bottom: 8px;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .all-contacts__items {
+    flex-flow: row wrap;
+  }
+
+  .all-contacts__items-options__menu {
+    top: 57px;
+    width: 123px;
+    right: 100px;
+  }
+
+  .all-contacts__items-options__menu-addToGroup {
+    position: relative;
+    top: 9px;
+    right: -135px;
+    width: 104px;
+  }
+
+  .all-contacts__items-options__menu-items-img {
+    transform: rotate(270deg);
+  }
+
+  .star-field {
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .create-group {
+    &__close-button {
+      left: 24px;
+    }
+  }
+}

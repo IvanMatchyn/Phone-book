@@ -1,0 +1,119 @@
+.contact-info {
+  margin: 24px 121px 58px 121px;
+
+  &__header {
+    margin-bottom: 46px;
+    height: 150px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    &-photo {
+      margin-right: 19px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: url("../../assets/img/addContactImg.png") no-repeat center center / cover;
+    }
+
+    &-desc {
+      &__initials {
+        &-h1 {
+          color: #000000;
+          font-family: 'Roboto', serif;
+          font-size: 24px;
+          font-weight: 900;
+        }
+      }
+
+      &__information {
+        &-text {
+          color: #1f2226;
+          margin: 4px 0;
+          font-family: 'Roboto', serif;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+
+  &__items {
+    margin-bottom: 31px;
+    display: flex;
+    flex-flow: row nowrap;
+
+    &-header {
+      margin-right: 20px;
+      color: #22282d;
+      font-family: 'Roboto', serif;
+      font-size: 18px;
+      font-weight: 700;
+      min-width: 150px;
+
+      &-h2 {
+        margin: 0;
+        text-align: right;
+        font-family: 'Roboto', serif;
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+
+    &-value {
+      color: #22282d;
+      font-family: 'Roboto', serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+
+      &__img {
+        margin-right: 5px;
+      }
+
+      &-textarea {
+        margin: 0;
+        max-width: 602px;
+        width: 100%;
+      }
+
+      &-p {
+        margin: 0;
+      }
+
+      &__h3 {
+        color: #3bb9e3;
+        font-family: 'Helvetica Neue', serif;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: -0.1px;
+        margin: 0;
+      }
+
+      &__insta-photos {
+        margin-top: 8px;
+        width: 260px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 83px);
+        grid-gap: 5px;
+
+        &__inner {
+          height: 83px;
+          border-radius: 4px;
+          background-color: #d0d5d9;
+        }
+      }
+
+      &__wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+      }
+
+      &__header {
+        display: flex;
+        flex-flow: row nowrap;
+      }
+    }
+  }
+}

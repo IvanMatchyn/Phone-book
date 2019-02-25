@@ -1,0 +1,111 @@
+.all-contacts {
+  margin: 32px 48px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 223px);
+  grid-column-gap: 40px;
+  grid-row-gap: 64px;
+
+  &__items {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height: 50px;
+
+    &-photo {
+      margin-right: 13px;
+      width: 48px;
+      height: 48px;
+      border: 2px solid #c30e42;
+      border-radius: 50%;
+    }
+
+    &-desc {
+      display: flex;
+      flex-flow: column nowrap;
+
+      &__name {
+        margin-bottom: 3px;
+        color: #000000;
+        font-family: 'Roboto', serif;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      &__text {
+        color: #9b9b9b;
+        font-family: 'Roboto', serif;
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+
+    &-options {
+      position: absolute;
+      top: 10px;
+      right: -10px;
+      width: 40px;
+      height: 30px;
+      background: url("../../assets/img/dots-img.png") no-repeat center center;
+      outline: none;
+
+      &__menu {
+        z-index: 1;
+        position: absolute;
+        right: -152px;
+        top: 33px;
+        width: 175px;
+        box-shadow: 0 0 10px rgba(48, 54, 80, 0.2);
+        border-radius: 5px;
+        background-color: #2c314a;
+        cursor: pointer;
+
+        &-addToGroup {
+          position: absolute;
+          z-index: 1;
+          top: 149px;
+          right: -178px;
+          width: 175px;
+          box-shadow: 0 0 10px rgba(48, 54, 80, 0.2);
+          border-radius: 5px;
+          background-color: #2c314a;
+          cursor: pointer;
+        }
+
+        &-items {
+          padding: 0 8px;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: center;
+          color: #ffffff;
+          font-family: 'Roboto', serif;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 26px;
+          border-bottom: 1px solid #ffffff;
+
+          &:first-child {
+            border-top: 1px solid #2c314a;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+          }
+
+          &:last-child {
+            border-bottom: 1px solid #2c314a;
+            border-radius: 5px;
+          }
+
+          &-p {
+            margin: 0;
+          }
+
+          &:hover {
+            background: #41465c;
+          }
+        }
+      }
+    }
+  }
+}

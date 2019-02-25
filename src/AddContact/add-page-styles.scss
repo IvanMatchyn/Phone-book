@@ -1,0 +1,209 @@
+.add-contact {
+  padding: 56px 48px 0 48px;
+
+  &__inner-wrapper {
+    display: inline-block;
+    max-width: 983px;
+    width: 100%;
+  }
+
+  &__initials {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+
+    &__photo {
+      min-width: 150px;
+      margin-right: 32px;
+      position: relative;
+
+      &__choose {
+        width: 150px;
+        height: 150px;
+        opacity: 0;
+        outline: none;
+        top: 0;
+        position: absolute;
+        cursor: pointer;
+      }
+
+      &__fake {
+        top: 0;
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: url("../../assets/img/addContactImg.png") no-repeat center center / cover;
+      }
+    }
+
+    &__desc {
+      max-width: 829px;
+      width: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+
+      &__full-name {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        max-width: 829px;
+        width: 100%;
+
+        &__wrapper {
+          max-width: 395px;
+          width: 100%;
+          display: flex;
+          flex-flow: column nowrap;
+
+          &:first-child {
+            margin-right: 40px;
+          }
+        }
+
+        &__text {
+          padding-left: 5px;
+          margin-top: 8px;
+          max-width: 395px;
+          width: 100%;
+          height: 32px;
+          box-shadow: inset 0 0 10px #e5e5e5;
+          border-radius: 2px;
+          border: 1px solid #999999;
+          background-color: #ffffff;
+
+          &:first-child {
+            margin-right: 40px;
+          }
+        }
+      }
+
+      &__textarea {
+        padding-left: 5px;
+        resize: none;
+        max-width: 829px;
+        width: 100%;
+        height: 54px;
+        box-shadow: inset 0 0 10px #e5e5e5;
+        border-radius: 2px;
+        border: 1px solid #999999;
+        background-color: #ffffff;
+        margin-top: 8px;
+
+        &__wrapper {
+          margin: 16px 0 48px 0;
+          max-width: 829px;
+          width: 100%;
+          display: flex;
+          flex-flow: column nowrap;
+        }
+      }
+    }
+
+  }
+
+  &__block {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: 16px;
+
+    &__header {
+      padding-top: 7px;
+      min-width: 150px;
+      text-align: right;
+      margin-right: 32px;
+    }
+
+    &__text {
+      max-width: 829px;
+      width: 100%;
+
+      &__input {
+        padding-left: 5px;
+        max-width: 829px;
+        width: 100%;
+        height: 32px;
+        box-shadow: inset 0 0 10px #e5e5e5;
+        border-radius: 2px;
+        border: 1px solid #999999;
+        background-color: #ffffff;
+      }
+    }
+
+    &__textarea {
+      padding-left: 5px;
+      max-width: 829px;
+      width: 100%;
+      height: 104px;
+      resize: none;
+      box-shadow: inset 0 0 10px #e5e5e5;
+      border-radius: 2px;
+      border: 1px solid #999999;
+      background-color: #ffffff;
+    }
+  }
+
+  &__tooltip {
+    &__h2 {
+      text-transform: capitalize;
+      margin: 0;
+      color: #000000;
+      font-family: 'Roboto', serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(68px, 580px) 182px 182px);
+    grid-column-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 48px;
+    margin-right: 48px;
+    position: absolute;
+    bottom: 46px;
+
+    &__line {
+      height: 0;
+      border: 1px solid #9699a5;
+    }
+
+    &__save {
+      position: relative;
+      width: 182px;
+      height: 46px;
+      border-radius: 56px;
+      background-color: #10b1df;
+      color: #ffffff;
+      font-family: 'Roboto', serif;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 32px;
+      letter-spacing: 0.35px;
+      margin-right: 32px;
+    }
+
+    &__cancel {
+      width: 182px;
+      height: 46px;
+      border-radius: 56px;
+      border: 2px solid #00b3e4;
+      color: #10b1df;
+      font-family: 'Roboto', serif;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 32px;
+      letter-spacing: 0.35px;
+    }
+
+    &__text {
+      margin: 0;
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}
