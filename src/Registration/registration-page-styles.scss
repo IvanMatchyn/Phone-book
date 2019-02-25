@@ -1,0 +1,86 @@
+.registration {
+  &-main {
+    width: 371px;
+    margin-top: 29px;
+    margin-left: 290px;
+  }
+
+  &-email {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-items: flex-start;
+    align-items: flex-start;
+  }
+
+  &-text {
+    width: 371px;
+    height: 32px;
+    box-shadow: inset 0 0 10px #e5e5e5;
+    border: 1px solid #999999;
+    background-color: #ffffff;
+    padding: 3px;
+  }
+
+  &-fullName {
+    width: 371px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+
+  &-name-field {
+    width: 176px;
+    height: 32px;
+    box-shadow: inset 0 0 10px #e5e5e5;
+    border: 1px solid #999999;
+    background-color: #ffffff;
+    padding: 3px;
+  }
+
+  &-confirm-button {
+    width: 172px;
+    height: 46px;
+    border-radius: 56px;
+    background-color: #10b1df;
+    color: white;
+    font-family: "Roboto - Black", serif;
+    font-size: 18px;
+    font-weight: 900;
+
+    &:active {
+      transform: translateY(1px);
+      filter: saturate(150%);
+      border: 1px solid red;
+    }
+
+    &:hover {
+      color: #4267b2;
+      border-color: currentColor;
+    }
+
+    &:focus {
+      color: #4267b2;
+      outline: none;
+      border: 1px solid #1C29B2;
+    }
+  }
+
+  &-close-button {
+    position: relative;
+    right: 50px;
+    outline: none;
+    border: 0;
+    width: 35px;
+    height: 32px;
+    background: url("../../assets/img/cancel.png") no-repeat center center / cover;
+  }
+}
+
+.reg-form-submit:focus,
+.reg-form-submit:active {
+  outline: none;
+}
+
+#wrong-email {
+  display: none;
+}

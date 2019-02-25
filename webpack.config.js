@@ -17,19 +17,19 @@ module.exports = {
     devServer: {
         port: 3000,
         contentBase: path.join(__dirname, './src'),
-        compress:true,
+        compress: true,
     },
     module: {
         rules: [
             {
-                test:/\.js$/,
+                test: /\.js$/,
                 loader: "babel-loader"
             },
             {
-                test:/\.(scss|css)$/,
+                test: /\.(scss|css)$/,
                 loaders: [
                     isDev ? {
-                        loader:'style-loader',
+                        loader: 'style-loader',
                         options: {
                             sourceMap: true
                         }
@@ -55,22 +55,22 @@ module.exports = {
                 ]
             },
             {
-                test:/\.(woff|woff2|eot|ttf|otf)$/,
-                use:[{
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [{
                     loader: "file-loader",
                     options: {
-                        name: './src/fonts/[name].[ext]'
+                        name: './assets/fonts/[name].[ext]'
                     }
                 }]
             },
             {
                 test: /\.(png|jpg|gif)$/i,
-                use:[{
+                use: [{
                     loader: "url-loader",
                     options: {
-                        limit:8192,
+                        limit: 8192,
                         fallback: 'file-loader',
-                        name:'./src/img/[name].[ext]'
+                        name: './assets/img/[name].[ext]'
                     }
                 }]
             },
