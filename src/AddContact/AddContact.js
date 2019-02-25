@@ -4,8 +4,8 @@ import Session from "../Offline/Session";
 
 export default class NewContact {
     onload() {
-
         ContactsBook.clearMainBlock();
+
         fetch('./AddContact/AddContact.html')
             .then(response => {
                 return response.text().then(function (text) {
@@ -15,12 +15,11 @@ export default class NewContact {
             .then(() => {
                 ContactsBook.mobileOpen();
                 this.addEventSaveContact();
-                this.AddEventCancelSavingInfo();
+                this.addEventCancelSavingInfo();
             })
     }
 
     addEventSaveContact() {
-        const book = new ContactsBook();
         const saveButton = document.querySelector('.add-contact__buttons__save');
         let activeUser = Session.getInstance().getActiveUser();
 
@@ -47,10 +46,10 @@ export default class NewContact {
             let bornDateCheck = ContactsBook.regEXPCheck(constants.REGEXP_BIRTHDAY, birthdayVal);
             let phoneCheck = ContactsBook.regEXPCheck(constants.REGEXP_PHONE, phoneVal);
 
-            if (nameCheck && surnameCheck && descriptionCheck && infoCheck && emailCheck && bornDateCheck
+            if (nameCheck && surnameCheck && descriptionCheck && emailCheck && bornDateCheck
                 && phoneCheck) {
-                let mainBlock = document.querySelector('.add-contact');
-                let maxContactID = Number(localStorage.getItem('maxContactID'));
+                let mainBlockWrapper = document.querySelector('.add-contact__inner-wrapper');
+                let maxContactID = Number(localStorage.getItem(constants.MAX_CONTACT_ID));
                 newContact.id = maxContactID + 1;
 
                 newContact.name = nameVal.value;
@@ -65,34 +64,51 @@ export default class NewContact {
 
 
                 let updatedMaxContactID = newContact.id;
-                localStorage.setItem('maxContactID', `${updatedMaxContactID}`);
+                localStorage.setItem(constants.MAX_CONTACT_ID, `${updatedMaxContactID}`);
 
                 let activeUserContacts = activeUser.contacts;
                 activeUserContacts.push(newContact);
-                localStorage.setItem('Active User', JSON.stringify(activeUser));
+                Session.getInstance().saveToStorage();
                 ContactsBook.offlineSynchronization();
 
                 dataArray.forEach(elem => {
                     elem.value = '';
                 });
 
-                let goodText = document.createElement('div')
-                goodText.innerText = 'Contact was created';
-                goodText.classList.add('good-text');
-                goodText.style.fontSize = '18px';
-                goodText.style.marginLeft = '20px';
-                goodText.style.marginTop = '50px';
+                successfulMsg();
 
-                mainBlock.appendChild(goodText)
+                function successfulMsg() {
+                    let goodText = document.createElement('div');
+                    goodText.innerText = 'Contact was created';
+                    goodText.classList.add('good-text');
+                    goodText.style.fontSize = '18px';
+                    goodText.style.marginLeft = '20px';
+                    goodText.style.marginTop = '10px';
+                    goodText.style.textAlign = 'right';
+
+                    let mainBlockChildren = [...mainBlockWrapper.children];
+
+                    let checkMsg = mainBlockChildren.find(msg =>
+                        msg.classList.contains('good-text')
+                    );
+
+                    if (!checkMsg) {
+                        mainBlockWrapper.appendChild(goodText)
+                    }
+                }
             }
         })
     }
 
-    AddEventCancelSavingInfo() {
+    addEventCancelSavingInfo() {
         const cancelButton = document.querySelector('.add-contact__buttons__cancel');
         cancelButton.addEventListener('click', () => {
+            let mainLeftBlock = document.querySelector('.main__left-side');
+
             ContactsBook.clearMainBlock();
             ContactsBook.isMobileDevice();
+
+            mainLeftBlock.style.display = 'block';
         });
     }
 }

@@ -1,27 +1,27 @@
 import * as constants from "../Constants";
-import AllContact from "../AllContacts/ContactHtmlBuilder.js"
 import Session from "../Offline/Session";
 import ContactBook from "../Module";
 import CategoryFunctions from "./CategoryFunctions";
+import ContactHtmlBuilder from "../AllContacts/ContactHtmlBuilder";
 
 export default class CategoriesLoad {
     static addCategories() {
         CategoriesLoad.printCategories();
     }
 
-     static printCategories() {
+    static printCategories() {
         let categoriesBlock = document.querySelector('.ls-inner__categories__wrapper');
         let activeUser = Session.getInstance().getActiveUser();
         let dropMenu = CategoriesLoad.categoryDropDownMenu();
 
-        activeUser.categories.forEach(obj => {
+        activeUser.categories.forEach(category => {
             let categoryName = CategoriesLoad.createHTMLForEachContactInCategory('p', 'ls-inner__categories__contacts__header');
             let categoryOptions = CategoriesLoad.createHTMLForEachContactInCategory('button', 'ls-inner__categories__contacts__option');
             let categoryWrapper = CategoriesLoad.createHTMLForEachContactInCategory('div', 'ls-inner__categories__contacts-wrapper');
             let newCategory = CategoriesLoad.createHTMLForEachContactInCategory('div', 'ls-inner__categories__contacts');
 
-            categoryName.innerText = obj.name;
-            categoryWrapper.dataset.id = obj.id;
+            categoryName.innerText = category.name;
+            categoryWrapper.dataset.id = category.id;
 
             categoryWrapper.appendChild(categoryName);
             categoryWrapper.appendChild(categoryOptions);
@@ -36,14 +36,13 @@ export default class CategoriesLoad {
                 dropMenu.classList.remove('hidden')
             });
 
-            let categoryContactID = obj.contacts;
+            let categoryContactID = category.contacts;
 
             CategoriesLoad.showAllContactsOnClick(newCategory, categoryContactID, categoryName.innerText)
         });
     }
 
-     static showAllContactsOnClick(category, contactsArrayID, header) {
-        let allContactHTML = new AllContact();
+    static showAllContactsOnClick(category, contactsArrayID, header) {
         let activeUser = Session.getInstance().getActiveUser();
         let contacts = activeUser.contacts;
 
@@ -68,7 +67,7 @@ export default class CategoriesLoad {
 
                         if (currentContact) {
                             const allContactsBlock = document.querySelector('.all-contacts');
-                            allContactHTML.createContactElements(allContactsBlock, contactInfo.name, contactInfo.surname, contactInfo.position, contactInfo.id, true)
+                            ContactHtmlBuilder.createContactElements(allContactsBlock, contactInfo.name, contactInfo.surname, contactInfo.position, contactInfo.id, true)
                         }
                     })
                 })

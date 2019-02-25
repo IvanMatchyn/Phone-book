@@ -3,11 +3,7 @@ import ContactBook from "../Module.js"
 import Session from "../Offline/Session";
 
 export default class ContactFunctions {
-    constructor() {
-
-    }
-
-    addCreateGroupEvent(button) {
+    addCategoryGroupEvent(button) {
         const groupMenu = new CategoryFunctions();
 
         button.addEventListener('click', (e) => {
@@ -62,7 +58,7 @@ export default class ContactFunctions {
 
                 if (contact === undefined) {
                     category.contacts.push(contactID);
-                    localStorage.setItem('Active User', JSON.stringify(Session.getInstance().getActiveUser()));
+                    Session.getInstance().saveToStorage();
                     ContactBook.offlineSynchronization();
                 }
             }

@@ -6,11 +6,11 @@ export default class Session {
     }
 
     loadActiveUser() {
-        this.user = JSON.parse(localStorage.getItem('Active User'));
+        this.user = JSON.parse(localStorage.getItem(constants.ACTIVE_USER));
     }
 
     saveToStorage() {
-        localStorage.setItem('Active User', JSON.stringify(this.getActiveUser()))
+        localStorage.setItem(constants.ACTIVE_USER, JSON.stringify(this.getActiveUser()))
     }
 
     static getInstance() {
