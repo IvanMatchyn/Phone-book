@@ -13,6 +13,10 @@ export default class Session {
         localStorage.setItem(constants.ACTIVE_USER, JSON.stringify(this.getActiveUser()))
     }
 
+    static createActiveUser(user){
+        localStorage.setItem(constants.ACTIVE_USER, JSON.stringify(user))
+    }
+
     static getInstance() {
         if (Session.instance === undefined) {
             Session.instance = new Session();

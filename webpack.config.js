@@ -1,7 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -81,12 +81,13 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.resolve(__dirname, './src/index.html')
         }),
         new MiniCssExtractPlugin({
-            filename: 'css/styles.css'
+            filename: 'styles.css'
         })
     ]
 };

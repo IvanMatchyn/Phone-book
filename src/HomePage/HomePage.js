@@ -2,7 +2,7 @@ import ContactsBook from "../Module.js"
 import * as constants from "../Constants";
 import CategoriesLoad from '../Categories/CategoriesLoad.js'
 import Session from "../Offline/Session";
-import LoadPage, {PageType} from "../LoadPage/LoadPage";
+import Route, {PageType} from "../LoadPage/Route";
 import ContactHtmlBuilder from "../AllContacts/ContactHtmlBuilder";
 
 export default class HomePage {
@@ -29,7 +29,7 @@ export default class HomePage {
             const createButton2 = document.querySelector('.ls-inner__add-group__wrapper');
 
             createButton2.addEventListener('click', () =>
-                LoadPage.load(PageType.CREATE_CATEGORY_PAGE)
+                Route.load(PageType.CREATE_CATEGORY_PAGE)
             )
         }
 
@@ -37,7 +37,7 @@ export default class HomePage {
             const allContactsButton = document.querySelector('#all-contacts-button');
 
             allContactsButton.addEventListener('click', () =>
-                LoadPage.load(PageType.ALL_CONTACT_PAGE)
+                Route.load(PageType.ALL_CONTACT_PAGE)
             )
         }
 
@@ -45,7 +45,7 @@ export default class HomePage {
             const addButton = document.querySelector('.ls-inner__add-contact__wrapper');
 
             addButton.addEventListener('click', () =>
-                LoadPage.load(PageType.CREATE_CONTACT_PAGE)
+                Route.load(PageType.CREATE_CONTACT_PAGE)
             )
         }
 
@@ -60,7 +60,7 @@ export default class HomePage {
 
             logOutButton.addEventListener('click', () => {
                 ContactsBook.clearMainBlock();
-                LoadPage.load(PageType.LOGIN_PAGE);
+                Route.load(PageType.LOGIN_PAGE);
                 ContactsBook.isMobileDevice();
             })
         }

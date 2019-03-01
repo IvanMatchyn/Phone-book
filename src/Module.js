@@ -1,5 +1,5 @@
 import Session from "./Offline/Session";
-import LoadPage, {PageType} from "./LoadPage/LoadPage";
+import Route, {PageType} from "./LoadPage/Route";
 import * as constants from './Constants.js'
 
 export default class ContactsBook {
@@ -24,7 +24,7 @@ export default class ContactsBook {
             page = PageType.LOGIN_PAGE;
         }
 
-        LoadPage.load(page);
+        Route.load(page);
     }
 
     static clearMainBlock() {

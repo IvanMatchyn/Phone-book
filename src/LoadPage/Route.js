@@ -16,7 +16,7 @@ export const PageType = {
     CREATE_CONTACT_PAGE: 'createContact',
 };
 
-export default class LoadPage {
+export default class Route {
     constructor() {
 
     }

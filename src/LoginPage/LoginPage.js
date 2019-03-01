@@ -1,7 +1,7 @@
 import * as constants from '../Constants.js'
 import ContactsBook from '../Module.js'
 import Session from "../Offline/Session";
-import LoadPage, {PageType} from "../LoadPage/LoadPage";
+import Route, {PageType} from "../LoadPage/Route";
 
 export default class LoginPage {
     onload() {
@@ -23,7 +23,7 @@ export default class LoginPage {
             const regLink = document.querySelector('.login-registration');
             regLink.addEventListener('click', event => {
                 event.stopPropagation();
-                LoadPage.load(PageType.REGISTRATION_PAGE)
+                Route.load(PageType.REGISTRATION_PAGE)
             })
         }
     }
@@ -37,13 +37,13 @@ export default class LoginPage {
             ContactsBook.clearMainBlock();
             let usersInfo = JSON.parse(localStorage.getItem(constants.ALL_USERS));
             let currUser = this.validateUserInfo(usersInfo, login, password);
-            if (currUser) {
-                LoadPage.load(PageType.HOME_PAGE);
-                LoginPage.removeTitleIfMobileDevice();
-                this.createMaxID();
-                Session.getInstance().saveToStorage();
-            }
 
+            if (currUser) {
+                Route.load(PageType.HOME_PAGE);
+                LoginPage.removeTitleIfMobileDevice();
+                Session.createActiveUser(currUser);
+                this.createMaxID();
+            }
         });
     }
 
